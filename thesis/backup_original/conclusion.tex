@@ -1,0 +1,57 @@
+\chapter{Conclusion and Future Work}
+\label{chap:conclusion}
+
+This thesis investigated the integration of Federated Dynamic Averaging (FDA) with Parameter-Efficient Low-Rank Adaptation (LoRA) in federated learning. By formulating and analyzing the FDA-RoLoRA Dual Track protocol, this work examined how variance-driven dynamic synchronization can be coupled with alternating low-rank parameter optimization to jointly address spatial parameter overhead and rigid temporal synchronization schedules under statistical data heterogeneity.
+
+\section{Synthesis of Results and Methodological Insights}
+\label{sec:synthesis_results}
+
+The development and evaluation of the FDA-RoLoRA Dual Track framework yield several key theoretical and empirical insights:
+
+\paragraph{Mathematical Consistency Through Alternating Subspace Isolation.}
+A central insight of this work is that dynamic averaging cannot be naively paired with standard federated LoRA due to the bilinear aggregation inconsistency ($\frac{1}{N}\sum A_i B_i \neq (\frac{1}{N}\sum A_i)(\frac{1}{N}\sum B_i)$). Bilinear aggregation errors distort client drift trajectories, causing geometric variance monitoring to misestimate true model divergence. By adopting RoLoRA's alternating coordinate scheme, the active parameter space is restricted to a single factor ($A$ or $B$) during each communication round. This guarantees strict linearity in local updates, providing the exact mathematical property required for stable, decoupled subspace variance tracking without cross-matrix distortion.
+
+\paragraph{Subspace Variance Dynamics and Temporal Smoothing.}
+Evaluating variance directly within low-rank coordinate tensors eliminates the memory and computational overhead of full-model gradient approximations. However, low-rank parameter trajectories exhibit significantly higher gradient volatility than full-model fine-tuning. Unsmoothed threshold prediction based on instantaneous variance often leads to aggressive round termination or boundary clipping at $e_{\max}$. Incorporating temporal smoothing—specifically Simple Moving Average (SMA) and Exponential Moving Average (EMA)—proved essential for stabilizing threshold evolution across rounds, balancing local epoch utilization, and preventing premature synchronization.
+
+\paragraph{Empirical Trade-Offs on Synthetic Benchmarks.}
+Extensive empirical evaluation across 66 runs on a controlled synthetic benchmark under extreme non-IID data partitioning substantiated the core behavior of the protocol:
+\begin{itemize}
+    \item \textbf{Communication Efficiency and Reliability}: Dynamic averaging variants demonstrated faster convergence to target accuracy milestones (achieving up to a $2.20\times$ conditional round reduction on non-linear partitions) and exhibited higher convergence reliability than fixed-epoch baselines.
+    \item \textbf{Compute versus Communication Trade-Off}: Dynamic averaging expended $1.7\times$ to $2.2\times$ more local gradient steps than fixed-schedule alternatives. This confirms that dynamic synchronization provides the highest practical benefit in federated settings where communication latency, round orchestration, or network bandwidth dominate overall training time, whereas fixed-budget methods remain preferable when edge computation is strictly constrained.
+\end{itemize}
+
+\paragraph{Scope and Status of Foundation Model Evaluations.}
+While the multi-process software architecture and model injection pipelines were fully implemented for large foundation models (RoBERTa-Large and Llama-2-7B on GLUE classification tasks), execution of these large-scale experiments remains in progress on cluster resources at the time of writing. Consequently, the synthetic benchmark results serve as the primary empirical validation of the dual-track synchronization mechanism and smoothing dynamics.
+
+\section{Limitations}
+\label{sec:limitations}
+
+While this work demonstrates the feasibility and properties of combining dynamic averaging with alternating low-rank adaptation, several operational and methodological limitations warrant discussion:
+
+First, from an empirical standpoint, the primary completed experimental results are derived from a controlled synthetic classification benchmark, with large-scale foundation model evaluations on GLUE tasks currently queued. While the synthetic setup captured extreme label skew and multi-layer non-linear dynamics, empirical validation across billion-parameter language models is needed to confirm scaling behaviors.
+
+Second, the lack of access to the original codebase from the RoLoRA paper mandated a complete custom reimplementation within our framework. Furthermore, experimental evaluations were conducted entirely within a simulated multi-process federated environment on institutional GPU resources ($2\times$ NVIDIA A10 GPUs), leaving real-world distributed network phenomena—such as physical link latency, bandwidth fluctuations, and stochastic client dropouts—unmodeled.
+
+Third, regarding variance tracking, while exact variance computation directly on compact LoRA tensors proved efficient for low adapter ranks ($r=8$), scaling to significantly higher ranks or wider layer coverage may eventually require approximate sketching techniques (such as the AMS sketch). Finally, the alternating optimization protocol relies on a rigid alternating schedule (e.g., $B$-first alternation), leaving the exploration of data-adaptive or variance-driven matrix toggling criteria for future investigation.
+
+\section{Future Work}
+\label{sec:future_work}
+
+Building upon the methodology and findings established in this work, several promising avenues for future research emerge:
+
+\paragraph{Completion of Foundation Model Benchmarking.}
+The immediate priority is completing the execution of the large-scale evaluation suite on RoBERTa-Large ($355\text{M}$) and Llama-2-7B ($7\text{B}$) across GLUE benchmark tasks (SST-2, MNLI) on the Polytechnix cluster. This will provide definitive empirical data on downstream task accuracy, total communication rounds, and byte transmission under realistic language modeling workloads.
+
+\paragraph{Dynamic Averaging Across Other Federated LoRA Variants.}
+Future work should explore extending dynamic variance monitoring to alternative federated parameter-efficient techniques. Promising directions include investigating \textbf{FDA + SLoRA} \cite{babakniya2023slora} for sparse low-rank coordinate exchanges, \textbf{FDA + FFA-LoRA} \cite{sun2024improving} with permanently frozen down-projections, and analyzing whether dynamic variance monitoring can help diagnose and mitigate client drift in standard simultaneous \textbf{FDA-FedAvg-LoRA}. Furthermore, developing adaptive rank selection—where the rank $r$ dynamically expands or contracts based on observed subspace variance—represents a natural extension.
+
+\paragraph{Optimization and System Extensions.}
+From an optimization perspective, exploring asymmetric learning rate schedules tailored independently for down-projection ($A$) and up-projection ($B$) matrices offers potential convergence benefits. Concurrently, developing formal convergence proofs for alternating dynamic averaging under non-convex loss surfaces constitutes an important theoretical frontier. System-level integrations with low-bit quantization (such as QLoRA \cite{dettmers2023qlora}) and deployment on physical edge testbeds will further assess operational feasibility.
+
+\paragraph{Integration with Federated Learning Frameworks.}
+To encourage community adoption and standardized benchmarking, integrating the FDA-RoLoRA Dual Track protocol into established open-source federated benchmarking platforms—such as \textbf{FederatedScope-LLM} \cite{kuang2023federatedscope}—will facilitate broader evaluation across diverse model architectures and distributed settings.
+
+\paragraph{Concluding Remarks.}
+In conclusion, this work demonstrates that federated low-rank adaptation can effectively incorporate dynamic, variance-driven synchronization. By establishing that alternating coordinate optimization provides a mathematically consistent substrate for geometric variance monitoring, this thesis provides a principled and communication-efficient approach for federated fine-tuning.
+

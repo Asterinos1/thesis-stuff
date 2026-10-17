@@ -1,0 +1,102 @@
+\chapter{Introduction}
+\label{chap:intro}
+Federated Learning (FL) \cite{kairouz2021advances, mcmahan2017communication} has established itself as the leading paradigm for training machine learning models across decentralized data owners without requiring the centralization of raw user data. By enabling participating nodes---ranging from resource-constrained edge devices to institutional data silos such as hospitals and financial institutions---to compute updates locally and share only parameter tensors with a coordinating server, FL enables collaborative optimization while respecting data privacy regulations (e.g., GDPR, HIPAA) and proprietary commercial boundaries.
+
+However, the iterative nature of federated optimization introduces a severe communication bottleneck. Historically, research in distributed machine learning has tackled this challenge primarily through temporal and algorithmic mechanisms designed for standard neural architectures. Yet, the recent paradigm shift toward massive foundation models has created an entirely new spatial crisis, rendering classical federated optimization techniques insufficient on their own.
+
+\section{Federated Learning and Optimization}
+\label{sec:intro-fl-opt}
+In canonical federated optimization, the central communication bottleneck is dictated by the synchronization frequency between clients and the central server. The foundational Federated Averaging (FedAvg) algorithm \cite{mcmahan2017communication} coordinates training by having clients execute a fixed, predetermined number of local stochastic gradient descent (SGD) epochs ($E$) before transmitting their updated parameter vectors to the server for aggregation. 
+
+While conceptually simple, rigid synchronization cadences suffer from fundamental inefficiencies under real-world conditions:
+\begin{itemize}
+    \item \textbf{Statistical Heterogeneity and Client Drift:} In decentralized environments, local client datasets are inherently non-identically and independently distributed (non-IID) \cite{li2020federated, karimireddy2020scaffold}. When clients execute multiple uncoordinated local epochs, their local models drift toward local empirical minima that diverge sharply from the global optimization trajectory.
+    \item \textbf{Temporal Redundancy:} Enforcing a static schedule remains blind to actual client convergence. In phases where local updates are minor or homogeneous, transmitting parameters after every fixed interval wastes critical network bandwidth on redundant updates. Conversely, when clients diverge rapidly, static schedules delay aggregation, exacerbating model divergence.
+\end{itemize}
+
+To improve federated optimization, adaptive server-side optimizers were introduced under the Federated Optimization (FedOpt) framework \cite{reddi2021adaptive}. By interpreting aggregated client updates as pseudo-gradients and applying momentum-based tracking (such as FedAdam and FedYogi), FedOpt stabilizes the global optimization trajectory against client drift. 
+
+Subsequently, to resolve the rigid cadence of static rounds, Federated Dynamic Averaging (FDA-Opt) \cite{theologitis2025fda, frangias2023federated} introduced variance-driven dynamic synchronization. Rather than synchronizing after fixed epochs, FDA-Opt continuously monitors the pairwise drift and variance across participating clients. Synchronization is triggered dynamically only when parameter variance breaches an adaptive drift threshold ($\theta$). By synchronizing strictly when mathematically necessary, FDA-Opt proved that dynamic temporal throttling can dramatically reduce total communication rounds without sacrificing final accuracy.
+
+Crucially, however, FedAvg, FedOpt, and FDA-Opt all share a common architectural assumption: \emph{the transmission and synchronization of full-rank model parameter vectors}.
+
+\section{Foundation Models and Parameter-Efficient Fine-Tuning}
+\label{sec:intro-foundation-peft}
+In recent years, the machine learning landscape has undergone an unprecedented transformation driven by large-scale pre-trained foundation models and Large Language Models (LLMs) scaling to billions of parameters \cite{brown2020language, bommasani2021opportunities}. Adapting these foundation models to specialized domain tasks (e.g., clinical diagnosis, legal discovery, financial fraud detection) is of paramount importance.
+
+Yet, this shift in model scale fundamentally breaks the physical viability of full-parameter federated learning:
+\begin{itemize}
+    \item Synchronizing a modern 7-billion parameter language model (such as LLaMA-2-7B \cite{touvron2023llama}) in 16-bit half-precision requires transmitting approximately \textbf{14 Gigabytes} of parameter data per client per round.
+    \item In a cross-silo federated setting with 50 participating institutions over a modest horizon of 100 communication rounds, total network transfer exceeds \textbf{70 Terabytes}---an operational volume that is wholly intractable over standard wide-area network (WAN) connections.
+    \item Even for moderately sized encoders such as RoBERTa-Large \cite{liu2019roberta} (355M parameters), a single full-parameter round requires $\sim$1.4 GB per client, swamping edge up-links.
+\end{itemize}
+
+To overcome this spatial bottleneck, Parameter-Efficient Fine-Tuning (PEFT) has emerged as an indispensable methodology. Among PEFT strategies, Low-Rank Adaptation (LoRA) \cite{hu2022lora} has become the de facto standard. LoRA keeps the large pre-trained weight matrix $W_0 \in \mathbb{R}^{d \times k}$ frozen, and factorizes task-specific parameter updates into two low-rank matrices:
+\begin{equation}
+    W = W_0 + \Delta W = W_0 + A B
+    \label{eq:intro_lora_decomposition}
+\end{equation}
+where $A \in \mathbb{R}^{d \times r}$ denotes the down-projection matrix, $B \in \mathbb{R}^{r \times k}$ denotes the up-projection matrix, and the rank $r \ll \min(d, k)$ (typically $r \in \{4, 8, 16\}$). Because only $A$ and $B$ are updated during training, LoRA compresses the volume of communicated parameters by over $99\%$, providing a powerful spatial solution for edge and silo environments.
+
+\section{Aggregation Inconsistency in Federated LoRA}
+\label{sec:intro-inconsistency}
+Given the spatial efficacy of LoRA, directly integrating low-rank adapters into federated learning---often termed Federated LoRA (FedLoRA) or FedIT \cite{yang2025federated, zhang2023towards}---appears to be a natural path forward. In naive FedLoRA, each client $i \in \{1, \dots, N\}$ initializes identical low-rank matrices, computes local gradient updates on private data, and transmits only its trained adapter matrices $A_i$ and $B_i$ to the central server.
+
+However, aggregating independently trained low-rank factors via standard FedAvg introduces a fatal mathematical failure mode: \emph{LoRA aggregation inconsistency} (or aggregation discordance) \cite{yang2025federated}. Because matrix multiplication is non-linear and non-commutative, averaging the factor matrices independently across clients fails to reconstruct the true average of their composite weight updates:
+\begin{equation}
+    \frac{1}{N}\sum_{i=1}^{N} (A_i B_i) \neq \left(\frac{1}{N}\sum_{i=1}^{N} A_i\right)\left(\frac{1}{N}\sum_{i=1}^{N} B_i\right)
+    \label{eq:intro_inconsistency}
+\end{equation}
+
+When the central server independently averages $A_i$ and $B_i$, the composite product of the averaged matrices generates cross-term interference vectors that do not exist in any client's local optimization trajectory. This bilinear distortion collapses the low-rank representation, induces severe gradient cancellation, and destabilizes global convergence, frequently causing fine-tuning to perform worse than static heuristics or simple localized training.
+
+\section{Robust Low-Rank Adaptation}
+\label{sec:intro-rolora}
+To resolve this bilinear aggregation discordance, several structural workarounds have been explored in recent literature:
+\begin{itemize}
+    \item \textbf{Full Weight Reconstruction:} Clients could theoretically reconstruct the dense update $\Delta W_i = A_i B_i$ before transmission, or the server could perform Singular Value Decomposition (SVD) on the aggregated full matrix \cite{yang2025federated}. However, this completely nullifies the spatial communication savings of LoRA and imposes prohibitive computational overhead.
+    \item \textbf{Static Down-Projection Freezing (FFA-LoRA):} FFA-LoRA \cite{sun2024improving} permanently freezes the down-projection matrix $A$ as a random projection across all clients, allowing clients to train and transmit only the up-projection matrix $B$. While this linearizes aggregation ($\frac{1}{N}\sum A B_i = A \frac{1}{N}\sum B_i$), permanently freezing half of the parameter degrees of freedom severely compromises adapter capacity and expressive power.
+    \item \textbf{Heterogeneous Rank Assembly (FLoRA):} FLoRA \cite{wang2024flora} attempts to support variable client ranks by stacking updates, but still incurs heavy reconstruction overhead on the aggregation server.
+\end{itemize}
+
+A decisive breakthrough resolving this dilemma without sacrificing model expressiveness is \textbf{Robust Low-Rank Adaptation (RoLoRA)} \cite{chen2025robust}. RoLoRA adopts an \emph{alternating coordinate optimization} strategy. Instead of updating both factor matrices simultaneously, training alternates in structured multi-round blocks:
+\begin{enumerate}
+    \item In Phase A, matrix $A$ is frozen globally across all clients, and only matrix $B$ is trained locally and aggregated.
+    \item In Phase B, the updated matrix $B$ is frozen globally across all clients, and only matrix $A$ is trained locally and aggregated.
+\end{enumerate}
+
+Because one coordinate factor is held globally identical across all clients during any given aggregation phase, the averaging operation becomes strictly linear:
+\begin{equation}
+    \frac{1}{N} \sum_{i=1}^{N} (A_{\text{frozen}} B_i) = A_{\text{frozen}} \left( \frac{1}{N} \sum_{i=1}^{N} B_i \right)
+    \label{eq:intro_rolora_linearity}
+\end{equation}
+By toggling the active subspace over alternating cycles, RoLoRA preserves the full representational rank and expressive capacity of standard LoRA while restoring mathematically exact federated averaging.
+
+\section{Proposed Method: FDA-RoLoRA}
+\label{sec:intro-fdarolora}
+With RoLoRA restoring mathematical linearity to federated low-rank aggregation, an extraordinary scientific opportunity emerges: \emph{Can we now unify the temporal adaptivity of Federated Dynamic Averaging with the spatial efficiency of alternating low-rank adaptation?}
+
+While RoLoRA successfully solves the spatial aggregation inconsistency, existing RoLoRA formulations remain shackled to \textbf{rigid, predetermined synchronization cadences} (fixed local steps or epochs). Clients must synchronize their active matrix after arbitrary epoch boundaries, inheriting all the temporal redundancies and drift penalties of classical FedAvg.
+
+Conversely, while FDA-Opt \cite{theologitis2025fda} pioneered variance-driven dynamic synchronization, it was formulated exclusively for monolithic full-rank neural networks. Simply applying FDA-Opt directly to RoLoRA is impossible due to three fundamental obstacles:
+\begin{enumerate}
+    \item \textbf{Asymmetric Coordinate Geometries:} The down-projection matrix $A \in \mathbb{R}^{d \times r}$ and up-projection matrix $B \in \mathbb{R}^{r \times k}$ fulfill entirely different functional roles (compression vs. expansion). Furthermore, standard initialization schemes ($A \sim \mathcal{N}(0, \sigma^2)$ and $B = 0$) create highly divergent gradient dynamics, spectral velocities, and parameter drift magnitudes. A single scalar threshold cannot govern both spaces.
+    \item \textbf{Subspace Coordinate Variance:} If client variance were computed by projecting updates back to full-rank matrices ($\Delta W = AB$), all computational and memory benefits of PEFT would be lost. Client drift must be measured \emph{directly within the low-rank coordinate subspace}.
+    \item \textbf{Geometric Cross-Contamination:} In alternating optimization, threshold evolution must not leak variance metrics between coordinate tracks. Dynamic thresholds for matrix $A$ must evolve independently from matrix $B$.
+\end{enumerate}
+
+To bridge this divide, this thesis introduces \textbf{FDA-RoLoRA}, a unified federated framework that combines alternating coordinate optimization with direct subspace dynamic averaging via a \textbf{Decoupled Dual-Track Threshold Mechanism}. By maintaining independent variance monitoring and threshold evolution tracks ($\theta_A$ and $\theta_B$), FDA-RoLoRA achieves simultaneous spatial compression, exact mathematical aggregation linearity, and dynamic communication throttling without projecting updates back to the full-rank parameter space.
+
+To evaluate this approach, we implement an end-to-end multi-process simulation testbed in PyTorch and Hugging Face PEFT, supporting Dirichlet-based non-IID data partitioning across transformer foundation models. Through this framework, we examine the convergence characteristics, communication savings, and parameter sensitivity of dynamic subspace averaging.
+
+\section{Thesis Outline}
+\label{sec:intro-outline}
+The remainder of this diploma thesis is organized as follows:
+
+\begin{itemize}
+    \item \textbf{Chapter~\ref{chap:background} (Theoretical Background)} establishes the theoretical foundations underpinning this work, reviewing stochastic gradient descent, foundation models, the Transformer architecture, client drift under statistical heterogeneity, server-side adaptive optimizers (FedOpt), Low-Rank Adaptation (LoRA), Robust LoRA (RoLoRA), and Federated Dynamic Averaging (FDA).
+    \item \textbf{Chapter~\ref{chap:methodology} (Methodology: FDA-RoLoRA)} presents the mathematical formulation of our proposed approach, detailing the alternating coordinate toggling protocol, direct subspace variance computation, independent halting criteria, dual-track threshold evolution strategies, and server-side adaptive optimization.
+    \item \textbf{Chapter~\ref{chap:implementation} (System Architecture and Implementation)} details the software engineering architecture of the simulation platform, covering PyTorch adapter injection, Dirichlet non-IID partitioning engines, multi-process inter-client communication, and cluster execution workflows.
+    \item \textbf{Chapter~\ref{chap:evaluation} (Experimental Evaluation \& Analysis)} defines the benchmarking protocol, comparative baseline algorithms, evaluation metrics across GLUE classification tasks, and presents an in-depth analytical investigation of expected convergence behaviors, communication trade-offs, and threshold dynamics under active empirical evaluation.
+    \item \textbf{Chapter~\ref{chap:conclusion} (Conclusion and Future Directions)} summarizes the scientific contributions of the thesis, reviews practical engineering limitations, and outlines promising trajectories for future research.
+\end{itemize}

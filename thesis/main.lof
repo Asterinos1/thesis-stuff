@@ -1,0 +1,11 @@
+\babel@toc {english}{}\relax 
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Parameter Server Architecture for Asynchronous Distributed Learning. Workers independently pull the latest parameters and push computed gradients.}}{10}{figure.2.1}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Chronological sequence of a Federated Learning communication round (broadcast, local client training, update collection, and server aggregation). Figure reproduced from Theologitis et al. \cite {theologitis2025fda}.}}{11}{figure.2.2}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Low-Rank Adaptation (LoRA) schematic: decomposition of weight updates into low-rank matrices $A$ and $B$ alongside frozen pretrained weights $W$.}}{15}{figure.2.3}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Robust Low-Rank Adaptation (RoLoRA) alternating optimization scheme. In each round, one low-rank matrix is frozen globally while the other is trained and aggregated linearly.}}{17}{figure.2.4}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }

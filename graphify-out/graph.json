@@ -1,0 +1,494 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {
+    "hyperedges": [
+      {
+        "id": "fda_rolora_halting_mechanism",
+        "label": "FDA RoLoRA Local Adaptive Tuning Mechanism",
+        "nodes": [
+          "sources_fda_rolora_dual_track_variants_1_subspace_variance",
+          "sources_fda_rolora_dual_track_variants_1_synchronization_halt",
+          "sources_fda_rolora_dual_track_variants_1_threshold_evolution"
+        ],
+        "relation": "form",
+        "confidence": "EXTRACTED",
+        "confidence_score": 1.0,
+        "source_file": "sources/FDA_ROLORA_DUAL_TRACK_VARIANTS-1.pdf"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "label": "main.toc",
+      "file_type": "code",
+      "source_file": "main.toc",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "main",
+      "community": 4,
+      "norm_label": "main.toc"
+    },
+    {
+      "label": "Chapter-by-Chapter Writing Guide",
+      "file_type": "document",
+      "source_file": "CHAPTER_GUIDE.md",
+      "source_location": "L1",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "chapter_guide_writing_guidelines",
+      "community": 0,
+      "norm_label": "chapter-by-chapter writing guide"
+    },
+    {
+      "label": "FDA RoLoRA Dual Track Framework",
+      "file_type": "concept",
+      "source_file": "CHAPTER_GUIDE.md",
+      "source_location": "L5",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "chapter_guide_fda_rolora_dual_track",
+      "community": 2,
+      "norm_label": "fda rolora dual track framework"
+    },
+    {
+      "label": "Diploma Thesis LaTeX Project Structure",
+      "file_type": "document",
+      "source_file": "THESIS_STRUCTURE.md",
+      "source_location": "L1",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "thesis_structure_directory_layout",
+      "community": 8,
+      "norm_label": "diploma thesis latex project structure"
+    },
+    {
+      "label": "Federated Learning at TensorFlow Using the Geometric Approach",
+      "file_type": "paper",
+      "source_file": "examples/Frangias_Georgios_Dip_2023.pdf",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Georgios Frangias",
+      "contributor": "Vasilis Samoladas",
+      "id": "examples_frangias_georgios_dip_2023_thesis",
+      "community": 2,
+      "norm_label": "federated learning at tensorflow using the geometric approach"
+    },
+    {
+      "label": "Geometric Approach for Federated Learning",
+      "file_type": "concept",
+      "source_file": "examples/Frangias_Georgios_Dip_2023.pdf",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Georgios Frangias",
+      "contributor": "Vasilis Samoladas",
+      "id": "examples_frangias_georgios_dip_2023_geometric_approach",
+      "community": 3,
+      "norm_label": "geometric approach for federated learning"
+    },
+    {
+      "label": "Algorithms for Online Federated Machine Learning",
+      "file_type": "paper",
+      "source_file": "examples/Theologitis_Michail_Dip_2023.pdf",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Michail Theologitis",
+      "contributor": "Vasilis Samoladas",
+      "id": "examples_theologitis_michail_dip_2023_thesis",
+      "community": 0,
+      "norm_label": "algorithms for online federated machine learning"
+    },
+    {
+      "label": "Functional Geometric Monitoring (FGM)",
+      "file_type": "concept",
+      "source_file": "examples/Theologitis_Michail_Dip_2023.pdf",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Michail Theologitis",
+      "contributor": "Vasilis Samoladas",
+      "id": "examples_theologitis_michail_dip_2023_functional_geometric_monitoring",
+      "community": 3,
+      "norm_label": "functional geometric monitoring (fgm)"
+    },
+    {
+      "label": "Investigating the applicability of Federated Dynamic Averaging in Federated Low-Rank Adaptation Architectures",
+      "file_type": "paper",
+      "source_file": "main.pdf",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Asterinos Karalis",
+      "contributor": "Vasilis Samoladas",
+      "id": "main_thesis_document",
+      "community": 0,
+      "norm_label": "investigating the applicability of federated dynamic averaging in federated low-rank adaptation architectures"
+    },
+    {
+      "label": "FDA RoLoRA Dual Track Framework",
+      "file_type": "concept",
+      "source_file": "main.pdf",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Asterinos Karalis",
+      "contributor": "Vasilis Samoladas",
+      "id": "main_fda_rolora_dual_track",
+      "community": 1,
+      "norm_label": "fda rolora dual track framework"
+    },
+    {
+      "label": "FDA RoLoRA Dual Track Specification",
+      "file_type": "paper",
+      "source_file": "sources/FDA_ROLORA_DUAL_TRACK_VARIANTS-1.pdf",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "sources_fda_rolora_dual_track_variants_1_specification",
+      "community": 2,
+      "norm_label": "fda rolora dual track specification"
+    },
+    {
+      "label": "Direct Subspace Variance Computation",
+      "file_type": "concept",
+      "source_file": "sources/FDA_ROLORA_DUAL_TRACK_VARIANTS-1.pdf",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Exact variance is computed directly and exclusively on the isolated low-rank subspace coordinates without mapping back to the expanded weight space to save computational cost and maintain linear properties.",
+      "id": "sources_fda_rolora_dual_track_variants_1_subspace_variance",
+      "community": 5,
+      "norm_label": "direct subspace variance computation"
+    },
+    {
+      "label": "Independent Synchronization Halt",
+      "file_type": "concept",
+      "source_file": "sources/FDA_ROLORA_DUAL_TRACK_VARIANTS-1.pdf",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Restricts client-side training computation using isolated active matrix thresholds to ensure asymmetrical geometries of projection (A) and expansion (B) matrices do not cross-contaminate stopping criteria.",
+      "id": "sources_fda_rolora_dual_track_variants_1_synchronization_halt",
+      "community": 6,
+      "norm_label": "independent synchronization halt"
+    },
+    {
+      "label": "Dynamic Threshold Evolution",
+      "file_type": "concept",
+      "source_file": "sources/FDA_ROLORA_DUAL_TRACK_VARIANTS-1.pdf",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "sources_fda_rolora_dual_track_variants_1_threshold_evolution",
+      "community": 7,
+      "norm_label": "dynamic threshold evolution"
+    },
+    {
+      "label": "FDA-Opt: Communication-Efficient Federated Fine-Tuning of Language Models",
+      "file_type": "paper",
+      "source_file": "sources/fda_opt.pdf",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Michail Theologitis; Vasilis Samoladas; Antonios Deligiannakis",
+      "contributor": null,
+      "id": "sources_fda_opt_paper",
+      "community": 0,
+      "norm_label": "fda-opt: communication-efficient federated fine-tuning of language models"
+    },
+    {
+      "label": "Federated Dynamic Averaging with Server Optimizers",
+      "file_type": "concept",
+      "source_file": "sources/fda_opt.pdf",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Michail Theologitis; Vasilis Samoladas; Antonios Deligiannakis",
+      "contributor": null,
+      "id": "sources_fda_opt_algorithm",
+      "community": 1,
+      "norm_label": "federated dynamic averaging with server optimizers"
+    },
+    {
+      "label": "FFA-LoRA: Federated Freeze A LoRA",
+      "file_type": "paper",
+      "source_file": "sources/ffalora.pdf",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "sources_ffalora_paper",
+      "community": 0,
+      "norm_label": "ffa-lora: federated freeze a lora"
+    },
+    {
+      "label": "Federated Freeze A LoRA (FFA-LoRA)",
+      "file_type": "concept",
+      "source_file": "sources/ffalora.pdf",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Freezing down-projections (A) prevents the mismatched term arising from separate global aggregations and joint local updates while reducing communication and computational overhead by half.",
+      "id": "sources_ffalora_method",
+      "community": 1,
+      "norm_label": "federated freeze a lora (ffa-lora)"
+    },
+    {
+      "label": "Robust Federated Finetuning of LLMs via Alternating Optimization of LoRA",
+      "file_type": "paper",
+      "source_file": "sources/rolora_verr4.pdf",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Shuangyi Chen; Yuanxin Guo; Yue Ju; Harik Dalal; Zhongwen Zhu; Ashish Khisti",
+      "contributor": null,
+      "id": "sources_rolora_verr4_paper",
+      "community": 0,
+      "norm_label": "robust federated finetuning of llms via alternating optimization of lora"
+    },
+    {
+      "label": "Robust Low-Rank Adaptation (RoLoRA)",
+      "file_type": "concept",
+      "source_file": "sources/rolora_verr4.pdf",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Shuangyi Chen; Yuanxin Guo; Yue Ju; Harik Dalal; Zhongwen Zhu; Ashish Khisti",
+      "contributor": null,
+      "rationale": "Alternating optimization allows linearizing the aggregation of product parameters while preserving the capacity to learn both projections for model expressiveness.",
+      "id": "sources_rolora_verr4_method",
+      "community": 1,
+      "norm_label": "robust low-rank adaptation (rolora)"
+    },
+    {
+      "label": "Technical University of Crete Logo",
+      "file_type": "image",
+      "source_file": "tuc_logo.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "tuc_logo_image",
+      "community": 0,
+      "norm_label": "technical university of crete logo"
+    }
+  ],
+  "links": [
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CHAPTER_GUIDE.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "chapter_guide_writing_guidelines",
+      "target": "main_thesis_document"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CHAPTER_GUIDE.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "chapter_guide_fda_rolora_dual_track",
+      "target": "examples_frangias_georgios_dip_2023_thesis"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CHAPTER_GUIDE.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "chapter_guide_fda_rolora_dual_track",
+      "target": "examples_theologitis_michail_dip_2023_thesis"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CHAPTER_GUIDE.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "chapter_guide_fda_rolora_dual_track",
+      "target": "sources_fda_rolora_dual_track_variants_1_specification"
+    },
+    {
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "main.pdf",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "main_thesis_document",
+      "target": "examples_frangias_georgios_dip_2023_thesis"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "examples/Theologitis_Michail_Dip_2023.pdf",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "examples_theologitis_michail_dip_2023_functional_geometric_monitoring",
+      "target": "examples_frangias_georgios_dip_2023_geometric_approach"
+    },
+    {
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "main.pdf",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "main_thesis_document",
+      "target": "examples_theologitis_michail_dip_2023_thesis"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "sources/fda_opt.pdf",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_fda_opt_paper",
+      "target": "examples_theologitis_michail_dip_2023_thesis"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "main.pdf",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "main_thesis_document",
+      "target": "main_fda_rolora_dual_track"
+    },
+    {
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "main.pdf",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "main_thesis_document",
+      "target": "sources_fda_opt_paper"
+    },
+    {
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "main.pdf",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "main_thesis_document",
+      "target": "sources_ffalora_paper"
+    },
+    {
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "main.pdf",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "main_thesis_document",
+      "target": "sources_rolora_verr4_paper"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tuc_logo.png",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "tuc_logo_image",
+      "target": "main_thesis_document"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "main.pdf",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "main_fda_rolora_dual_track",
+      "target": "sources_fda_opt_algorithm"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "main.pdf",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "main_fda_rolora_dual_track",
+      "target": "sources_fda_rolora_dual_track_variants_1_specification"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "main.pdf",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "main_fda_rolora_dual_track",
+      "target": "sources_rolora_verr4_method"
+    },
+    {
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "sources/rolora_verr4.pdf",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_rolora_verr4_paper",
+      "target": "sources_ffalora_paper"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "sources/ffalora.pdf",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_ffalora_method",
+      "target": "sources_rolora_verr4_method"
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "fda_rolora_halting_mechanism",
+      "label": "FDA RoLoRA Local Adaptive Tuning Mechanism",
+      "nodes": [
+        "sources_fda_rolora_dual_track_variants_1_subspace_variance",
+        "sources_fda_rolora_dual_track_variants_1_synchronization_halt",
+        "sources_fda_rolora_dual_track_variants_1_threshold_evolution"
+      ],
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "sources/FDA_ROLORA_DUAL_TRACK_VARIANTS-1.pdf"
+    }
+  ]
+}

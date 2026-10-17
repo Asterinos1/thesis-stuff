@@ -1,0 +1,23 @@
+\begin{tikzpicture}[
+    node distance=2cm and 2.5cm,
+    ps/.style={rectangle, draw, fill=blue!10, text width=3.5cm, align=center, minimum height=1.2cm, rounded corners=3pt, thick},
+    worker/.style={rectangle, draw, fill=orange!10, text width=2cm, align=center, minimum height=1cm, rounded corners=3pt, thick},
+    arrow/.style={-stealth, thick, color=black!70}
+]
+
+\node[ps] (ps) {\textbf{Parameter Server} \\ \small Maintains Global Params};
+
+\node[worker, below left=1.5cm and 2cm of ps] (w1) {Worker 1};
+\node[worker, below=1.5cm of ps] (w2) {Worker 2};
+\node[worker, below right=1.5cm and 2cm of ps] (w3) {Worker 3};
+
+\draw[arrow, bend left=15] (ps.200) to node[left, font=\footnotesize] {Pull} (w1.60);
+\draw[arrow, bend left=15] (w1.20) to node[right, font=\footnotesize] {Push $\nabla$} (ps.240);
+
+\draw[arrow, bend left=15] (ps.260) to node[left, font=\footnotesize] {Pull} (w2.120);
+\draw[arrow, bend left=15] (w2.60) to node[right, font=\footnotesize] {Push $\nabla$} (ps.280);
+
+\draw[arrow, bend left=15] (ps.340) to node[left, font=\footnotesize] {Pull} (w3.120);
+\draw[arrow, bend left=15] (w3.160) to node[right, font=\footnotesize] {Push $\nabla$} (ps.300);
+
+\end{tikzpicture}

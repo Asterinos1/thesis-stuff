@@ -1,0 +1,57 @@
+{
+  "main.toc": {
+    "mtime": 1784293463.9373174,
+    "ast_hash": "96aab68cf7218135024599d277e2730f",
+    "semantic_hash": "96aab68cf7218135024599d277e2730f"
+  },
+  "CHAPTER_GUIDE.md": {
+    "mtime": 1784293729.7813213,
+    "ast_hash": "0a2067e52eab04388903d45de631528d",
+    "semantic_hash": "0a2067e52eab04388903d45de631528d"
+  },
+  "THESIS_STRUCTURE.md": {
+    "mtime": 1784293468.5638297,
+    "ast_hash": "1ac0bdcd295a4c6853d43f355e6d5737",
+    "semantic_hash": "1ac0bdcd295a4c6853d43f355e6d5737"
+  },
+  "examples/Frangias_Georgios_Dip_2023.pdf": {
+    "mtime": 1770655569.7417455,
+    "ast_hash": "806f2703211e041096426dd9663cd171",
+    "semantic_hash": "806f2703211e041096426dd9663cd171"
+  },
+  "examples/Theologitis_Michail_Dip_2023.pdf": {
+    "mtime": 1762786272.1916177,
+    "ast_hash": "15884a285a48912f160fecf1f383100b",
+    "semantic_hash": "15884a285a48912f160fecf1f383100b"
+  },
+  "main.pdf": {
+    "mtime": 1784293464.0755742,
+    "ast_hash": "1a9968bd4dd76180a1baf78b88b97967",
+    "semantic_hash": "1a9968bd4dd76180a1baf78b88b97967"
+  },
+  "sources/FDA_ROLORA_DUAL_TRACK_VARIANTS-1.pdf": {
+    "mtime": 1784293675.220466,
+    "ast_hash": "9633139cc48bc16217fe9d873f128021",
+    "semantic_hash": "9633139cc48bc16217fe9d873f128021"
+  },
+  "sources/fda_opt.pdf": {
+    "mtime": 1776256548.93029,
+    "ast_hash": "11e590899cf3a0b085b983f6ff6ba7f7",
+    "semantic_hash": "11e590899cf3a0b085b983f6ff6ba7f7"
+  },
+  "sources/ffalora.pdf": {
+    "mtime": 1777046441.5401444,
+    "ast_hash": "27696d9ede908a11c83bfcd437886be6",
+    "semantic_hash": "27696d9ede908a11c83bfcd437886be6"
+  },
+  "sources/rolora_verr4.pdf": {
+    "mtime": 1775151544.0777235,
+    "ast_hash": "607c1ec717d3a641a17e38668bd2ac61",
+    "semantic_hash": "607c1ec717d3a641a17e38668bd2ac61"
+  },
+  "tuc_logo.png": {
+    "mtime": 1779363038.447844,
+    "ast_hash": "3d98a98cff4f8752f7438e74106aaf9c",
+    "semantic_hash": "3d98a98cff4f8752f7438e74106aaf9c"
+  }
+}

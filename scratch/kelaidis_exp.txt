@@ -1,0 +1,406 @@
+--- Page 52 ---
+CHAPTER 4. FEDERATED LORA-TUNING 46
+4.3.3 Data and Evaluation Pipeline
+We developed modules of code that make federated LoRA training and evaluation clearer
+and, in practice, more reliable. One set of modules handles data formatting, standardizing
+how diverse benchmark datasets are transformed into chat-style prompts and ensuring
+that the model sees inputs in a consistent way and that answers are not inadvertently
+hinted at in the input. Another set focuses on inference and evaluation, aligning outputs
+with the original label space of each benchmark and using robust parsing to map free-text
+generations back to discrete labels. Together these components reduce ambiguity, avoid
+missing correct answers, and make results more consistent and reproducible across tasks.
+Canonical chat templating
+This component standardizes task inputs across datasets by wrapping each example in a
+single user-assistant exchange compatible with the Gemma 3 chat interface. Three de-
+sign rules guide the templates. First, no few-shot exemplars are injected, so the model’s
+performance reflects fine-tuning rather than prompt engineering or transient pattern learn-
+ing. Second, labels are canonicalized into minimal, unambiguous strings that match the
+task space (e.g., “True”/“False” or sentiment categories), reducing label-token variabil-
+ity, making correct answers easier to detect, and promoting consistency in model outputs.
+Third, templates avoid leaking answer structure into the user message and never hint at a
+preferred style, ensuring that the model must solve the task rather than infer hidden cues.
+As a concrete example, in BoolQ each instance presents the passage and question as
+the user turn. The task is to decide whether the statement is true or false according to
+the passage, with subjects ranging widely from science and law to phytology and theater.
+During training, the assistant turn contains the ground-truth label so that the model is
+trained to predict it token by token under the causal language modeling loss. At evaluation
+time, this turn is left empty, and the model must generate its own answer:
+User : Here is a passage: passage
+Question (answer with True or False): question
+Model : True or False
+This keeps the output space binary and unambiguous, making both training and eval-
+uation straightforward.
+As a different type of example, WinoGrande instances present a sentence with a blank
+and two candidate fillers. The user turn includes the sentence and the options, while the
+assistant turn can be reduced to a single digit (1 or 2) that identifies the correct filler,
+although we also recognize the actual word to be filled as a valid answer:
+
+--- Page 53 ---
+CHAPTER 4. FEDERATED LORA-TUNING 47
+User : Sentence with a blank: sentence
+Options:
+1) option1
+2) option2
+Fill the blank with the better option.
+Model : 1 or 2
+This structure keeps the answer space compact, prevents the model from copying long
+option text verbatim, and avoids ambiguities like “option 1” versus “1”, although in prac-
+tice we also implement robust parsing code that accepts either form when scoring predic-
+tions.
+Other benchmarks follow the same principles. For PIQA, the model is presented with
+a goal and two candidate solutions, and must identify which one better achieves the goal.
+For TFNS, the input is a raw tweet or headline about economic or financial topics, followed
+by a fixed polarity question, and the model must infer the sentiment behind it. For FPB
+(Financial PhraseBank), the task is similar but the data comes from financial articles,
+where each statement is labeled for sentiment. Together these two datasets cover both
+the informal (social-media/newswire) and the formal (press and articles) sides of financial
+language.
+The case of MedQuAD required more substantial preprocessing. The dataset is drawn
+from medical questions-answer sources and covers 37 question types (e.g., treatment, di-
+agnosis, side effects) linked to diseases, drugs, and tests. Many answers in the raw XML
+files begin by repeating the user’s question (e.g., Q: “What are the symptoms of X?” A:
+“What are the symptoms of X? The symptoms of X are...”). This duplication introduces a
+misleading signal where the model may gain credit by merely echoing the question rather
+than producing a genuine answer, or conversely be penalized when it avoids repetition and
+outputs a semantically valid response that differs in surface form. In both cases the over-
+lap distorts the evaluation and makes performance estimates unreliable. To address this,
+we implemented a sanitization step that detects and removes leading interrogative frag-
+ments whenever they mirror the original question and occur within the first few hundred
+characters. This cleaning ensures that the model cannot rely on superficial repetition and
+must instead learn to generate the medically relevant content. While seemingly minor, this
+intervention is important for fair evaluation, and it may also contribute to greater training
+stability, highlighting how preprocessing choices can directly affect both the model and the
+benchmark.
+
+--- Page 54 ---
+CHAPTER 4. FEDERATED LORA-TUNING 48
+Inference and robust parsing
+The second set of modules ensures that evaluation is consistent and makes free-form gen-
+eration compatible with discrete metrics. All prompts are reformulated in the Gemma 3
+chat template, and decoding is run without sampling (using do sample=False). Token
+generation is capped at the smallest safe limit per task, keeping evaluation lightweight
+while avoiding irrelevant trailing text.
+Because models often answer flexibly (e.g., “Option 1,” “Answer 1,” or restating the
+choice in words), outputs are normalized with compact regular expressions that accept
+natural paraphrases but map them back to the canonical label space. For instance, in
+PIQA we match a digit with tolerant prefixes (“solution 0”, “answer1”), falling back to
+option-text containment if necessary. In BoolQ, we accept a small lexicon of positive and
+negative forms, answers such as “true,” “yes,” or “yeah” are mapped to the label True,
+while variants like “false” or “no” are mapped to False. This prevents correct answers from
+being overlooked simply because of harmless verbosity, while avoiding task-specific hacks.
+From a practical standpoint, we keep evaluation lightweight. The fine-tuned Gemma 3
+model is loaded in 4-bit quantization and the testing split is formatted with the same chat
+template used during training. This ensures consistency between training and evaluation,
+keeps memory requirements low, and makes the evaluation process efficient.
+Together, the formatting and inference modules ensure that evaluation reflects the
+model’s capabilities, rather than being influenced by incidental factors that could interfere
+with assessing the effectiveness of the method.
+
+--- Page 55 ---
+CHAPTER 4. FEDERATED LORA-TUNING 49
+Figure 4.3: Workflow of our supporting modules. Raw datasets are first passed through
+canonical chat templating to produce standardized prompts, which are then used in feder-
+ated LoRA training. At evaluation time, outputs are processed by inference and parsing
+routines to yield consistent metrics.
+4.4 Experiments
+We evaluate our approach across a range of benchmark datasets. To cover general-purpose
+reasoning and comprehension, we selected BoolQ, WinoGrande, and PIQA. BoolQ is
+a binary question-answering benchmark where the task is to decide if a passage supports
+a given statement. WinoGrande measures commonsense reasoning by requiring the model
+to fill in a blank in a sentence with the correct word from two options. PIQA (Physical
+Interaction Question Answering) asks the model to choose which of two solutions best
+accomplishes a physical goal. These benchmarks collectively test reasoning, reading com-
+prehension and commonsense capabilities.
+To extend the evaluation into the financial domain, we included the TFNS dataset,
+which consists of tweets and headlines labeled for sentiment polarity (negative, neutral,
+or positive). We also included FPB the (Financial PhraseBank) dataset, which contains
+statements from financial articles labeled for sentiment. These two datasets collectively
+represent both informal (social media) and formal (news and reports) financial language.
+We should also note that all the aforementioned datasets were also used in the original
+
+--- Page 56 ---
+CHAPTER 4. FEDERATED LORA-TUNING 50
+study, while the ones we left out were either unavailable or at least could not be located.
+In the case of MedQuAD, the dataset was accessible (although altered due to copyright
+restrictions) but required considerably more computational resources to be executed at
+least with a rank of r = 128 and a batch size of 6 in order to remain close to the original
+experimental setup.
+Furthermore, as previously discussed, the baseline DP-LoRA study [40] evaluates perfor-
+mance across four models: GPT-2 (1.5B parameters), BERT (110M), ChatGLM-6B, and
+LLaMA2-7B. Two of these models (GPT-2 and BERT) are substantially smaller than
+our Gemma3-4B backbone, while ChatGLM-6B is moderately larger and LLaMA2-7B is
+roughly twice its size. We compare our method against all of them using the reported
+results from the corresponding tables as reference.
+4.4.1 Training Constraints
+Due to hardware limitations, most of our experiments were conducted with a rank of
+r = 128 and only 4-5 federated rounds, compared to the r = 512 and 50 rounds used
+in the baseline study. In practice, this means that our models were trained under more
+constrained and less favorable conditions. The reduced rank partially compensates for the
+smaller number of rounds, since fewer parameters are trained per round, but overall our
+setup involves significantly fewer optimization steps.
+For certain datasets, additional adjustments were necessary. For example, PIQA was
+trained with a batch size of 6 instead of 8 to fit within GPU memory constraints. Similarly
+while training with r = 256 was feasible for some datasets, we opted to keep r = 128 to
+ensure more stable training given the limited number of rounds. Importantly, at no point
+did we alter hyperparameters in ways that would grant an advantage over the reported
+baselines. On the contrary, across all experiments our configuration involved either fewer
+trainable parameters, fewer training rounds or smaller batch sizes.
+Therefore our results should be viewed as conservative, since they were achieved under
+less favorable training conditions than the baseline study. Whenever our Gemma 3 model
+matches or exceeds the reported baselines, it does so despite operating under stricter
+constraints. We emphasize this to show that the observed performance gains cannot be
+attributed to more favorable experimental conditions, but rather to the effectiveness of the
+federated LoRA strategy and the robustness of Gemma 3 as a foundation model. These
+results thus validate the methodological modifications introduced in our approach.
+
+--- Page 57 ---
+CHAPTER 4. FEDERATED LORA-TUNING 51
+4.4.2 Results
+In this subsection, we provide the execution details and results obtained across the evalu-
+ated datasets. We begin with the three general-domain benchmarks, followed by the two
+financial-domain datasets. For clarity, we highlight the best overall result in bold and
+underline the best result reported in the original study. This format allows for an intuitive
+comparison between our approach and the baseline models.
+BoolQ
+Rank (r) Ours (Gemma3-4B) LLaMA2-7B ChatGLM-6B BERT GPT-2
+512 – 76.4 61.5 45.8 61.9
+128 88.04 50.3 51.3 – –
+Table 4.1: BoolQ dataset. Performance of our approach compared to all models reported
+in [40]. GPT-2 results are from Table 16, BERT from Table 17, ChatGLM-6B from Table
+12, LLaMA2-7B from Table 5, and the r = 128 results from Table 5.
+For BoolQ, our model was trained with r = 128, batch size 8 and 4 federated rounds.
+Under these settings, our Gemma3-4B fine-tuned model achieved an accuracy of 88 .04%
+compared to the best reported LLaMA2-7B baseline of 76 .3%. This corresponds to an
+absolute gain of 11 .7 percentage points or a relative improvement of 15 .4%.
+WinoGrande
+Rank (r) Ours (Gemma3-4B) LLaMA2-7B ChatGLM-6B BERT GPT-2
+512 – 70.0 63.8 51.3 48.3
+128 77.35 69.7 44.1 – –
+Table 4.2: WinoGrande dataset. Performance of our approach compared to all models
+reported in [40]. GPT-2 from Table 16, BERT from Table 11, ChatGLM-6B from Table
+12, LLaMA2-7B from Table 13, and the r = 128 results from Table 5.
+For WinoGrande, we used thewinogrande-xl variant containing 43.4k sentences, matching
+the one used in the original study. Our model was trained with a rank ofr = 128, batch size
+8 and 5 federated rounds. Each client processed approximately 0.4 of an epoch per round
+due to the large local subsets assigned to them, which increased the computational cost
+and prolonged training. Under these settings, our Gemma3-4B fine-tuned model achieved
+
+--- Page 58 ---
+CHAPTER 4. FEDERATED LORA-TUNING 52
+an accuracy of 77 .35% compared to the best reported LLaMA2-7B baseline of 70 .0% .
+This corresponds to an absolute gain of 7 .35 percentage points or a relative improvement
+of approximately 10.5%.
+PIQA
+Rank (r) Ours (Gemma3-4B) LLaMA2-7B ChatGLM-6B BERT GPT-2
+512 – 80.4 69.3 51.3 53.8
+128 83.79 78.5 56.7 – –
+Table 4.3: PIQA dataset. Performance of our approach compared to all models reported in
+[40]. GPT-2 from Table 16, BERT from Table 17, ChatGLM-6B from Table 12, LLaMA2-
+7B from Table 5, and the r = 128 results from Table 5.
+For PIQA, training was conducted with a rank of r = 128, batch size 6 and 5 federated
+rounds. Since each client handled a comparatively large local subset, the total training
+covered roughly 0 .6 of an epoch per client. Despite the reduced number of rounds, our
+Gemma3-4B fine-tuned model reached an accuracy of 83 .79%, outperforming the best
+reported LLaMA2-7B baseline of 80 .4%. This represents an absolute improvement of 3 .39
+percentage points and a relative gain of approximately 4 .2%.
+Both WinoGrande and PIQA posed particular challenges given our limited training regime.
+Because of their relatively large sizes the number of local steps each client could complete
+per round was restricted, about 0 .4 of an epoch for WinoGrande and 0 .6 for PIQA, leav-
+ing fewer effective passes over the data. This naturally constrained the model’s ability to
+further improve its accuracy, especially for the larger WinoGrande dataset. While Wino-
+Grande is demanding due to its scale and the fine-grained commonsense reasoning required
+to fill gaps in text, PIQA is inherently more difficult from a task perspective, since each
+instance presents two realistic physical solutions to a goal and the model must infer which
+one would succeed in the real world. However our model still managed to outperform the
+baseline results.
+
+--- Page 59 ---
+CHAPTER 4. FEDERATED LORA-TUNING 53
+TFNS
+Rank (r) Ours (Gemma3-4B) LLaMA2-7B ChatGLM-6B BERT GPT-2
+512 – 69.6 70.1 57.3 66.0
+128 89.57 – – – –
+Table 4.4: TFNS dataset. Performance of our approach compared to all models reported in
+[40]. GPT-2 from Table 10, BERT from Table 11, ChatGLM-6B from Table 12, LLaMA2-
+7B from Table 13.
+For TFNS, our model was trained with a rank of r = 128, batch size 8 and 4 federated
+rounds. Under these conditions, our Gemma3-4B fine-tuned model achieved an accuracy of
+89.57% outperforming the best reported ChatGLM-6B baseline of 70 .1%. This translates
+to an absolute gain of 19.47 percentage points and a relative improvement of approximately
+27.8%.
+FPB
+Rank (r) Ours (Gemma3-4B) LLaMA2-7B ChatGLM-6B BERT GPT-2
+512 – 59.1 55.5 65.5 59.8
+128 86.39 – – – –
+Table 4.5: FPB dataset. Performance of our approach compared to all models reported in
+[40]. GPT-2 from Table 10, BERT from Table 11, ChatGLM-6B from Table 12, LLaMA2-
+7B from Table 13.
+For FPB, training was conducted with a rank of r = 128, batch size 8, and 5 federated
+rounds. Under these conditions, our Gemma3-4B fine-tuned model reached an accuracy of
+86.39%, surpassing the best baseline reported in [40] , achieved by BERT at 65 .5%. This
+marks an absolute improvement of 20 .89 percentage points and a relative gain of roughly
+31.9%.
+We also note that the strong performance on the financial-domain datasets sparked our
+interest for a closer examination. The observed gains exceeding 20 percentage points
+over the best reported baselines raised the question of whether these results arose from
+our federated fine-tuning procedure or were influenced by the inherent capabilities of the
+Gemma-3 model itself. We explore this question further in the next subsection.
+
+--- Page 60 ---
+CHAPTER 4. FEDERATED LORA-TUNING 54
+4.4.3 Overall Performance Comparison
+Table 4.6 summarizes the results across all evaluated datasets.
+Dataset Rank ( r) Ours (Gemma3-4B) LLaMA2-7B ChatGLM-6B BERT GPT-2
+BoolQ 512 – 76.3 61.5 45.8 61.9
+128 88.04 50.3 51.3 – –
+WinoGrande 512 – 70.0 63.8 51.3 48.3
+128 77.35 69.7 44.1 – –
+PIQA 512 – 80.4 69.3 51.3 53.8
+128 83.79 78.5 56.7 – –
+TFNS 512 – 69.6 70.1 57.3 66.0
+128 89.57 – – – –
+FPB 512 – 59.1 55.5 65.5 59.8
+128 86.39 – – – –
+Table 4.6: Overall comparison across all evaluated datasets. Bold numbers indicate the best
+result for each dataset, while underlined values denote the strongest non-private baselines
+reported in the original study [40]. For detailed references to the specific tables from which
+each baseline result was taken, see the corresponding per-dataset tables provided earlier in
+this section.
+From the collective table above, it is clear that the strongest results among their models
+generally come from the largest one, LLaMA2-7B, while the smaller models (specifically
+BERT) managed to outperform the larger ones only in a single benchmark (FPB). This
+pattern aligns with the expected relationship between model size and performance, as
+larger architectures typically possess greater capacity for generalization. Nevertheless, our
+fine-tuned Gemma3-4B consistently achieved higher scores across all datasets, despite be-
+ing trained under more constrained conditions and with substantially fewer parameters.
+This demonstrates that high performance can be achieved without relying on large param-
+eter counts. By pairing an appropriately chosen backbone with our carefully structured
+federated LoRA adaptation, our approach attains competitive accuracy under constrained
+conditions reinforcing the soundness of the design choices made throughout this work.
+Interestingly, from Table 4.6, we can observe that our model achieved particularly strong
+results on the financial-domain datasets. In both TFNS and FPB, the fine-tuned Gemma3-
+4B outperformed the best models reported in [40] by relative improvements exceeding 25%.
+
+--- Page 61 ---
+CHAPTER 4. FEDERATED LORA-TUNING 55
+These substantial gains motivated a closer examination of whether the improvements stem
+from the federated fine-tuning procedure itself rather than from any inherent strength of
+the base model.
+Model TFNS FPB
+Gemma 3 (no tuning) 43.38 44.54
+Gemma 3 tuned 89.57 86.39
+Table 4.7: Performance of the Gemma-3 model on financial-domain datasets before and
+after applying federated LoRA fine-tuning.
+To test this, we evaluated the untuned Gemma-3 model on the same financial datasets
+and compared its performance to our fine-tuned version. As shown in Table 4.7, the
+base model performs close to random guessing on both datasets, achieving around 43-44%
+accuracy. After applying our federated LoRA fine-tuning accuracy nearly doubles, reaching
+89.57% on TFNS and 86.39% on FPB. This demonstrates that the observed improvements
+stem directly from our adaptation procedure rather than from any inherent advantage of
+the base model, and highlights the importance of targeted fine-tuning even for modern
+instruction-tuned backbones.
+
+--- Page 62 ---
+Chapter 5
+Conclusions
+This final chapter summarizes our study. We revisit the main objectives set at the be-
+ginning of the thesis, outline how they were achieved, and highlight the significance of
+the results obtained through our experiments. Finally, we discuss possible extensions and
+future research directions that could build upon this work.
+5.1 Result Summary
+This thesis presented a non-private variant of the DP-LoRA framework, designed to study
+the effectiveness of federated fine-tuning for large language models in the absence of dif-
+ferential privacy. By removing the privacy component, the intention was to isolate and
+evaluate the core capabilities of the federated LoRA algorithm, measuring its true poten-
+tial in collaborative adaptation scenarios without the additional performance degradation
+introduced by privacy noise.
+To support this goal, we implemented two complementary modules that ensured con-
+sistency and reproducibility across all stages of training and evaluation. The first, a data
+formatting module, was responsible for constructing clear and leakage-free prompts for
+each dataset, converting examples into a standardized chat-style format suitable for large
+language models. The second, an inference and parsing component, enabled robust and
+deterministic evaluation across tasks. Together, these tools were developed to minimize
+external variability and ensure that the reported outcomes reflect the genuine effectiveness
+of the model-algorithm pair.
+Our experiments employed the Gemma3-4B open-weight model as the backbone, se-
+lected for its promising performance reported in the Gemma technical report and its rela-
+tively lightweight architecture, which makes it suitable for federated learning environments
+where client hardware resources can vary considerably. Despite being smaller than the
+largest models used in the baseline DP-LoRA study (LLaMA2-7B and ChatGLM-6B) and
+56
+
+--- Page 63 ---
+CHAPTER 5. CONCLUSIONS 57
+trained under significantly constrained conditions, lower rank (r = 128), fewer communica-
+tion rounds and in some cases smaller batch sizes, our approach consistently surpassed all
+reported baselines. Across general-domain benchmarks such as BoolQ, WinoGrande and
+PIQA, as well as financial-domain datasets like TFNS and FPB, our model achieved supe-
+rior accuracy. The improvements were particularly striking in the financial domain, where
+performance gains exceeded 20 percentage points over the strongest reported baselines.
+Overall, this study validates the methodological refinements introduced in our work and
+highlights the potential of federated LoRA as a practical approach for distributed model
+training. Furthermore, although it was not our initial goal, the findings demonstrate that
+even under resource-limited settings, high performance can be achieved through careful
+model selection and efficient federated fine-tuning.
+5.2 Future Work
+This work was conducted under constrained computational resources, which limited the
+number of training rounds and the parameter dimensions used. A natural continuation
+would therefore be to rerun the experiments under the same conditions as the original
+study, using larger ranks and more communication rounds, to allow for a fully parallel
+comparison of performance trends. While expanding the evaluation to additional datasets,
+such as MedQuAD, would also provide a broader assessment of the model’s adaptability
+across domains.
+A further research direction would be to reintroduce differential privacy into the training
+process, enabling a comparison between noth our non-private results and the differentially
+private outcomes reported in the original DP-LoRA study. This would help quantify the ex-
+act trade-off between privacy preservation and utility in realistic federated environments.
+Additional experiments could also involve hyperparameter optimization across learning
+rates, LoRA ranks and the number of communication rounds, to identify potential overfit-
+ting in model performance.
+Another promising line of work involves extending this study across the Gemma-3 model
+family. For instance, experimenting with the 1B, 12B and 27B variants 1 could help es-
+tablish a practical mapping between task complexity, client resources and the appropriate
+model size. Such an analysis would provide insights into when it becomes worthwhile
+to move to a larger model, ensuring that computational resources are not wasted on un-
+necessarily heavy architectures when smaller ones are sufficient. A similar investigation
+could also be combined with alternative adaptation strategies, offering a more systematic
+understanding of parameter-efficient fine-tuning under federation.
+Finally, it would be particularly interesting to extend the current setup to non-IID sce-
+1After the initial release, a 270M-parameter variant of Gemma-3 was also released.
+
+--- Page 64 ---
+CHAPTER 5. CONCLUSIONS 58
+narios, where client data distributions differ and more specifically to cases of imbalanced
+clients, where certain nodes contribute substantially more data than others. Such exper-
+iments would offer valuable insights into the robustness and fairness of federated LoRA
+under varying real-world conditions.
+
+--- Page 65 ---
+Bibliography
+[1] Martin Abadi, Andy Chu, Ian Goodfellow, H Brendan McMahan, Ilya Mironov, Ku-
+nal Talwar, and Li Zhang. “Deep learning with differential privacy”. In: Proceedings
+of the 2016 ACM SIGSAC conference on computer and communications security .
+2016, pp. 308–318.
+[2] Josh Achiam, Steven Adler, Sandhini Agarwal, Lama Ahmad, Ilge Akkaya, Florencia
+Leoni Aleman, Diogo Almeida, Janko Altenschmidt, Sam Altman, Shyamal Anadkat,
+et al. “Gpt-4 technical report”. In: arXiv preprint arXiv:2303.08774 (2023).
+[3] Armen Aghajanyan, Luke Zettlemoyer, and Sonal Gupta. “Intrinsic dimensional-
+ity explains the effectiveness of language model fine-tuning”. In: arXiv preprint
+arXiv:2012.13255 (2020).
+[4] Jay Alammar. The Illustrated Transformer. 2018.
+[5] Q Jiang Albert, Alexandre Sablayrolles, Arthur Mensch, Chris Bamford, and Deven-
+dra Singh Chaplot. “Mistral 7B”. In: arXiv preprint (2023).
+[6] Galen Andrew, Om Thakkar, Brendan McMahan, and Swaroop Ramaswamy. “Differ-
+entially private learning with adaptive clipping”. In: Advances in Neural Information
+Processing Systems 34 (2021), pp. 17455–17466.
+[7] Rohan Anil, Andrew M Dai, Orhan Firat, Melvin Johnson, Dmitry Lepikhin, Alexan-
+dre Passos, Siamak Shakeri, Emanuel Taropa, Paige Bailey, Zhifeng Chen, et al.
+“Palm 2 technical report”. In: arXiv preprint arXiv:2305.10403 (2023).
+[8] Anthropic. Introducing Claude. Anthropic Website. URL https://www.anthropic.
+com/index/introducing-claude. Mar. 2023.
+[9] Stella Biderman, Usvsn Prashanth, Lintang Sutawika, Hailey Schoelkopf, Quentin
+Anthony, Shivanshu Purohit, and Edward Raff. “Emergent and predictable memo-
+rization in large language models”. In: Advances in Neural Information Processing
+Systems 36 (2023), pp. 28072–28090.
+59
+

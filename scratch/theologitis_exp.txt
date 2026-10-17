@@ -1,0 +1,1975 @@
+--- Page 38 ---
+Chapter 4
+Experiments
+In the Experiments section, we undertake an empirical investigation of the performance
+of the three FDA strategies delineated in the preceding sections: ”naive” (Section 3.6),
+”linear” (Section 3.7), and ”sketch” (Section 3.8) within the Federated Learning (FL)
+setting. Our goal is to discern the relative merits and potential shortcomings of each
+strategy not only in juxtaposition with each other but also in comparison to the baseline
+”synchronous” strategy (Section 3.9).
+4.1 Simulator
+We have developed a Python package tailored for simulating the FDA algorithm (Al-
+gorithm 5) in the Federated Learning (FL) setting with customizable hyper-parameters.
+Built atop the TensorFlow framework, our package is designed for adaptability, allow-
+ing the evaluation of diverse experiments on a variety of Convolutional Neural Networks
+(CNNs). Although we initially crafted two specific CNNs for our experiments, the pack-
+age’s architecture is receptive to the integration of other Neural Network designs in future
+studies.
+Emphasizing efficient execution, the package is highly parallelized, capable of simulta-
+neously managing a spectrum of tasks—from a single simulation to orchestrating dozens
+or even hundreds of simulations. The only limitation, in this case, tends to be the available
+computational resources. With a focus on deployment flexibility, our package seamlessly
+functions in both High-Performance Computing (HPC) environments and local clusters.
+Beyond native support for SLURM execution [45] and integration with ”Dask” [46], the
+package automatically utilizes all available CPU and GPU resources, ensuring efficient
+computation regardless of the setup.
+To further contextualize our experiments, we will first detail the architectures of the
+two primary CNN models utilized: ”LeNet-5” and ”AdvancedCNN”.
+4.1.1 LeNet-5
+”LeNet-5”, introduced by LeCun et al. in 1998 [47], is one of the earliest Convolutional
+Neural Network (CNN) structures. Its historical significance and relatively small number
+of parameters (specifically 61 .706) make it an attractive model for various applications,
+particularly in digit recognition tasks.
+The concise yet comprehensive design of ”LeNet-5” makes it an ideal choice for our
+experiments, allowing us to explore the behavior of the FDA algorithm with a well-
+established model.
+Figure 4.1 illustrates the architecture of ”LeNet-5”, comprising multiple convolutional
+and pooling layers followed by fully connected layers. The structure’s simplicity and
+37
+
+--- Page 39 ---
+4.1 Simulator
+INPUT
+Convolution
+n : 6
+kernel : 
+activation : 
+padding : "same"
+Average Pooling
+pool size : 
+strides : 
+padding : "valid"
+Convolution
+n : 16
+kernel : 
+activation : 
+padding : "valid"
+Average Pooling
+pool size : 
+strides : 
+padding : "valid"
+Fully
+Connected
+activation : 
+Fully 
+Connected
+activation : Fully
+Connected
+activation : 
+Figure 4.1: LeNet-5 architecture
+efficiency have contributed to its enduring relevance in the field of deep learning.
+4.1.2 AdvancedCNN
+The ”AdvancedCNN” is a custom-built Convolutional Neural Network (CNN) tailored for
+our experiments. Comprising 2 .592.202 parameters, this architecture allows us to test the
+FDA algorithm in a more complex environment compared to LeNet-5. As depicted in
+Figure 4.2, the structure consists of multiple convolutional and pooling layers, followed by
+fully connected layers.
+INPUT
+Convolution
+n : 64
+kernel : 
+activation : 
+padding : "same"
+Convolution
+n : 64
+kernel : 
+activation : 
+padding : "same"
+Convolution
+n : 128
+kernel : 
+activation : 
+padding : "same"
+Max Pooling
+pool size : 
+strides : 
+padding : "valid"
+Max Pooling
+pool size : 
+strides : 
+padding : "valid"
+Convolution
+n : 128
+kernel : 
+activation : 
+padding : "same"
+Convolution
+n : 256
+kernel : 
+activation : 
+padding : "same"
+Convolution
+n : 256
+kernel : 
+activation : 
+padding : "same"
+Max Pooling
+pool size : 
+strides : 
+padding : "valid"
+Fully
+Connected
+activation : 
+Fully
+Connected
+activation : 
+Fully
+Connected
+activation : 
+Figure 4.2: AdvancedCNN architecture
+While the figure provides a detailed view of the structure, it’s worth noting that two
+dropout layers are included in the architecture but not shown in the diagram. These
+dropout layers, with a rate of 0.5, are strategically placed after the dense layers to prevent
+overfitting.
+The ”AdvancedCNN” model offers a more intricate architecture, allowing us to inves-
+tigate the FDA algorithm’s performance with varying levels of complexity. The inclusion
+of dropout layers adds an additional layer of robustness to the model.
+38
+
+--- Page 40 ---
+4.1 Simulator
+4.1.3 Training
+Our experiments operate within the Federated Learning (FL) setting, leveraging the two
+Convolutional Neural Networks: ”LeNet-5” (Section 4.1.1) and ”AdvancedCNN” (Section
+4.1.2). To initialize these networks, we employ random Xavier (Glorot uniform) initializa-
+tion [48].
+Training utilizes the MNIST dataset [49], which we partition into approximately equal
+segments for all participating clients, in alignment with the FL setting. In the context
+of the Functional Dynamic Averaging (FDA) algorithm (Algorithm 5), we test the four
+distinct techniques: ”naive” (Section 3.6), ”linear” (Section 3.7), ”sketch” (Section 3.8)
+and the baseline ”synchronous” (Section 3.9). All of our experimental designs align with
+the assumptions presented in Section 3.5. As a loss function we employ the cross-entropy,
+a gold standard for classification endeavors.
+For evaluation, we introduce and leverage the term epoch. Within our experiments,
+an epoch refers to a single pass through the entire FL dataset, completed when all clients
+have trained once on their whole local dataset. The training for each local client uniformly
+adopts the Adam optimization method (Algorithm 2), maintaining parameters: η = 0.001,
+β1 = 0.9, and β2 = 0.999.
+A fundamental constant in our varied simulations is the data allocation to each client,
+contingent, naturally, on the consistent number of clients. To illustrate, any simulation
+involving thirty clients will share an identical dataset across all its tests. Beyond this
+consistency, all other elements can be regarded as stochastic in nature: the shuffling of
+data, the Glorot uniform initialization, and more. This design choice is intentional. Given
+the extensive array of unique simulations, any variance from less ideal or highly favorable
+initializations or shuffles becomes inconsequential.
+4.1.4 Hyper-Parameters
+The Functional Dynamic Averaging (FDA) algorithm (Algorithm 5) necessitates the spec-
+ification of several hyper-parameters. These include the number of clients ( K), the local
+mini-batch size (b), the monitoring threshold (Θ), the strategy that defines Sk(t) and F (·),
+and the number of local steps ( s) which is consistently set to one throughout our testing.
+The hyper-parameters and their corresponding values are summarized in Table 4.1.
+Parameter V alues
+CNN name {”LeNet-5”, ”AdvancedCNN”}
+FDA method {”naive”, ”linear”, ”sketch”, ”synchronous”}
+K (Number of clients) {5, 10, 15, . . . ,60}
+b (Local mini-batch size) {32, 128, 256}
+Θ (Monitoring threshold) {0.5, 1, 2}
+E (Epochs, as defined in 4.1.3) (Dynamic)
+Table 4.1: Hyper-parameters used in the experiments. 1
+In our experimental design, we define a simulation as the process of training in the FL
+setting using a specific strategy, guided by a particular combination of hyper-parameters
+as outlined in Table 4.1. The number of epochs for each simulation is predetermined, yet
+it dynamically varies depending on a combination of factors. These include the specific
+FDA strategy in use, the selected hyper-parameters like the monitoring threshold (Θ),
+local mini-batch size ( b) and the number of clients ( K), as well as the choice of model
+1For the baseline ”synchronous” strategy (Section 3.9), the hyper-parameter Θ is not applicable and
+can be disregarded.
+39
+
+--- Page 41 ---
+4.2 Results
+between ”LeNet-5” and ”AdvancedCNN”. This adaptively chosen number of epochs serves
+as the predetermined stopping criterion for our experiments.
+The selection of hyper-parameters was not arbitrary or made without consideration.
+Extensive exploratory testing was conducted to identify the most suitable values for in-
+vestigation. This process, although vital to the experimental design, is beyond the scope
+of this work and will not be detailed further.
+By conducting comprehensive testing across all possible combinations of the above
+hyper-parameters with both models and all four strategies, we were able to record a
+wealth of results and useful metrics.
+4.1.5 Data Analysis
+Our experiments unfold in a simulated environment, a departure from a real-world Fed-
+erated Learning context. While we model all pertinent costs, such as communication and
+computation time, it’s essential to understand these as approximations. For clarity, when
+transmitting a 32-bit float from clients to the server, we account for 4 bytes and vice versa.
+Additionally, the local computation time, which is largely driven by backpropagation, is
+empirically determined for each batch size, capturing the average time consumed, and this
+measurement is then applied in our analyses based on the specific batch size used.
+While our analysis isn’t precisely tailored to reflect real-world scenarios in their entirety,
+it is meticulously crafted to ensure valid and equitable comparisons between the different
+strategies.
+For the computation of transmission times, we turn to the two communication models
+detailed in Section 2.5.2. Specifically, the transmission time for a data amount C is
+calculated using equations (2.4) for the Common channel communication, and (2.5) for
+the Hypercube communication model. In both scenarios, we operate under the premise of
+a channel bandwidth B set at 1Gbit.
+In the subsequent Results section (Section 4.2), we grapple with the challenge of visu-
+alizing and comparing the performance of various strategies across a multitude of hyper-
+parameters. The extensive data generated from different simulations, each representing a
+unique combination of hyper-parameters, makes creating a comprehensive and meaningful
+comparison a complex task.
+To aid this comparative analysis, we introduce the notion of an Accuracy Target. The
+essence is to juxtapose different strategies based on the epoch in which they first attain
+this accuracy target, assessing their efficiency through the lens of the unified time cost
+(Equation (2.3)).
+For illustration, imagine two simulations—one where the ”sketch” strategy meets the
+accuracy target by the tenth epoch and another where the ”synchronous” strategy reaches
+the same in merely the first epoch. Our comparison will focus on the specific epoch where
+the target is first met, rather than subsequent epochs where the target may be repeatedly
+achieved. It’s worth noting that some simulations might not reach the accuracy target,
+and therefore, they will not be included at all.
+We term this evaluative paradigm as the Filtered approach. It offers an unambiguous,
+equitable assessment, spotlighting the efficiency of strategies in accomplishing the set
+accuracy.
+4.2 Results
+In this section, we delve into the results, beginning with high-level overview plots that
+encapsulate the essence of all conducted simulations. Then, we’ll transition to showcasing
+select examples from the comprehensive collection of plots available in Appendix A
+40
+
+--- Page 42 ---
+4.2 Results
+4.2.1 LeNet-5
+0 50 100 150 200 250 300
+Time Cost (sec)
+0.00
+0.02
+0.04
+0.06
+0.08
+0.10Density
+Average Time Cost:
+linear: 17.33 sec
+naive: 18.57 sec
+sketch: 18.86 sec
+synchronous: 99.67 sec
+Common Channel Communication Model
+linear
+naive
+sketch
+synchronous
+0 10 20 30 40 50 60 70
+Time Cost (sec)
+0.00
+0.02
+0.04
+0.06
+0.08Density
+Average Time Cost:
+linear: 12.21 sec
+naive: 12.98 sec
+sketch: 13.03 sec
+synchronous: 22.61 sec
+Hypercube Communication Model
+linear
+naive
+sketch
+synchronous
+(a) Accuracy Target is 0 .96.
+0 100 200 300 400 500
+Time Cost (sec)
+0.00
+0.02
+0.04
+0.06
+0.08
+0.10
+0.12Density
+Average Time Cost:
+linear: 20.81 sec
+naive: 21.94 sec
+sketch: 21.70 sec
+synchronous: 145.28 sec
+Common Channel Communication Model
+linear
+naive
+sketch
+synchronous
+0 25 50 75 100 125 150 175 200
+Time Cost (sec)
+0.00
+0.02
+0.04
+0.06
+0.08
+0.10Density
+Average Time Cost:
+linear: 13.04 sec
+naive: 14.12 sec
+sketch: 12.62 sec
+synchronous: 33.54 sec
+Hypercube Communication Model
+linear
+naive
+sketch
+synchronous
+(b) Accuracy Target is 0 .965.
+0 100 200 300 400 500
+Time Cost (sec)
+0.00
+0.02
+0.04
+0.06
+0.08Density
+Average Time Cost:
+linear: 25.22 sec
+naive: 24.74 sec
+sketch: 27.88 sec
+synchronous: 211.96 sec
+Common Channel Communication Model
+linear
+naive
+sketch
+synchronous
+0 20 40 60 80 100 120 140
+Time Cost (sec)
+0.00
+0.02
+0.04
+0.06
+0.08
+0.10
+0.12
+0.14Density
+Average Time Cost:
+linear: 13.83 sec
+naive: 13.45 sec
+sketch: 14.20 sec
+synchronous: 38.33 sec
+Hypercube Communication Model
+linear
+naive
+sketch
+synchronous
+(c) Accuracy Target is 0 .97.
+0 50 100 150 200 250 300 350 400
+Time Cost (sec)
+0.000
+0.025
+0.050
+0.075
+0.100
+0.125
+0.150
+0.175Density
+Average Time Cost:
+linear: 30.24 sec
+naive: 34.85 sec
+sketch: 37.95 sec
+synchronous: 324.22 sec
+Common Channel Communication Model
+linear
+naive
+sketch
+synchronous
+0 20 40 60 80 100
+Time Cost (sec)
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+1.2
+1.4
+1.6Density
+Average Time Cost:
+linear: 16.65 sec
+naive: 17.14 sec
+sketch: 18.70 sec
+synchronous: 52.90 sec
+Hypercube Communication Model
+linear
+naive
+sketch
+synchronous
+(d) Accuracy Target is 0 .975.
+Figure 4.3: Filtered (Section 4.1.5). Kernel Density Estimation plots offering a high-
+level overview of the efficiency of different strategies. The density curves represent the
+distribution of time costs incurred – as defined in (2.3) – at the first epoch where the
+accuracy target is met. The height of the curve at any given point indicates the estimated
+density of simulations with that specific time cost.
+41
+
+--- Page 43 ---
+4.2 Results
+0 5 10 15 20 25 30 35
+Communication (GB)
+0.0
+0.2
+0.4
+0.6
+0.8Density
+Average Communication:
+linear: 0.77 GB
+naive: 0.84 GB
+sketch: 0.87 GB
+synchronous: 11.64 GB
+linear
+naive
+sketch
+synchronous
+0 10 20 30 40 50 60
+CPU time cost (sec)
+0.00
+0.02
+0.04
+0.06
+0.08Count
+Average Communication:
+linear: 11.41 sec
+naive: 12.10 sec
+sketch: 12.11 sec
+synchronous: 10.05 sec
+linear
+naive
+sketch
+synchronous
+(a) Accuracy Target is 0 .96.
+0 10 20 30 40 50 60
+Communication (GB)
+0.0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7Density
+Average Communication:
+linear: 1.14 GB
+naive: 1.16 GB
+sketch: 1.33 GB
+synchronous: 17.20 GB
+linear
+naive
+sketch
+synchronous
+0 10 20 30 40 50 60 70
+CPU time cost (sec)
+0.00
+0.02
+0.04
+0.06
+0.08
+0.10Count
+Average Communication:
+linear: 11.95 sec
+naive: 12.99 sec
+sketch: 11.39 sec
+synchronous: 13.43 sec
+linear
+naive
+sketch
+synchronous
+(b) Accuracy Target is 0 .965.
+0 10 20 30 40 50 60
+Communication (GB)
+0.0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6Density
+Average Communication:
+linear: 1.64 GB
+naive: 1.63 GB
+sketch: 1.97 GB
+synchronous: 25.71 GB
+linear
+naive
+sketch
+synchronous
+0 10 20 30 40 50
+CPU time cost (sec)
+0.00
+0.02
+0.04
+0.06
+0.08
+0.10
+0.12
+0.14Count
+Average Communication:
+linear: 12.42 sec
+naive: 12.02 sec
+sketch: 12.51 sec
+synchronous: 13.05 sec
+linear
+naive
+sketch
+synchronous
+(c) Accuracy Target is 0 .97.
+0 10 20 30 40 50
+Communication (GB)
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0Density
+Average Communication:
+linear: 2.00 GB
+naive: 2.56 GB
+sketch: 2.84 GB
+synchronous: 39.81 GB
+linear
+naive
+sketch
+synchronous
+0 5 10 15 20 25 30 35
+CPU time cost (sec)
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+1.2
+1.4
+1.6Count
+Average Communication:
+linear: 14.73 sec
+naive: 14.89 sec
+sketch: 15.90 sec
+synchronous: 15.61 sec
+linear
+naive
+sketch
+synchronous
+(d) Accuracy Target is 0 .975.
+Figure 4.4: Filtered (Section 4.1.5). Kernel Density Estimation plots offering a high-
+level overview of the efficiency of various strategies. The density curves represent the
+distribution of communication costs and CPU time costs incurred at the first epoch where
+the accuracy target is met. The height of the curves at any given point indicate the
+estimated density of simulations with that specific cost.
+42
+
+--- Page 44 ---
+4.2 Results
+5 10 15 20 25 30 35 40 45 50 55 60
+Number of clients
+25
+50
+75
+100
+125
+150
+175
+200Time Cost
+Common Channel Communication Model
+linear
+naive
+sketch
+synchronous
+5 10 15 20 25 30 35 40 45 50 55 60
+Number of clients
+10
+20
+30
+40
+50
+60Time Cost
+Hypercube Communication Model
+linear
+naive
+sketch
+synchronous
+Batch Size : 32 ,  : 0.5
+Figure 4.5: Filtered (Section 4.1.5). Detailed view of individual simulations with a batch
+size ( b) of 32 and a monitoring threshold (Θ) set to 0 .5. We illustrate the time cost
+incurred at the first epoch where the accuracy target of 0 .96 is met. Each dot within a
+chain of line segments represents an individual simulation. For the exhaustive collection
+of results, refer to Appendix A.A.
+20 40 60 80 100 120
+Time Cost
+0.950
+0.955
+0.960
+0.965
+0.970
+0.975Accuracy
+Common Channel Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+0 20 40 60 80 100 120
+Time Cost
+0.950
+0.955
+0.960
+0.965
+0.970
+0.975Accuracy
+Hypercube Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+Batch Size : 32 ,  : 0.5
+Figure 4.6: Detailed view an individual simulation’s progression in time, using the ”sketch”
+strategy, with a batch size ( b) of 32 and a monitoring threshold (Θ) set to 0 .5, after
+reaching the accuracy target of 0 .95. Each chain of line segments represents an individual
+simulation. Each dot within a chain represents a specific epoch within the simulation,
+capturing the time cost and accuracy at that moment. For the exhaustive collection of
+results, refer to Appendix A.A.
+43
+
+--- Page 45 ---
+4.2 Results
+4.2.2 AdvancedCNN
+0 2000 4000 6000 8000 10000
+Time Cost (sec)
+0.0000
+0.0002
+0.0004
+0.0006
+0.0008
+0.0010Density
+Average Time Cost:
+linear: 933.15 sec
+naive: 1000.68 sec
+sketch: 931.17 sec
+synchronous: 2889.54 sec
+Common Channel Communication Model
+linear
+naive
+sketch
+synchronous
+0 500 1000 1500 2000 2500 3000
+Time Cost (sec)
+0.0000
+0.0005
+0.0010
+0.0015
+0.0020
+0.0025
+0.0030
+0.0035
+0.0040Density
+Average Time Cost:
+linear: 381.78 sec
+naive: 419.17 sec
+sketch: 394.48 sec
+synchronous: 646.02 sec
+Hypercube Communication Model
+linear
+naive
+sketch
+synchronous
+(a) Accuracy Target is 0 .97.
+0 5000 10000 15000 20000 25000 30000
+Time Cost (sec)
+0.00000
+0.00005
+0.00010
+0.00015
+0.00020
+0.00025
+0.00030
+0.00035
+0.00040Density
+Average Time Cost:
+linear: 1954.71 sec
+naive: 1907.75 sec
+sketch: 1892.73 sec
+synchronous: 6317.25 sec
+Common Channel Communication Model
+linear
+naive
+sketch
+synchronous
+0 5000 10000 15000 20000 25000
+Time Cost (sec)
+0.00000
+0.00005
+0.00010
+0.00015
+0.00020
+0.00025
+0.00030
+0.00035
+0.00040Density
+Average Time Cost:
+linear: 1144.16 sec
+naive: 1058.99 sec
+sketch: 1095.56 sec
+synchronous: 2022.13 sec
+Hypercube Communication Model
+linear
+naive
+sketch
+synchronous
+(b) Accuracy Target is 0 .98.
+0 10000 20000 30000 40000 50000 60000 70000 80000
+Time Cost (sec)
+0.00000
+0.00005
+0.00010
+0.00015
+0.00020
+0.00025
+0.00030
+0.00035Density
+Average Time Cost:
+linear: 3142.61 sec
+naive: 3556.28 sec
+sketch: 3254.67 sec
+synchronous: 14246.70 sec
+Common Channel Communication Model
+linear
+naive
+sketch
+synchronous
+0 2500 5000 7500 10000 12500 15000 17500 20000
+Time Cost (sec)
+0.00000
+0.00005
+0.00010
+0.00015
+0.00020
+0.00025
+0.00030
+0.00035
+0.00040Density
+Average Time Cost:
+linear: 1726.79 sec
+naive: 2060.57 sec
+sketch: 1880.32 sec
+synchronous: 3707.07 sec
+Hypercube Communication Model
+linear
+naive
+sketch
+synchronous
+(c) Accuracy Target is 0 .985.
+0 20000 40000 60000 80000 100000
+Time Cost (sec)
+0.00000
+0.00002
+0.00004
+0.00006
+0.00008
+0.00010
+0.00012
+0.00014Density
+Average Time Cost:
+linear: 7814.21 sec
+naive: 7785.27 sec
+sketch: 7964.48 sec
+synchronous: 71786.81 sec
+Common Channel Communication Model
+linear
+naive
+sketch
+synchronous
+0 2000 4000 6000 8000 10000 12000
+Time Cost (sec)
+0.0000
+0.0001
+0.0002
+0.0003
+0.0004Density
+Average Time Cost:
+linear: 2734.04 sec
+naive: 2805.45 sec
+sketch: 2661.78 sec
+synchronous: 8509.10 sec
+Hypercube Communication Model
+linear
+naive
+sketch
+synchronous
+(d) Accuracy Target is 0 .99.
+Figure 4.7: Filtered (Section 4.1.5). Kernel Density Estimation plots offering a high-
+level overview of the efficiency of different strategies. The density curves represent the
+distribution of time costs incurred – as defined in (2.3) – at the first epoch where the
+accuracy target is met. The height of the curve at any given point indicates the estimated
+density of simulations with that specific time cost.
+44
+
+--- Page 46 ---
+4.2 Results
+0 200 400 600 800 1000 1200
+Communication (GB)
+0.000
+0.001
+0.002
+0.003
+0.004
+0.005
+0.006
+0.007
+0.008Density
+Average Communication:
+linear: 80.73 GB
+naive: 85.26 GB
+sketch: 78.62 GB
+synchronous: 328.36 GB
+linear
+naive
+sketch
+synchronous
+0 500 1000 1500 2000 2500 3000
+CPU time cost (sec)
+0.0000
+0.0005
+0.0010
+0.0015
+0.0020
+0.0025
+0.0030
+0.0035Count
+Average Communication:
+linear: 307.36 sec
+naive: 340.11 sec
+sketch: 321.74 sec
+synchronous: 343.73 sec
+linear
+naive
+sketch
+synchronous
+(a) Accuracy Target is 0 .97.
+0 500 1000 1500 2000 2500 3000 3500
+Communication (GB)
+0.000
+0.001
+0.002
+0.003
+0.004
+0.005
+0.006Density
+Average Communication:
+linear: 122.24 GB
+naive: 128.75 GB
+sketch: 120.61 GB
+synchronous: 690.72 GB
+linear
+naive
+sketch
+synchronous
+0 5000 10000 15000 20000 25000
+CPU time cost (sec)
+0.0000
+0.0001
+0.0002
+0.0003
+0.0004Count
+Average Communication:
+linear: 1015.25 sec
+naive: 920.02 sec
+sketch: 966.73 sec
+synchronous: 1110.18 sec
+linear
+naive
+sketch
+synchronous
+(b) Accuracy Target is 0 .98.
+0 2000 4000 6000 8000 10000
+Communication (GB)
+0.0000
+0.0005
+0.0010
+0.0015
+0.0020
+0.0025
+0.0030
+0.0035
+0.0040Density
+Average Communication:
+linear: 213.23 GB
+naive: 228.52 GB
+sketch: 206.50 GB
+synchronous: 1621.82 GB
+linear
+naive
+sketch
+synchronous
+0 2000 4000 6000 8000 10000 12000 14000
+CPU time cost (sec)
+0.00000
+0.00005
+0.00010
+0.00015
+0.00020
+0.00025
+0.00030
+0.00035
+0.00040Count
+Average Communication:
+linear: 1500.09 sec
+naive: 1802.53 sec
+sketch: 1664.02 sec
+synchronous: 1808.86 sec
+linear
+naive
+sketch
+synchronous
+(c) Accuracy Target is 0 .985.
+0 2000 4000 6000 8000 10000 12000
+Communication (GB)
+0.0000
+0.0002
+0.0004
+0.0006
+0.0008
+0.0010Density
+Average Communication:
+linear: 719.62 GB
+naive: 700.80 GB
+sketch: 751.11 GB
+synchronous: 8826.66 GB
+linear
+naive
+sketch
+synchronous
+0 1000 2000 3000 4000 5000 6000
+CPU time cost (sec)
+0.0000
+0.0001
+0.0002
+0.0003
+0.0004
+0.0005
+0.0006
+0.0007
+0.0008Count
+Average Communication:
+linear: 2183.34 sec
+naive: 2294.57 sec
+sketch: 2095.48 sec
+synchronous: 2555.31 sec
+linear
+naive
+sketch
+synchronous
+(d) Accuracy Target is 0 .99.
+Figure 4.8: Filtered (Section 4.1.5). Kernel Density Estimation plots offering a high-
+level overview of the efficiency of various strategies. The density curves represent the
+distribution of communication costs and CPU time costs incurred at the first epoch where
+the accuracy target is met. The height of the curves at any given point indicate the
+estimated density of simulations with that specific cost.
+45
+
+--- Page 47 ---
+4.2 Results
+5 10 15 20 25 30 35 40 45 50 55 60
+Number of clients
+0
+10000
+20000
+30000
+40000
+50000
+60000Time Cost
+Common Channel Communication Model
+linear
+naive
+sketch
+synchronous
+5 10 15 20 25 30 35 40 45 50 55 60
+Number of clients
+0
+2000
+4000
+6000
+8000
+10000
+12000
+14000Time Cost
+Hypercube Communication Model
+linear
+naive
+sketch
+synchronous
+Batch Size : 32 ,  : 0.5
+Figure 4.9: Filtered (Section 4.1.5). Detailed view of individual simulations with a batch
+size ( b) of 32 and a monitoring threshold (Θ) set to 0 .5. We illustrate the time cost
+incurred at the first epoch where the accuracy target of 0 .985 is met. Each dot within a
+chain of line segments represents an individual simulation. For the exhaustive collection
+of results, refer to Appendix A.B.
+4000 6000 8000 10000 12000 14000 16000 18000
+Time Cost
+0.985
+0.986
+0.987
+0.988
+0.989
+0.990Accuracy
+Common Channel Communication Model
+Num Clients
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+2000 4000 6000 8000
+Time Cost
+0.985
+0.986
+0.987
+0.988
+0.989
+0.990Accuracy
+Hypercube Communication Model
+Num Clients
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+Batch Size : 32 ,  : 0.5
+Figure 4.10: Detailed view an individual simulation’s progression in time, using the
+”sketch” strategy, with a batch size ( b) of 32 and a monitoring threshold (Θ) set to
+0.5, after reaching the accuracy target of 0 .985. Each chain of line segments represents
+an individual simulation. Each dot within a chain represents a specific epoch within the
+simulation, capturing the time cost and accuracy at that moment. For the exhaustive
+collection of results, refer to Appendix A.B.
+46
+
+--- Page 48 ---
+4.2 Results
+4.2.3 Discussion
+In the previous section, we presented several density plots capturing the time cost incurred
+at the first epoch where different accuracy targets are achieved by individual simulations
+(Figures 4.3 and 4.7). Given the multitude of experiments, specifying hyper-parameter
+details were omitted for clarity. Instead, we emphasized on the overall performance trends
+across different strategies, including the baseline algorithm. Within each plot, we also
+provided information indicating the average cost for each strategy, offering a summarized
+view of their representative performance.
+We begin by evaluating the performance of different strategies using the relatively
+small ”LeNet-5” model. As depicted in Figure 4.3, all three FDA strategies exhibit simi-
+lar performance across all accuracy targets. Consequently, we group them together for a
+collective comparison against the ”synchronous” strategy, which follows a non-dynamic,
+predetermined round termination typical of many Federated Learning algorithms. Table
+4.2 encapsulates the improvement achieved by employing FDA strategies over the tradi-
+tional ”synchronous” approach.
+Accuracy Target
+0.96 0.965 0.97 0.975
+Common Channel Communication Model 5.5 6.8 8.2 9.4
+Hypercube Communication Model 1.8 2.5 2.8 3
+Table 4.2: ”LeNet-5”: Comparative Speedup of FDA Strategies vs. ”Synchronous” Strat-
+egy
+The observed speedup in our experiments is not only substantial but also exhibits a pat-
+tern where the improvement correlates with the accuracy target. This behavior aligns with
+our expectations, as discussed in Section 3.2. During the early stages of training, round
+terminations occur frequently as clients diverge more easily, leading the FDA strategies
+to prescribe regular round terminations. As training progresses and the models approach
+higher quality, the impact of the FDA strategies becomes more pronounced. When train-
+ing for the highest achievable accuracy, known to be approximately 0 .98 for ”LeNet-5”,
+we observe a speedup of 11 for the Common Channel Communication model and 3 for the
+Hypercube communication model. These results hold particular promise in the context
+of neural networks, where the phenomenon of ”diminishing returns” is well-known. As
+a model nears its learning limits for a given data-set and architecture, each additional
+increment in accuracy may necessitate a disproportionate increase in training time, tun-
+ing, and resources. The FDA strategies, growing more effective as training advances, can
+substantially enhance the accuracy limits of models in the FL setting, where the classic
+non-dynamic approach might otherwise stumble.
+To elucidate how the ”speedup” numbers were derived, consider the example of an
+accuracy target equal to 0 .96 using the Common Channel Communication model. The
+calculation, derived from the informative text about the averages in Figure 4.3a, is given
+by 99.67
+(17.33+18.57+18.86)/3 ≈ 5.5.
+Continuing our exploration, we shift focus to the ”AdvancedCNN” model. As with
+the ”LeNet-5”, Figure 4.7 demonstrates that the FDA strategies maintain consistent per-
+formance across all accuracy targets. Given this consistency, we once again group them
+for a direct comparison with the ”synchronous” approach. Table 4.3 encapsulates the
+improvement achieved by employing FDA strategies over the traditional ”synchronous”
+strategy.
+For both the ”LeNet-5” and the ”AdvancedCNN” models, our experiments revealed
+a consistent trend: the advantage of FDA strategies generally amplifies as the accuracy
+target escalates. Training for the highest achievable accuracy, which is roughly 0.99 for the
+47
+
+--- Page 49 ---
+4.2 Results
+Accuracy Target
+0.97 0.98 0.985 0.99
+Common Channel Communication Model 3 3.3 4.3 9.2
+Hypercube Communication Model 1.6 1.8 2 3.1
+Table 4.3: ”AdvancedCNN”: Comparative Speedup of FDA Strategies vs. ”Synchronous”
+Strategy
+”AdvancedCNN”, resulted in a speedup of 11 with the Common Channel Communication
+model and 3 with the Hypercube communication model.
+Upon examination of Figures 4.4 and 4.8, a counter-intuitive finding arises. In Feder-
+ated Learning, it’s commonly understood that fewer round terminations typically translate
+to longer convergence times. However, against this prevalent expectation, the FDA meth-
+ods show nearly identical CPU time distributions when compared to the ”synchronous”
+approach for achieving the same accuracy level. This suggests that while FDA methods
+have fewer synchronizations, they may be offering a more efficient exploration of the pa-
+rameter space. Conversely, the regular realignments in the ”synchronous” strategy might
+confine exploration, limiting clients due to constant synchronizations and potentially ham-
+pering their ability to locate optimal parameters effectively.
+Building on the insights from Figures 4.4 and 4.8, we further detail the raw com-
+munication costs required to attain the designated accuracy targets. Regardless of the
+methodology for correlating communication costs with time expenditure (as detailed in
+Section 2.5.2), the raw communication data is undeniable. Considering the similar local
+computation times and the clear results from raw communication costs, the benefits of
+employing the FDA methods in Federated Learning are evident.
+Turning our attention to Figures 4.5 and 4.9, we can observe the trends of simulations
+with specific batch size ( b) and monitoring threshold (Θ). Across the board, the three
+FDA strategies showcase consistent performance. These figures provide a snapshot; they
+only hint at the comprehensive collection of results cataloged in Appendix A. Within
+the Common Channel model, there emerges a distinct trend: the cost-effectiveness of
+achieving a particular accuracy target largely remains unaffected by the selection of clients
+for the simulation. Conversely, the Hypercube communication model, due to its efficient
+communication capabilities, seems to favor deploying a greater number of clients – a trend
+reflected in the time cost assessments.
+Lastly, in Figures 4.6 and 4.10, we delve deeper, showcasing the progression of individ-
+ual simulations in time after meeting a specific accuracy target. While these detailed plots
+may seem complex at first glance, they effectively highlight the intricacies and challenges
+of achieving convergence in the Federated Learning (FL) setting. Conclusive insights
+from these plots are best derived by examining the comprehensive collection of results in
+Appendix A. By offering this granular view, we aim to emphasize the depth of training
+involved and the challenges faced in the FL setting.
+48
+
+--- Page 50 ---
+Chapter 5
+Conclusion
+The Functional Dynamic Averaging (FDA) offers a renewed approach to the traditional
+Federated Learning (FL) training methodology, inspired by the principles of Functional
+Geometric Monitoring (FGM). The central aim of this work was to explore the capabilities
+of the FDA approximation algorithm in the FL setting. Through experimental evalua-
+tions on two distinct CNNs, ”LeNet-5” and ”AdvancedCNN”, it was evident that the FDA
+strategies consistently outperformed a traditional non-dynamic FL training method, rem-
+iniscent of FedSGD with small local steps. The FDA approximation algorithm, in essence,
+serves as a naive embodiment of the FGM protocol. Its demonstrated effectiveness not
+only stands on its own merit but also suggests FGM’s potential to refine and enhance
+the conventional FL iterative training process into a more agile, adaptable, and efficient
+paradigm.
+Building on this foundation, the next logical step is to delve deeper into the implica-
+tions of the FDA algorithm in diverse contexts. One such avenue for future exploration
+emerges from our foundational assumption: all clients participate in every FL round.
+Analyzing the dynamics of various client selection strategies, both empirically and theo-
+retically, will undoubtedly provide insights into FDA’s performance and adaptability in
+diverse FL scenarios.
+An additional layer of complexity is introduced when we consider the choice of opti-
+mizer. In our work, we anchored the experiments on the Adam optimizer for local client
+training. Yet, the relationship between FDA and a spectrum of optimizers, from SGD to
+AdaGrad, remains uncharted territory. Exploring these interactions could further high-
+light FDA’s versatility across different FL environments.
+Lastly, an intriguing dimension worth pursuing stems from the choice to monitor the
+variance of the models, a decision grounded in a wealth of empirical evidence. The poten-
+tial of alternatives, such as cosine similarity, could provide valuable insights and pave the
+way for future research directions in refining the traditional Federated Learning iterative
+training process.
+49
+
+--- Page 51 ---
+Appendices
+50
+
+--- Page 52 ---
+Appendix A
+Detailed Results
+A.A LeNet-5
+50 100 150 200 250 300 350 400
+Time Cost
+0.950
+0.955
+0.960
+0.965
+0.970
+0.975Accuracy
+Common Channel Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+0 50 100 150 200 250
+Time Cost
+0.950
+0.955
+0.960
+0.965
+0.970
+0.975Accuracy
+Hypercube Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+Batch Size : 32 ,  : 0.0
+20 40 60 80 100 120 140
+Time Cost
+0.950
+0.955
+0.960
+0.965
+0.970Accuracy
+Common Channel Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+20 40 60 80 100 120
+Time Cost
+0.950
+0.955
+0.960
+0.965
+0.970Accuracy
+Hypercube Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+Batch Size : 128 ,  : 0.0
+40 60 80 100
+Time Cost
+0.9500
+0.9525
+0.9550
+0.9575
+0.9600
+0.9625
+0.9650
+0.9675Accuracy
+Common Channel Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+35
+20 30 40 50 60 70 80 90
+Time Cost
+0.9500
+0.9525
+0.9550
+0.9575
+0.9600
+0.9625
+0.9650
+0.9675Accuracy
+Hypercube Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+35
+Batch Size : 256 ,  : 0.0
+Figure A.1: Synchronous Strategy. Each chain of line segments represents a simulation’s
+progression in time for a specific number of clients ( K), after reaching the accuracy target
+of 0 .95. Each dot within a chain represents a specific epoch within the simulation, cap-
+turing the time cost and accuracy at that moment.
+51
+
+--- Page 53 ---
+A.A LeNet-5
+20 40 60 80 100 120
+Time Cost
+0.950
+0.955
+0.960
+0.965
+0.970
+0.975Accuracy
+Common Channel Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+0 20 40 60 80 100 120
+Time Cost
+0.950
+0.955
+0.960
+0.965
+0.970
+0.975Accuracy
+Hypercube Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+Batch Size : 32 ,  : 0.5
+20 40 60 80 100 120
+Time Cost
+0.950
+0.955
+0.960
+0.965
+0.970
+0.975Accuracy
+Common Channel Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+0 20 40 60 80 100 120
+Time Cost
+0.950
+0.955
+0.960
+0.965
+0.970
+0.975Accuracy
+Hypercube Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+Batch Size : 32 ,  : 1.0
+20 40 60 80
+Time Cost
+0.950
+0.955
+0.960
+0.965
+0.970Accuracy
+Common Channel Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+20 40 60 80
+Time Cost
+0.950
+0.955
+0.960
+0.965
+0.970Accuracy
+Hypercube Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+Batch Size : 32 ,  : 2.0
+10 20 30 40 50 60 70 80
+Time Cost
+0.9500
+0.9525
+0.9550
+0.9575
+0.9600
+0.9625
+0.9650
+0.9675Accuracy
+Common Channel Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+10 20 30 40 50 60 70 80
+Time Cost
+0.9500
+0.9525
+0.9550
+0.9575
+0.9600
+0.9625
+0.9650
+0.9675Accuracy
+Hypercube Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+Batch Size : 128 ,  : 0.5
+10 20 30 40 50 60 70 80
+Time Cost
+0.9500
+0.9525
+0.9550
+0.9575
+0.9600
+0.9625
+0.9650
+0.9675Accuracy
+Common Channel Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+10 20 30 40 50 60 70 80
+Time Cost
+0.9500
+0.9525
+0.9550
+0.9575
+0.9600
+0.9625
+0.9650
+0.9675Accuracy
+Hypercube Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+Batch Size : 128 ,  : 1.0
+Figure A.2: Naive FDA. Each chain of line segments represents a simulation’s progression
+in time for a specific number of clients ( K), after reaching the accuracy target of 0 .95.
+Each dot within a chain represents a specific epoch within the simulation, capturing the
+time cost and accuracy at that moment.
+52
+
+--- Page 54 ---
+A.A LeNet-5
+10 20 30 40 50 60 70 80
+Time Cost
+0.9500
+0.9525
+0.9550
+0.9575
+0.9600
+0.9625
+0.9650
+0.9675Accuracy
+Common Channel Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+10 20 30 40 50 60 70 80
+Time Cost
+0.9500
+0.9525
+0.9550
+0.9575
+0.9600
+0.9625
+0.9650
+0.9675Accuracy
+Hypercube Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+Batch Size : 128 ,  : 2.0
+20 30 40 50 60 70
+Time Cost
+0.950
+0.952
+0.954
+0.956
+0.958
+0.960
+0.962
+0.964Accuracy
+Common Channel Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+10 20 30 40 50 60 70
+Time Cost
+0.950
+0.952
+0.954
+0.956
+0.958
+0.960
+0.962
+0.964Accuracy
+Hypercube Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+Batch Size : 256 ,  : 0.5
+20 30 40 50 60 70
+Time Cost
+0.950
+0.952
+0.954
+0.956
+0.958
+0.960
+0.962
+0.964
+0.966Accuracy
+Common Channel Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+35
+10 20 30 40 50 60 70
+Time Cost
+0.950
+0.952
+0.954
+0.956
+0.958
+0.960
+0.962
+0.964
+0.966Accuracy
+Hypercube Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+35
+Batch Size : 256 ,  : 1.0
+10 20 30 40 50 60 70
+Time Cost
+0.950
+0.952
+0.954
+0.956
+0.958
+0.960
+0.962
+0.964
+0.966Accuracy
+Common Channel Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+10 20 30 40 50 60 70
+Time Cost
+0.950
+0.952
+0.954
+0.956
+0.958
+0.960
+0.962
+0.964
+0.966Accuracy
+Hypercube Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+Batch Size : 256 ,  : 2.0
+Figure A.2: Naive FDA. Each chain of line segments represents a simulation’s progression
+in time for a specific number of clients ( K), after reaching the accuracy target of 0 .95.
+Each dot within a chain represents a specific epoch within the simulation, capturing the
+time cost and accuracy at that moment.
+53
+
+--- Page 55 ---
+A.A LeNet-5
+20 40 60 80 100 120
+Time Cost
+0.950
+0.955
+0.960
+0.965
+0.970
+0.975Accuracy
+Common Channel Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+0 20 40 60 80 100
+Time Cost
+0.950
+0.955
+0.960
+0.965
+0.970
+0.975Accuracy
+Hypercube Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+Batch Size : 32 ,  : 0.5
+20 40 60 80 100
+Time Cost
+0.950
+0.955
+0.960
+0.965
+0.970
+0.975Accuracy
+Common Channel Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+20 40 60 80 100
+Time Cost
+0.950
+0.955
+0.960
+0.965
+0.970
+0.975Accuracy
+Hypercube Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+Batch Size : 32 ,  : 1.0
+10 20 30 40 50 60
+Time Cost
+0.950
+0.955
+0.960
+0.965
+0.970Accuracy
+Common Channel Communication Model
+Num Clients
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+10 20 30 40 50 60
+Time Cost
+0.950
+0.955
+0.960
+0.965
+0.970Accuracy
+Hypercube Communication Model
+Num Clients
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+Batch Size : 32 ,  : 2.0
+10 20 30 40 50 60 70 80
+Time Cost
+0.9500
+0.9525
+0.9550
+0.9575
+0.9600
+0.9625
+0.9650
+0.9675Accuracy
+Common Channel Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+10 20 30 40 50 60 70 80
+Time Cost
+0.9500
+0.9525
+0.9550
+0.9575
+0.9600
+0.9625
+0.9650
+0.9675Accuracy
+Hypercube Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+Batch Size : 128 ,  : 0.5
+10 20 30 40 50 60 70 80
+Time Cost
+0.9500
+0.9525
+0.9550
+0.9575
+0.9600
+0.9625
+0.9650
+0.9675Accuracy
+Common Channel Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+10 20 30 40 50 60 70 80
+Time Cost
+0.9500
+0.9525
+0.9550
+0.9575
+0.9600
+0.9625
+0.9650
+0.9675Accuracy
+Hypercube Communication Model
+Num Clients
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+Batch Size : 128 ,  : 1.0
+Figure A.3: Linear FDA. Each chain of line segments represents a simulation’s progression
+in time for a specific number of clients ( K), after reaching the accuracy target of 0 .95.
+Each dot within a chain represents a specific epoch within the simulation, capturing the
+time cost and accuracy at that moment.
+54
+

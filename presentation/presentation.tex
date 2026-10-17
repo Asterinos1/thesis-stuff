@@ -1,0 +1,792 @@
+\documentclass[aspectratio=169]{beamer}
+
+\usetheme{Madrid}
+\usecolortheme{whale}
+
+\usepackage[utf8]{inputenc}
+\usepackage[greek,english]{babel}
+\usepackage[LGR,T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{substitutefont}
+\substitutefont{LGR}{\rmdefault}{neohellenic}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{hyperref}
+
+% Custom Colors & Styles
+\definecolor{tucblue}{RGB}{0, 51, 102}
+\definecolor{tucred}{RGB}{153, 0, 0}
+\definecolor{darkgreen}{RGB}{0, 128, 0}
+\definecolor{tucgray}{RGB}{100, 110, 120}
+\definecolor{tucdark}{RGB}{20, 30, 45}
+\setbeamercolor{structure}{fg=tucblue}
+\setbeamercolor{block title}{bg=tucblue,fg=white}
+\setbeamercolor{block body}{bg=tucblue!5,fg=black}
+\setbeamercolor{block title alerted}{bg=tucred,fg=white}
+\setbeamercolor{block body alerted}{bg=tucred!5,fg=black}
+\setbeamercolor{block title example}{bg=darkgreen!80!black,fg=white}
+\setbeamercolor{block body example}{bg=darkgreen!5,fg=black}
+
+% Metadata
+\title[Investigating FDA in Federated LoRA Architectures]{Investigating the applicability of Federated Dynamic Averaging in Federated Low-Rank Adaptation Architectures}
+\subtitle{Diploma Thesis Presentation}
+\author[Asterinos Karalis]{
+    \textbf{Asterinos Karalis}\\[0.3em]
+    \footnotesize
+    \textbf{Supervisor:} Assoc.~Prof.~Vasilis Samoladas\\[0.1em]
+    \textbf{Committee:} Prof.~Antonios Deligiannakis, Prof.~Minos Garofalakis
+}
+\institute[]{
+    School of Electrical \& Computer Engineering\\
+    Technical University of Crete
+}
+\date[October 2026]{October 2026}
+\titlegraphic{}
+
+\AtBeginSection[]
+{
+    \begin{frame}{Table of Contents}
+        \tableofcontents[currentsection]
+    \end{frame}
+}
+
+\begin{document}
+
+% ==============================================================================
+% Title
+% ==============================================================================
+\begin{frame}[plain]
+    \vspace{-0.2em}
+    %% Institutional Masthead: TUC Logo + University & School
+    \begin{columns}[c]
+        \begin{column}{0.10\textwidth}
+            \includegraphics[height=1.35cm,keepaspectratio]{tuc_logo.png}
+        \end{column}
+        \begin{column}{0.88\textwidth}
+            {\large \textbf{\color{tucblue}TECHNICAL UNIVERSITY OF CRETE}}\\[0.18em]
+            {\small \color{tucgray}School of Electrical \& Computer Engineering}
+        \end{column}
+    \end{columns}
+    
+    \vspace{0.4em}
+    {\color{tucblue!30}\hrule height 0.8pt}
+    \vspace{1.1em}
+    
+    %% Title Block: Clean, unboxed, balanced typography
+    \centering
+    {\Large \textbf{\color{tucblue} Investigating the Applicability of Federated Dynamic Averaging\\[0.3em] in Federated Low-Rank Adaptation Architectures}}\\[0.7em]
+    {\small \textbf{\color{tucred} Diploma Thesis Presentation}}\\[0.8em]
+    
+    {\color{tucblue!20}\rule{0.6\textwidth}{0.6pt}}
+    \vspace{1.0em}
+    
+    %% Personnel: Two balanced academic columns
+    \begin{columns}[t]
+        \begin{column}{0.44\textwidth}
+            {\small \textbf{\color{tucblue} Author}}\\[0.4em]
+            {\normalsize \textbf{\color{tucdark} Asterinos Karalis}}
+        \end{column}
+        
+        \begin{column}{0.52\textwidth}
+            {\small \textbf{\color{tucblue} Examination Committee}}\\[0.4em]
+            \small
+            \begin{tabular}{@{}ll@{}}
+                \textbf{\color{tucdark}Supervisor:} & Assoc.~Prof.~Vasilis Samoladas \\[0.3em]
+                \textbf{\color{tucdark}Members:}    & Prof.~Antonios Deligiannakis \\[0.2em]
+                                                    & Prof.~Minos Garofalakis
+            \end{tabular}
+        \end{column}
+    \end{columns}
+    
+    \vfill
+    {\scriptsize \color{tucgray} Chania, Greece \quad$\cdot$\quad October 2026}
+    \vspace{0.3em}
+\end{frame}
+
+\begin{frame}{Table of Contents}
+    \tableofcontents
+\end{frame}
+
+
+% ==============================================================================
+% SECTION 1: Introduction
+% ==============================================================================
+\section{Introduction}
+
+\begin{frame}{Introduction : Federated Fine-Tuning of Foundation Models}
+    \begin{itemize}
+        \item \textbf{Federated Learning (FL)}: Privacy-preserving collaborative model optimization across decentralized edge devices or institutional silos without centralizing raw data.
+        \item \textbf{Foundation Model Scaling}: Adaptation of large pre-trained transformer models (e.g., RoBERTa 125M/355M, Llama-2 7B) to downstream domains is vital across healthcare, finance, and legal domains.
+        \item \textbf{The Core Constraint}: Transmitting billions of parameters over bandwidth-limited edge networks makes standard centralized or full-parameter federated learning computationally and communicatively intractable.
+    \end{itemize}
+    
+    \begin{block}{Central Research Question}
+        How can we jointly optimize both the \textbf{spatial parameter volume} and the \textbf{temporal synchronization frequency} in federated learning without sacrificing global aggregation fidelity?
+    \end{block}
+\end{frame}
+
+\begin{frame}{Introduction : The Dual Communication Bottleneck}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{block}{1. Spatial Bottleneck}
+                \begin{itemize}
+                    \item \textbf{Physical Volume}: Data transferred per synchronization round.
+                    \item Full parameter transfers require gigabytes per client per round (e.g., 28~GB for Llama-2-7B in FP32).
+                    \item Addressed via alternating low-rank adaptation (\textbf{RoLoRA}, Chen et al., NeurIPS 2025).
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{block}{2. Temporal Bottleneck}
+                \begin{itemize}
+                    \item \textbf{Synchronization Cadence}: Frequency of communication rounds.
+                    \item Static schedules ($\tau = E$) ignore local optimization dynamics and statistical data drift.
+                    \item Addressed in full models via dynamic averaging (\textbf{FDA-Opt}, Theologitis et al., 2025).
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+    \vspace{0.8em}
+    \centering
+    \textit{True communication efficiency requires co-optimizing both dimensions simultaneously: \textbf{FDA-Opt} (Temporal) + \textbf{RoLoRA} (Spatial).}
+\end{frame}
+
+\begin{frame}{Introduction : Core Objectives \& Scientific Contributions}
+    \begin{itemize}
+        \item \textbf{Conceptual Integration}: First formulation uniting temporal dynamic averaging (\textbf{FDA-Opt}, Theologitis et al., 2025) with alternating parameter-efficient adaptation (\textbf{RoLoRA}, Chen et al., NeurIPS 2025).
+        \item \textbf{FDA-RoLoRA Framework}: Embeds variance-driven dynamic synchronization into RoLoRA's alternating optimization scheme with independent per-matrix variance thresholds $(\theta_A, \theta_B)$.
+        \item \textbf{Direct Subspace Variance Tracking}: Formulates variance tracking operating strictly within low-rank coordinate tensors, avoiding full-parameter expansion overhead.
+        \item \textbf{Decoupled Subspace Threshold Evolution}: Dynamically updates synchronization thresholds for each matrix track independently via midpoint scaling, avoiding cross-phase geometric interference.
+        \item \textbf{Software Architecture \& Foundation Model Testbed}: Extended the open-source \textbf{FDA-Opt} codebase to build an end-to-end framework on PyTorch, Transformers, and PEFT, benchmarked on foundation models (\texttt{roberta-base}) across GLUE tasks on an enterprise GPU cluster.
+    \end{itemize}
+\end{frame}
+
+
+% ==============================================================================
+% SECTION 2: Background & Problem Statement
+% ==============================================================================
+\section{Background \& Problem Statement}
+
+\begin{frame}{Background : Distributed Learning, FedAvg \& Client Drift}
+    \begin{columns}
+        \begin{column}{0.55\textwidth}
+            \begin{itemize}
+                \item \textbf{Federated Averaging (FedAvg)}:
+                $$w_{t+1} = w_t + \frac{1}{|S_t|} \sum_{k \in S_t} \Delta_t^{(k)}$$
+                Clients execute $\tau$ local SGD steps on private data $\mathcal{D}_k$.
+                \item \textbf{Statistical Heterogeneity (Non-IID)}:
+                Client distributions differ in label, quantity, or features. Modeled via \textbf{Dirichlet distribution} $p_k \sim \text{Dir}(\alpha)$.
+                \item \textbf{Client Drift}: Divergent local minima pull updates away from the true global optimum.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.42\textwidth}
+            \begin{block}{Dirichlet Heterogeneity ($\alpha$)}
+                \begin{itemize}
+                    \item $\alpha \to 0$: Extreme label skew (clients hold single-class data).
+                    \item $\alpha \to \infty$: Uniform IID distribution.
+                    \item Key benchmark lever for evaluating drift robustness.
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Background : Low-Rank Adaptation (LoRA) \& Factor Asymmetry}
+    \begin{columns}
+        \begin{column}{0.55\textwidth}
+            \begin{itemize}
+                \item Pre-trained weights $W_0 \in \mathbb{R}^{d \times k}$ are kept \textbf{frozen}.
+                \item Updates factorized into low-rank matrices:
+                $$\Delta W = A B, \quad A \in \mathbb{R}^{d \times r}, \, B \in \mathbb{R}^{r \times k}$$
+                where rank $r \ll \min(d,k)$.
+                \item Forward pass: $h = W_0 x + A B x$.
+                \item Trainable parameters reduced by $>99\%$.
+                \item \textbf{Factor Asymmetry}:
+                \begin{itemize}
+                    \item $A$: Down-projection (compression), Gaussian init.
+                    \item $B$: Up-projection (expansion), zero init.
+                    \item Exhibits distinct gradient flows and variance dynamics.
+                \end{itemize}
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.42\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{figures/lora_figure.png}
+            \vspace{0.2em}
+            \footnotesize{\textbf{Figure}: LoRA decomposition with frozen weights $W_0$.}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Background : The LoRA Aggregation Inconsistency Problem}
+    \begin{alertblock}{Mathematical Non-Commutativity (Bilinear Distortion)}
+        Independent server-side averaging of client low-rank factors fails to reconstruct the composite weight update:
+        $$\frac{1}{N}\sum_{i=1}^{N} (A_i B_i) \neq \left(\frac{1}{N}\sum_{i=1}^{N} A_i\right) \left(\frac{1}{N}\sum_{i=1}^{N} B_i\right)$$
+    \end{alertblock}
+    
+    \begin{itemize}
+        \item Direct FedAvg on $(A_i, B_i)$ induces cross-client geometric interference.
+        \item Destabilizes convergence under non-IID data distributions.
+        \item \textbf{Prior Work Limitations}:
+        \begin{itemize}
+            \item \emph{Full-matrix expansion} ($\Delta W = AB$): Transmits full parameter matrices $\to$ destroys spatial savings.
+            \item \emph{FFA-LoRA}: Permanently freezes down-projection $A$ $\to$ sacrifices adapter expressivity.
+            \item \emph{FLoRA}: Server-side SVD recalculation $\to$ high server compute overhead.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Background : Robust Low-Rank Adaptation (RoLoRA)}
+    \framesubtitle{Chen et al., NeurIPS 2025 -- Alternating Coordinate Optimization}
+    \begin{columns}
+        \begin{column}{0.55\textwidth}
+            \begin{block}{Alternating Coordinate Optimization}
+                \footnotesize
+                \textbf{RoLoRA} resolves the LoRA bilinear aggregation inconsistency by alternating the active trainable matrix while freezing the other globally.
+            \end{block}
+            \vspace{-0.4em}
+            \begin{itemize}
+                \footnotesize
+                \item \textbf{Odd Rounds (B-Track)}: Freeze $A^t$; train $B$:
+                {\scriptsize $$\frac{1}{N}\sum_{i=1}^N (A^t B^{t+1}_i) = A^t \bar{B}^{t+1} = A^t B^{t+1}$$}
+                \vspace{-0.4em}
+                \item \textbf{Even Rounds (A-Track)}: Freeze $B^{t+1}$; train $A$:
+                {\scriptsize $$\frac{1}{N}\sum_{i=1}^N (A^{t+1}_i B^{t+1}) = \bar{A}^{t+1} B^{t+1} = A^{t+1} B^{t+1}$$}
+                \item \textbf{Limitation}: Enforces a rigid, static local epoch schedule ($E$), leaving temporal synchronization unoptimized.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.43\textwidth}
+            \centering
+            \includegraphics[width=0.88\textwidth]{figures/rolora_framework.png}
+            \vspace{0.1em}
+            \footnotesize{\textbf{Figure}: RoLoRA alternating framework.}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Background : FDA-Opt \& Geometric Monitoring}
+    \framesubtitle{Theologitis, Samoladas \& Deligiannakis, 2025 -- Dynamic Variance Halting}
+    \begin{columns}
+        \begin{column}{0.55\textwidth}
+            \begin{itemize}
+                \footnotesize
+                \item \textbf{Geometric Monitoring Root}: Decomposes global threshold functions over distributed streams into local \textbf{safe zones} (Sharfman et al., 2006).
+                \item \textbf{FDA-Opt Formulation} (Theologitis et al., 2025): Tracks client update dispersion via parameter variance:
+                {\small $$\text{Var}(W_{t,i}) = \frac{1}{|S_t|}\sum_{k \in S_t} \|\Delta_{t,i}^{(k)}\|_2^2 - \|g_{t,i}\|_2^2$$}
+                Low variance $=$ aligned progress; high variance $=$ client drift.
+                \item \textbf{Event-Driven Halting}: Synchronize when $\text{Var}(W) > \theta_t$.
+                \item \textbf{Midpoint Threshold Scaling}: $\theta_{t+1} = \text{ar}_t \cdot \frac{\tau}{2 s_t}$.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.43\textwidth}
+            \begin{block}{Research Gap in FDA-Opt}
+                \footnotesize
+                \begin{itemize}
+                    \item FDA-Opt operated strictly on \textbf{full model parameters} (approximated via AMS sketches).
+                    \item Spatial compression (LoRA) and temporal adaptivity (FDA) had never been synthesized.
+                    \item Low-rank adapters exhibit high variance volatility requiring decoupled mechanics.
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Background : Comparison of Foundational Precursors}
+    \framesubtitle{Synthesizing RoLoRA (Spatial) and FDA-Opt (Temporal)}
+    \centering
+    \scriptsize
+    \renewcommand{\arraystretch}{1.15}
+    \begin{tabular}{l l l l}
+        \toprule
+        \textbf{Dimension} & \textbf{RoLoRA} (NeurIPS '25) & \textbf{FDA-Opt} (2025) & \textbf{FDA-RoLoRA} (\textbf{This Thesis}) \\
+        \midrule
+        \textbf{Optimization Focus} & Spatial parameter volume & Temporal synchronization & \textbf{Joint Spatial + Temporal} \\
+        \textbf{Parameter Scope} & Low-rank adapters ($A, B$) & Full model weights & \textbf{Low-rank adapters ($A, B$)} \\
+        \textbf{Aggregation} & Alternating coordinates & Standard FedAvg / FedOpt & \textbf{Alternating coordinates} \\
+        \textbf{Local Scheduling} & Static fixed ($E$ epochs) & Dynamic (Model variance) & \textbf{Dynamic (Subspace variance)} \\
+        \textbf{Variance Tracking} & None & Full-weight (AMS sketch) & \textbf{Exact Subspace} (No sketch) \\
+        \textbf{Threshold Logic} & None & Single scalar threshold & \textbf{Decoupled Dual-Track} $(\theta_A, \theta_B)$ \\
+        \bottomrule
+    \end{tabular}
+    
+    \vspace{0.7em}
+    \begin{alertblock}{Complementary Synergy}
+        \scriptsize
+        \textbf{FDA-RoLoRA} solves the core limitations of both parent papers: RoLoRA provides the strict aggregation linearity needed for stable variance tracking, while FDA-Opt provides the event-driven cadence needed to eliminate static schedule waste.
+    \end{alertblock}
+\end{frame}
+
+
+% ==============================================================================
+% SECTION 3: Proposed Methodology: FDA RoLoRA
+% ==============================================================================
+\section{Proposed Methodology: FDA RoLoRA}
+
+\begin{frame}{Methodology : Dynamic Averaging in Federated LoRA}
+    \begin{block}{Taxonomy of Integration Avenues}
+        Different PEFT architectures have distinct mathematical structures and optimization geometries; dynamic averaging cannot use a single one-size-fits-all rule.
+    \end{block}
+    
+    \begin{itemize}
+        \item \textbf{FDA + FedAvg-LoRA}: Dynamic averaging with simultaneous $(A, B)$ training.
+        \begin{itemize}
+            \item \emph{Drawback}: Inherits bilinear aggregation error; non-linear distortion destabilizes variance monitoring.
+        \end{itemize}
+        \item \textbf{FDA + FFA-LoRA}: Dynamic averaging with permanently frozen $A$ \emph{[Future Work]}.
+        \item \textbf{FDA + SLoRA}: Dynamic thresholding over sparse adapter coordinates \emph{[Future Work]}.
+        \item \textbf{FDA-RoLoRA}: \textbf{This Thesis}
+        \begin{itemize}
+            \item Synthesizes \textbf{RoLoRA} (Chen et al., 2025) and \textbf{FDA-Opt} (Theologitis et al., 2025).
+            \item Alternating coordinates provide strict linearity $\to$ perfect substrate for variance tracking.
+            \item Maintains independent persistent variance thresholds $(\theta_A, \theta_B)$ for each subspace.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Methodology : FDA-RoLoRA Architecture}
+    \begin{block}{Decoupled Subspace Variance Mechanics}
+        RoLoRA isolates the optimization trajectories of down-projection ($A$) and up-projection ($B$). FDA-RoLoRA leverages this to isolate variance tracking and threshold evolution.
+    \end{block}
+    
+    \begin{itemize}
+        \item \textbf{Active Subspace Mapping}: Server maps active threshold based on designated matrix $\mathcal{M}^{(r)} \in \{A, B\}$:
+        $$\theta_{\text{current}}^{(r)} = \begin{cases} \theta_A & \text{if } \mathcal{M}^{(r)} = A \\ \theta_B & \text{if } \mathcal{M}^{(r)} = B \end{cases}$$
+        \item \textbf{Direct Subspace Variance}: Evaluated exclusively on low-rank coordinate tensors:
+        $$\text{Var}_{\text{subspace}}(\Delta^{(e)}) = \frac{1}{|S_r|} \sum_{i \in S_r} \|\Delta_i^{(e)}\|_2^2 - \left\| \frac{1}{|S_r|} \sum_{i \in S_r} \Delta_i^{(e)} \right\|_2^2$$
+        \item Eliminates memory/compute overhead of mapping drifts back to the full weight space.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Methodology : Independent Halting \& Local Training Bounds}
+    \begin{columns}
+        \begin{column}{0.50\textwidth}
+            \begin{block}{Local Epoch Bounds}
+                Client training is bounded between $[e_{\min}, e_{\max}]$ to prevent extreme stagnation or runaway drift:
+                $$\text{Halt if } \text{Var}_{\text{subspace}}(\Delta^{(e)}) > \theta_{\text{current}}^{(r)} \;\lor\; e \ge e_{\max}$$
+                Evaluated at epoch boundaries $e \ge e_{\min}$.
+            \end{block}
+        \end{column}
+        \begin{column}{0.46\textwidth}
+            \begin{block}{Target Threshold Proposal}
+                Targets midpoint training progress ($e_{\max}/2$):
+                $$\theta_{\text{target}}^{(r)} = \left(\frac{e_{\max}/2}{e^*}\right) \text{Var}_{\text{subspace}}(\Delta^{(e^*)})$$
+                where $e^*$ is the realized epoch count at termination.
+            \end{block}
+        \end{column}
+    \end{columns}
+    \vspace{0.6em}
+    \begin{alertblock}{Prevention of Cross-Matrix Contamination}
+        The inactive matrix threshold remains strictly frozen during the alternate round, preserving optimization state and respecting factor asymmetry.
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}{Methodology : Threshold Evolution Mechanics \& Controller Design}
+    \begin{block}{Primary Operational Controller: Standard Midpoint Scaling}
+        Direct assignment without memory lag: $\theta_{\mathcal{M}^{(r)}}^{(\text{next})} = \theta_{\text{target}}^{(r)}$.
+        \begin{itemize}
+            \item \textbf{Parameter-Free}: No sensitivity to tuning hyperparameters.
+            \item \textbf{Adaptive Response}: Responds instantly to changes in gradient drift variance.
+        \end{itemize}
+    \end{block}
+    
+    \begin{block}{Exploratory Temporal Smoothing Variants (Prototyped)}
+        \begin{itemize}
+            \item \textbf{Simple Moving Average (SMA)}: Mean over past $K$ active rounds: $\frac{1}{K}\sum_{k=0}^{K-1} \theta_{\text{target}}^{(r-k)}$.
+            \item \textbf{Exponential Moving Average (EMA)}: Historical weighting: $\rho \theta_{\text{current}} + (1-\rho) \theta_{\text{target}}$.
+            \item \textbf{Finding}: Prototyping revealed smoothing added threshold inertia/lag under distribution shifts without tangible accuracy benefit; hence retained as future work.
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Methodology : Server Adaptive Optimization \& Protocol Flow}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Server FedAdamW Optimizer}
+                \begin{itemize}
+                    \item Aggregated pseudo-gradient:
+                    $$\nabla_{\text{pseudo}}^{(r)} = -\frac{1}{|S_r|}\sum_{i \in S_r} \Delta_i^{(e^*)}$$
+                    \item First \& second moment updates:
+                    \begin{align*}
+                        m^{(r)} &= \beta_1 m^{(r-1)} + (1-\beta_1)\nabla_{\text{pseudo}}^{(r)} \\
+                        v^{(r)} &= \beta_2 v^{(r-1)} + (1-\beta_2)(\nabla_{\text{pseudo}}^{(r)})^2
+                    \end{align*}
+                    \item Decoupled weight decay:
+                    {\small $$W_{\text{act}}^{(r+1)} = W_{\text{act}}^{(r)} - \eta_s \left(\frac{\hat{m}^{(r)}}{\sqrt{\hat{v}^{(r)}}+\epsilon} + \lambda W_{\text{act}}^{(r)}\right)$$}
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Protocol Execution Lifecycle}
+                \begin{enumerate}
+                    \footnotesize
+                    \item \textbf{Toggle}: Server selects active track $A$ or $B$.
+                    \item \textbf{Broadcast}: Sends $W_{\text{act}}^{(r)}$ and $\theta_{\text{current}}^{(r)}$ to $S_r$.
+                    \item \textbf{Train}: Clients run local SGD steps.
+                    \item \textbf{Check}: Evaluate subspace variance at $e \ge e_{\min}$.
+                    \item \textbf{Halt}: Return $\Delta_i^{(e^*)}$ when $\text{Var} > \theta$ or $e = e_{\max}$.
+                    \item \textbf{Aggregate}: Server forms pseudo-gradient.
+                    \item \textbf{Evolve}: Update active threshold $\theta_{\mathcal{M}^{(r)}}^{(\text{next})}$.
+                    \item \textbf{Step}: Server AdamW updates active weights.
+                \end{enumerate}
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+% ==============================================================================
+% SECTION 4: System Implementation
+% ==============================================================================
+\section{System Implementation}
+
+\begin{frame}{Implementation : Modular 3-Tier Software Architecture}
+    \begin{columns}[t]
+        \begin{column}{0.32\textwidth}
+            \begin{block}{1. Server Orchestrator}
+                \footnotesize
+                \begin{itemize}
+                    \item Global $A, B$ matrices.
+                    \item Tracks $(\theta_A, \theta_B)$ state.
+                    \item Coordinates RoLoRA toggle.
+                    \item FedAdamW server optimizer.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.32\textwidth}
+            \begin{block}{2. Client Nodes}
+                \footnotesize
+                \begin{itemize}
+                    \item Private data partitions.
+                    \item Local SGD training loops.
+                    \item Subspace drift computation.
+                    \item Variance checks at $e \ge e_{\min}$.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.32\textwidth}
+            \begin{block}{3. Comm. Interface}
+                \footnotesize
+                \begin{itemize}
+                    \item Low-rank serialization.
+                    \item PyTorch, HF \& PEFT.
+                    \item Lightweight FDA-Opt core.
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+    
+    \vspace{0.3em}
+    \begin{block}{Key Engineering Decisions}
+        \footnotesize
+        \begin{itemize}
+            \item \textbf{FDA-Opt Base vs. FederatedScope-LLM}: The RoLoRA paper (Chen et al., NeurIPS 2025) used FederatedScope-LLM without a public release. We adopted and extended the open-source \textbf{FDA-Opt} repository (Theologitis et al., 2025), integrating HuggingFace PEFT and RoLoRA coordinate alternation into its modular PyTorch core.
+            \item \textbf{Exact Variance over AMS Sketch}: Full-parameter FDA-Opt required randomized AMS sketching to bound memory. In low-rank coordinates ($r=8$), parameters are so compact that exact subspace variance is computed with negligible overhead, eliminating sketching approximations.
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Implementation : Foundation Model Setup \& Data Partitioning}
+    \footnotesize
+    \begin{columns}
+        \begin{column}{0.50\textwidth}
+            \begin{block}{Foundation Model Backbone}
+                \begin{itemize}
+                    \item \textbf{Model}: \texttt{roberta-base} ($125\text{M}$ params; chosen over \texttt{roberta-large} to conserve resources/time).
+                    \item \textbf{Adapter Placement}: Low-rank adapters injected into Query ($W_q$) and Value ($W_v$) projections across top encoder layers.
+                    \item \textbf{Adapter Configuration}: Rank $r=4$ (and $8$), scaling factor $\alpha_{\text{lora}}=8$ (and $16$).
+                    \item \textbf{Spatial Reduction}: Backbone frozen; communicating only compact $A, B$ factors cuts parameter transfer by $>99\%$.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.46\textwidth}
+            \begin{block}{Resource Constraints \& Simulation Setup}
+                \begin{itemize}
+                    \item \textbf{Dirichlet Partitioning}: Client data sampled via $p_k \sim \text{Dir}(\alpha)$ ($\alpha \in \{0.5, 1000.0\}$).
+                    \item \textbf{25k Dataset Cap}: Datasets capped at $\le 25{,}000$ samples ($\text{MAX\_SAMPLES}=25{,}000$) due to compute limits.
+                    \item \textbf{Simulation Early Stopping}: External framework mechanic (not part of RoLoRA/FDA) to prevent wasteful GPU-hours.
+                    \item \textbf{Benchmark Tasks}: GLUE suite (SST-2, QQP, QNLI, MNLI).
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Implementation : Training Pipeline \& HPC Cluster Deployment}
+    \begin{columns}
+        \begin{column}{0.50\textwidth}
+            \begin{block}{Training Pipeline Mechanics}
+                \begin{itemize}
+                    \item \textbf{Alternation}: Track $B$ on even rounds ($t=0,2,\dots$), Track $A$ on odd rounds ($t=1,3,\dots$).
+                    \item \textbf{Exact Subspace Variance}: Evaluated centrally at $e \ge e_{\min}$ without high-dimensional projection.
+                    \item \textbf{Server Optimization}: Pseudo-gradient step with $\eta_s = 1.0$ replicating FedAvg over active coordinate.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.46\textwidth}
+            \begin{block}{Polytechnix HPC Cluster}
+                \begin{itemize}
+                    \item \textbf{Server}: SoftNet Lab Polytechnix node.
+                    \item \textbf{GPUs}: $2\times$ NVIDIA Ampere A10 ($24\,\text{GB}$ VRAM each).
+                    \item \textbf{CPUs}: $2\times$ Intel Xeon Silver 4310 ($24\text{c}/48\text{t}$, $2.10\,\text{GHz}$).
+                    \item \textbf{RAM}: $256\,\text{GB}$ system memory.
+                    \item Multi-process client orchestration with automated sweep scripts.
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+% ==============================================================================
+% SECTION 5: Evaluations & Results
+% ==============================================================================
+\section{Evaluations \& Results}
+
+\begin{frame}{Evaluation : Foundation Model Benchmarking \& Baseline Results}
+    \begin{alertblock}{Empirical Status on Polytechnix Cluster ($2\times$ NVIDIA A10)}
+        \footnotesize
+        Baselines for \texttt{roberta-base} on GLUE sequence classification tasks are \textbf{fully completed}. The proposed FDA-RoLoRA runs are in their final stage ($40/52$ total runs complete; final MNLI and SST-2 draining).
+    \end{alertblock}
+    
+    \vspace{-0.3em}
+    \begin{table}
+        \centering
+        \tiny
+        \begin{tabular}{lccccc}
+            \toprule
+            \textbf{Methodology} & \textbf{SST-2 Acc. (\%)} & \textbf{MNLI Acc. (\%)} & \textbf{QNLI Acc. (\%)} & \textbf{Comm. Rounds} & \textbf{Payload / Round} \\
+            \midrule
+            Untuned Base (Zero-Shot)    & $50.90 \pm 0.00$          & $35.40 \pm 0.00$          & $49.50 \pm 0.00$          & --            & $0.0\,\text{MB}$ \\
+            \midrule
+            FedAvg + LoRA ($r=4$)       & $90.48 \pm 0.00$          & $76.85 \pm 0.90$          & $87.31 \pm 0.00$          & 23--45        & Full ($2 \times d \times r$) \\
+            \textbf{FedAvg + RoLoRA (Fixed E10)} & $\mathbf{91.51 \pm 0.23}$ & $\mathbf{74.11 \pm 0.22}$ & $\mathbf{81.10 \pm 3.05}$ & 15--50 & \textbf{Half ($1 \times d \times r$)} \\
+            \midrule
+            \textbf{FDA-RoLoRA (Ours)}  & \emph{Active (Rnd 17--19)} & \emph{Active (Rnd 30--34)} & $\mathbf{83.38 \pm 0.00}$ & \textbf{19--38} & \textbf{Half ($1 \times d \times r$)} \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    \vspace{-0.5em}
+    \begin{block}{Key Baseline Insights}
+        \footnotesize
+        \begin{itemize}
+            \item \textbf{Spatial Linear Aggregation}: Alternating RoLoRA eliminates LoRA aggregation inconsistency while cutting per-round uplink communication payload by $50\%$ ($\approx 4.69\,\text{MB}$ vs. $9.38\,\text{MB}$ per round for $C=20$).
+            \item \textbf{Rigid Schedule Bottleneck}: Fixed $E=10$ incurs client drift under Dirichlet Non-IID ($\alpha=0.5$), requiring 50 full rounds on MNLI, whereas FDA adapts local epochs dynamically to accelerate convergence.
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Evaluation : Theoretical Convergence \& Failure Modes Analysis}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Theoretical Convergence Guarantees}
+                \footnotesize
+                \begin{itemize}
+                    \item \textbf{Spatial Linearity}: RoLoRA guarantees $\frac{1}{N}\sum A B_i = A \bar{B}$, matching centralized averaging updates mathematically.
+                    \item \textbf{Temporal Adaptivity}:
+                    \begin{itemize}
+                        \footnotesize
+                        \item Homogeneous data (high $\alpha$): Gradual variance accumulation $\to$ clients train up to $e_{\max}$, minimizing communication rounds.
+                        \item Heterogeneous data (low $\alpha$): Divergent drift accelerates variance $\to$ early halt curbs drift.
+                    \end{itemize}
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Boundary Regimes \& Failure Modes}
+                \footnotesize
+                \begin{itemize}
+                    \item \textbf{Excessive Thresholds} ($\theta \gg \text{Var}$): Variance never trips threshold $\to$ degenerates to static fixed-schedule RoLoRA ($e = e_{\max}$).
+                    \item \textbf{Overly Strict Thresholds} ($\theta \ll \text{Var}$): Premature halts at $e_{\min} \to$ inflates total communication frequency.
+                    \item \textbf{Extreme Pathological Skew}: Near-instant variance spikes requiring robust floor bounds ($e_{\min}$).
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Evaluation : Controlled Sandbox Validation (Proof of Concept)}
+    \begin{block}{Rigorous Prototyping Benchmark Suite}
+        Prior to cluster scaling, the algorithmic mechanics were validated across a \textbf{66-run multi-seed benchmark} ($S \in \{42, 43, 44\}$, $T=100$ rounds) under extreme pathological label skews:
+        \begin{itemize}
+            \item \textbf{\texttt{10c1}}: 10 clients, exactly 1 class per client (maximal non-IID label skew).
+            \item \textbf{\texttt{5c2}}: 5 clients, exactly 2 classes per client.
+        \end{itemize}
+    \end{block}
+    
+    \begin{table}
+        \centering
+        \tiny
+        \begin{tabular}{llcccc}
+            \toprule
+            \textbf{Scenario} & \textbf{Method} & \textbf{Round 50 Acc.} & \textbf{Round 100 Acc.} & \textbf{Peak Acc. (\%)} & \textbf{Mean Best Rd} \\
+            \midrule
+            \multirow{4}{*}{\textbf{Nonlin - 10c1}}
+            & \textbf{FDA-RoLoRA (Std)} & $63.95 \pm 2.94$ & $\mathbf{71.23 \pm 0.41}$ & $\mathbf{74.56 \pm 1.24}$ & 94.7 \\
+            & RoLoRA (Fixed)            & $64.13 \pm 1.77$ & $69.40 \pm 3.58$ & $75.24 \pm 0.44$ & 93.3 \\
+            & FFA-LoRA                  & $61.43 \pm 1.37$ & $69.14 \pm 4.42$ & $71.78 \pm 1.22$ & 96.7 \\
+            & FedAvg-LoRA               & $63.03 \pm 4.02$ & $67.01 \pm 2.07$ & $71.82 \pm 1.49$ & 85.7 \\
+            \midrule
+            \multirow{4}{*}{\textbf{Nonlin - 5c2}}
+            & \textbf{FDA-RoLoRA (Std)} & $72.26 \pm 1.14$ & $\mathbf{76.89 \pm 4.65}$ & $\mathbf{80.07 \pm 1.90}$ & 93.3 \\
+            & RoLoRA (Fixed)            & $\mathbf{75.69 \pm 2.67}$ & $75.73 \pm 5.39$ & $79.93 \pm 0.34$ & 93.3 \\
+            & FedAvg-LoRA               & $68.93 \pm 2.56$ & $75.07 \pm 1.05$ & $75.12 \pm 1.06$ & 97.0 \\
+            & FFA-LoRA                  & $57.61 \pm 0.96$ & $59.22 \pm 2.03$ & $60.14 \pm 0.69$ & 93.0 \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    \vspace{-0.4em}
+    \footnotesize
+    \textbf{Validation}: Confirmed that alternating coordinate optimization eliminates LoRA aggregation inconsistency, while dynamic halting provides superior stability ($\pm 0.41\%$ on 10c1).
+\end{frame}
+
+\begin{frame}{Evaluation : Accuracy Trajectories \& Convergence Speedup}
+    \begin{columns}
+        \begin{column}{0.50\textwidth}
+            \centering
+            \includegraphics[height=0.62\textheight,keepaspectratio]{figures/toy_acc_trajectories.png}
+            \vspace{0.1em}
+            \tiny Test accuracy trajectories across 100 communication rounds.
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{$\mathbf{2.20\times}$ Round Reduction}
+                \footnotesize
+                On \texttt{5c2} at $75\%$ accuracy: FDA reaches milestone in $\mathbf{42.3}$ rounds vs. $93.0$ for FedAvg-LoRA ($\mathbf{2.20\times}$ faster).
+            \end{exampleblock}
+            \vspace{0.3em}
+            \begin{exampleblock}{Convergence Reliability}
+                \footnotesize
+                FDA achieves \textbf{100\%} milestone success rate under extreme skew, whereas naive FedAvg-LoRA fails completely on $1/3$ of random seeds.
+            \end{exampleblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Evaluation : Dual-Axis Trade-Off: Communication vs. Computation}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{figures/toy_steps_trajectories.png}
+            \vspace{0.1em}
+            \footnotesize Accuracy vs. Local Optimizer Steps.
+        \end{column}
+        \begin{column}{0.50\textwidth}
+            \begin{table}
+                \centering
+                \tiny
+                \begin{tabular}{llcc}
+                    \toprule
+                    \textbf{Scenario} & \textbf{Method} & \textbf{Cumul. Steps} & \textbf{Mean Epochs} \\
+                    \midrule
+                    \multirow{2}{*}{\textbf{10c1}}
+                    & \textbf{FDA-RoLoRA (Std)} & 83,597 & 8.89 \\
+                    & Baselines (Fixed $E=5$) & 47,000 & 5.00 \\
+                    \midrule
+                    \multirow{2}{*}{\textbf{5c2}}
+                    & \textbf{FDA-RoLoRA (Std)} & 158,514 & 8.48 \\
+                    & Baselines (Fixed $E=5$) & 93,500 & 5.00 \\
+                    \bottomrule
+                \end{tabular}
+            \end{table}
+            \begin{block}{Trade-Off Characterization}
+                \footnotesize
+                \begin{itemize}
+                    \item FDA dynamically expends $1.7\times - 1.8\times$ more local steps by extending epochs when variance allows.
+                    \item \textbf{Practical Advantage}: Enormous win in edge networks where network latency and round handshakes dominate; fixed schedules preferable only when edge compute is severely bottlenecked.
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+% ==============================================================================
+% SECTION 6: Conclusion & Future Work
+% ==============================================================================
+\section{Conclusion \& Future Work}
+
+\begin{frame}{Conclusion : Synthesis of Scientific Contributions}
+    \begin{itemize}
+        \item \textbf{Bridging RoLoRA \& FDA-Opt}: Unified alternating low-rank adaptation (\textbf{RoLoRA}, Chen et al., NeurIPS 2025) with dynamic variance-driven averaging (\textbf{FDA-Opt}, Theologitis et al., 2025) into a coherent dual-axis federated framework.
+        \item \textbf{Mathematical Consistency via Alternating Isolation}: Alternating coordinate optimization solves the bilinear aggregation inconsistency, providing strictly linear updates that enable stable, distortion-free geometric variance monitoring.
+        \item \textbf{Decoupled Subspace Geometric Monitoring}: Evaluating drift variance directly on isolated low-rank coordinate tensors eliminates the memory and communication overhead of full-model gradient approximations.
+        \item \textbf{Parameter-Free Standard Controller}: Adopted the responsive Standard midpoint scaling rule for algorithmic parsimony; prototyping confirmed smoothing (SMA/EMA) introduced threshold inertia without tangible benefit.
+        \item \textbf{Clear Dual-Axis Trade-Off}: Dynamically trading modest local computation for massive global communication round reductions.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Conclusion : Limitations \& Future Research Horizons}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Limitations}
+                \footnotesize
+                \begin{itemize}
+                    \item \textbf{Ongoing Cluster Runs}: Full empirical benchmark on foundation models actively executing on Polytechnix cluster.
+                    \item \textbf{Simulated Multi-Process}: Centralized multi-process setup leaves physical network latency unmodeled.
+                    \item \textbf{Fixed Alternation}: Relies on deterministic alternating schedule.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Future Horizons}
+                \footnotesize
+                \begin{itemize}
+                    \item \textbf{Completion of Foundation Benchmark}: Concluding SST-2 and MNLI multi-seed evaluation.
+                    \item \textbf{Broader PEFT Variants}: Formalizing FDA + FFA-LoRA, FDA + SLoRA, and dynamic rank allocation.
+                    \item \textbf{Advanced Controllers}: PID-regulated threshold scaling and variance-acceleration damping.
+                    \item \textbf{Quantization \& Edge}: Integration with QLoRA and deployment on physical edge testbeds.
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Key References}
+    \scriptsize
+    \begin{thebibliography}{99}
+        \bibitem{chen2025robust}
+        S.~Chen, Y.~Guo, Y.~Ju, H.~Dalal, Z.~Zhu, and A.~Khisti.
+        \newblock \textbf{Robust Federated Finetuning of LLMs via Alternating Optimization of LoRA}.
+        \newblock In \emph{Advances in Neural Information Processing Systems (NeurIPS)}, 2025.
+        
+        \bibitem{theologitis2025fda}
+        M.~Theologitis, V.~Samoladas, and A.~Deligiannakis.
+        \newblock \textbf{FDA-Opt: Communication-Efficient Federated Fine-Tuning of Language Models}.
+        \newblock \emph{arXiv preprint arXiv:2505.04535}, 2025.
+        
+        \bibitem{hu2022lora}
+        E.~J.~Hu, Y.~Shen, P.~Wallis, Z.~Allen-Zhu, Y.~Li, S.~Wang, L.~Wang, and W.~Chen.
+        \newblock \textbf{LoRA: Low-Rank Adaptation of Large Language Models}.
+        \newblock In \emph{International Conference on Learning Representations (ICLR)}, 2022.
+        
+        \bibitem{mcmahan2017communication}
+        B.~McMahan, E.~Moore, D.~Ramage, S.~Hampson, and B.~A.~y~Arcas.
+        \newblock \textbf{Communication-Efficient Learning of Deep Networks from Decentralized Data}.
+        \newblock In \emph{AISTATS}, pages 1273--1282, 2017.
+        
+        \bibitem{sharfman2006geometric}
+        I.~Sharfman, A.~Schuster, and D.~Keren.
+        \newblock \textbf{A Geometric Approach to Monitoring Threshold Functions over Distributed Data Streams}.
+        \newblock In \emph{ACM SIGMOD}, pages 301--312, 2006.
+    \end{thebibliography}
+\end{frame}
+
+\begin{frame}
+    \centering
+    \Huge \textbf{Thank You!}
+    
+    \vspace{1em}
+    \Large Questions \& Discussion
+    
+    \vspace{1.5em}
+    \normalsize
+    Asterinos Karalis -- Technical University of Crete\\
+    \vspace{0.5em}
+    \small Open-Source Repository: \url{https://github.com/Asterinos1/FDA-LoRA}
+\end{frame}
+
+\end{document}

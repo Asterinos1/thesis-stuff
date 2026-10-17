@@ -1,0 +1,77 @@
+\begin{tikzpicture}[
+    scale=0.85, transform shape,
+    box/.style={rectangle, draw, rounded corners=4pt, thick, align=center, inner sep=4pt},
+    server/.style={box, fill=blue!10, text width=3.0cm, minimum height=1.1cm},
+    client/.style={box, fill=green!10, text width=1.8cm, minimum height=1.0cm},
+    db/.style={cylinder, draw, shape border rotate=90, aspect=0.25, fill=orange!15, text width=1.0cm, align=center, minimum height=0.6cm, font=\tiny, thick},
+    arrow/.style={-stealth, thick, color=blue!70!black},
+    upload/.style={-stealth, thick, color=red!70!black},
+    paneltitle/.style={font=\bfseries\small, align=center}
+]
+
+% ==========================================
+% PANEL 1: Step 1 - Model Broadcast
+% ==========================================
+\begin{scope}[shift={(0,0)}]
+    \node[paneltitle] at (1.8, 3.2) {Step 1: Model Broadcast};
+    \node[server] (s1) at (1.8, 2.0) {\textbf{Central Server}\\ Global Model $w_t$};
+    
+    \node[client] (c1_1) at (0, 0) {\small Client 1\\ \tiny $w_t$};
+    \node[client] (c1_2) at (3.6, 0) {\small Client 2\\ \tiny $w_t$};
+    
+    \draw[arrow] (s1.south) -- (c1_1.north) node[midway, left=2pt, font=\tiny] {Broadcast $w_t$};
+    \draw[arrow] (s1.south) -- (c1_2.north) node[midway, right=2pt, font=\tiny] {Broadcast $w_t$};
+    
+    \node[db] at (0, -1.2) {$\mathcal{D}_1$};
+    \node[db] at (3.6, -1.2) {$\mathcal{D}_2$};
+\end{scope}
+
+% ==========================================
+% PANEL 2: Step 2 - Local Training
+% ==========================================
+\begin{scope}[shift={(6.8,0)}]
+    \node[paneltitle] at (1.8, 3.2) {Step 2: Local Training};
+    \node[server, fill=gray!8] (s2) at (1.8, 2.0) {\textbf{Central Server}\\ \small (Idle / Waiting)};
+    
+    \node[client, fill=green!22] (c2_1) at (0, 0) {\small Local SGD\\[-1pt] \tiny Compute $\Delta_t^{(1)}$};
+    \node[client, fill=green!22] (c2_2) at (3.6, 0) {\small Local SGD\\[-1pt] \tiny Compute $\Delta_t^{(2)}$};
+    
+    \node[db] (db2_1) at (0, -1.2) {$\mathcal{D}_1$};
+    \node[db] (db2_2) at (3.6, -1.2) {$\mathcal{D}_2$};
+    
+    \draw[thick, color=green!60!black] (c2_1.south) -- (db2_1.north);
+    \draw[thick, color=green!60!black] (c2_2.south) -- (db2_2.north);
+\end{scope}
+
+% ==========================================
+% PANEL 3: Step 3 - Update Upload
+% ==========================================
+\begin{scope}[shift={(0,-5.6)}]
+    \node[paneltitle] at (1.8, 3.2) {Step 3: Update Upload};
+    \node[server] (s3) at (1.8, 2.0) {\textbf{Central Server}\\ \small Receiving Updates};
+    
+    \node[client] (c3_1) at (0, 0) {\small Client 1};
+    \node[client] (c3_2) at (3.6, 0) {\small Client 2};
+    
+    \draw[upload] (c3_1.north) -- (s3.south) node[midway, left=2pt, font=\tiny] {Upload $\Delta_t^{(1)}$};
+    \draw[upload] (c3_2.north) -- (s3.south) node[midway, right=2pt, font=\tiny] {Upload $\Delta_t^{(2)}$};
+    
+    \node[db] at (0, -1.2) {$\mathcal{D}_1$};
+    \node[db] at (3.6, -1.2) {$\mathcal{D}_2$};
+\end{scope}
+
+% ==========================================
+% PANEL 4: Step 4 - Server Aggregation
+% ==========================================
+\begin{scope}[shift={(6.8,-5.6)}]
+    \node[paneltitle] at (1.8, 3.2) {Step 4: Server Aggregation};
+    \node[server, fill=blue!22] (s4) at (1.8, 2.0) {\textbf{Central Server}\\ \small $w_{t+1} = w_t + \sum \frac{n_k}{n} \Delta_t^{(k)}$};
+    
+    \node[client] (c4_1) at (0, 0) {\small Client 1};
+    \node[client] (c4_2) at (3.6, 0) {\small Client 2};
+    
+    \node[db] at (0, -1.2) {$\mathcal{D}_1$};
+    \node[db] at (3.6, -1.2) {$\mathcal{D}_2$};
+\end{scope}
+
+\end{tikzpicture}

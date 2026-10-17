@@ -1,0 +1,1040 @@
+--- Page 49 ---
+Chapter 5
+Experiments and Results
+In this chapter, we will explain in detail the preliminary work that was needed to perform
+the experiments and also present and analyze the results that were generated. Preliminary
+work involves code structure, training details, KungFu customization and data analysis
+description.
+5.1 Preliminary Work
+5.1.1 Experimental Setup and Infrastructure
+The experiments were performed using the KungFu distributed machine learning library,
+q.v. Section 3.3. The source code was forked from the project’s GitHub repository
+and customized in order to facilitate our needs. At first, it was crucial to design a
+comprehensive and effortless way to install KungFu on the available hardware, using the
+available source code.
+The initial experiments were performed on a personal computer environment of only
+one node and moved on to cluster and High-Performance Computing (HPC) infrastruc-
+ture. The first attempt on a cluster was the CPU “Grid” Cluster at Technical University
+of Crete (TUC), however the CPU instruction set required from KungFu wasn’t available
+to this server.
+A more modern and customizable option was used afterwards and namely the
+“∼okeanos-knossos” cloud IaaS service provided by the National Infrastructures for Re-
+search and Technology (GRNET). The ∼okeanos-knossos is equipped with a convenient
+user interface to create, edit and destroy custom CPU-powered virtual machines (VMs).
+The use of ∼okeanos-knossos, with its simple VM architecture, was pivotal assisting in
+the understanding of KungFu’s function in a distributed environment.
+On this server, a custom Conda environment [2] was designed so that the installation
+of KungFu on a multitude of VMs can be simpler and speedier. Conda environments
+are collections of software packages that complement or replace the default packages
+installed on a machine. These package collections can be described in .yaml files, so
+they can be used in different machines without the effort of package reinstallation. The
+package go-cgo was the most important for building the project as it was the only one
+who managed to compile the communication layer library designed by KungFu.
+39
+
+--- Page 50 ---
+Chapter 5. Experiments and Results
+Further experimentation, involving GPUs this time, was conducted using the newly-
+assembled Polytechnix GPU server at TUC. Nonetheless, hardware on this server was
+insufficient for the purpose of the ultimate experiments. The experiments demanded a
+GPU cluster consisting of multiple nodes, and that ideally involves a handy scheduler. For
+that reason, the final solution would be to run the experiments on the ARIS HPC super-
+computer from GRNET S.A. [3]. The ARIS supercomputer provides 44 GPU accelerator
+nodes each containing 2 processors. ARIS admits projects from any Greek educational
+institution and thus a variety of users and purposes.
+This workload needs to somehow get balanced by a central service. Consequently,
+ARIS employs the Slurm workload manager [39] to manage submitted jobs. Users are
+obligated to describe their job requirements in a Bash file, i.e. number of nodes, RAM
+usage, wall time. If all nodes are allocated, Slurm adds the job in a queue, with its rank
+depending on its requirements.
+5.1.2 Model
+The model we needed to select for the experiments had to be powerful enough to achieve
+high accuracy, comparable to state of the art performance. This way we could examine
+if the Geometric Approach algorithms can maintain high accuracy values, while reducing
+training time. In order to keep the number of variables in the neural network low, we
+had to use a Convolutional Neural Network (CNN).
+The network has been developed by Michail Theologitis from the Technical University
+of Crete for his own Federated Learning project and termed “Advanced CNN” (Figure
+5.1). The network uses multiple convolutional layers, with ReLU as the activation func-
+tion, and multiple pull layers. It consists of 2,592,202 variables in total.
+ReLU
+ReLU
+ReLU
+ReLU
+ReLU
+ReLU
+ReLU
+ReLU
+SoftmaxDropout=0.5
+Dropout=0.5
+Figure 5.1: Advanced CNN
+5.2 Experiments
+Our main focus regarding the experiments was to show how the Geometric Approach
+—using the Functional Dynamic Averaging (FDA) methods— perform in various hyper-
+parameters settings. In order to isolate each hyper-parameter and observe the changes
+40
+
+--- Page 51 ---
+5.2. Experiments
+that each of them induces to a number of metrics, it was necessary to arbitrarily choose
+a set of default hyper-parameter values. Each parameter examined alters its value based
+on a set described by us, while all other parameters remain stable on their default values.
+The FDA methods are compared to a baseline synchronous algorithm, that essentially
+aggregates model variables for every training step. It is equivalent to training with zero
+threshold, minus the local state computation and communication.
+The parameters that where used are the following. They include hyper-parameters
+for number of clients, batch size and threshold. The values in bold font represent the
+default values.
+Repeat 3 times
+
+
+
+1. Optimizer : Adam (learning rate 10 −3)
+2. Epochs : 50
+3. Model : Advanced CNN
+4. Algorithms : Synchronous, Naive FDA, Linear FDA, Sketch FDA
+5. Number of Clients : 4, 8, 16, 32
+6. Batch Size : 64, 128, 256
+7. Threshold : 1, 25, 50, 100, 200
+The number of total experiments performed can be extracted by the following calcu-
+lation,
+(3 × (7 FDA exp.) + (3 Synchronous exp.)) × (4 clients setups) × (3 repetitions) = 288 .
+Hopefully, an automated mechanism to execute 288 experiments was developed, thor-
+oughly analyzed in Section 4.3. This mechanism provided the advantage to concentrate
+all 288 experiments to only four Slurm [39] jobs, as many as the number of different
+clients setups.
+To assess the efficacy of the Geometric Approach using a broader range of network
+topologies, six extra experiments have been executed. The earlier experiments have been
+using the default ring topology of KungFu, but this topology isn’t common in Federated
+Learning scenarios. Ring topologies are beneficial to cluster-based training. Since the
+Geometric Approach was designed with decentralized learners in mind, it was reasonable
+to assume that they would perform significantly better in these topologies compared to
+the baseline algorithm. As the results would be more evident in a bigger network, it was
+decided to execute them in a network of 32 clients. The parameters of the experiments
+were:
+1. Optimizer : Adam (learning rate 10 −3)
+2. Epochs : 50
+3. Model : Advanced CNN
+41
+
+--- Page 52 ---
+Chapter 5. Experiments and Results
+4. Algorithms : Synchronous, Naive FDA, Linear FDA, Sketch FDA
+5. Number of Clients : 32
+6. Batch Size : 128
+7. Threshold : 2
+The default ring topology (Figure 5.2a) used by KungFu creates an optimal ring based
+on the topology of the GPU nodes in the network as shown in Figure 3.3. The topologies
+that we investigated were a star and binary tree topology. The star topology would
+be the most wearing to the network as all peer-to-peer communication would require
+communication with central node “0”. On the other hand, the binary tree topology would
+be an in-between solution as it is a complete tree and distributes network overhead in
+equal shares.
+0
+1
+2
+3
+4
+5
+678910
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22 23 24 25 26
+27
+28
+29
+30
+31
+(a) Ring
+0 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31 (b) Binary Tree
+0 1
+2
+3
+4
+5
+6
+78910
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23 24 25 26
+27
+28
+29
+30
+31 (c) Star
+Figure 5.2: Network Topologies
+These experiments, as discussed earlier, were executed using the ARIS HPC [3] 1.
+The GPU partition of ARIS provides 44 nodes each containing two Haswell - Intel(R)
+Xeon(R) E5-2660v3 processors. KungFu has the ability to add multiple slots for clients
+in a single node and thus a decision had to be made, on how many clients would exist
+on each node. Having two GPU processors on each node we concluded to use two clients
+per node, although this would slightly limit inter-GPU communication. So, from now on
+two clients are synonymous to one GPU node.
+5.3 Results
+The visualization of the experiments’ results was possible with the use of a data analysis
+Python class that reads CSV files and registers their data in three Pandas [26] dataframes
+as the ones created during experiment execution (q.v. Figure 4.2). This class is used by a
+Jupyter notebook dedicated to data visualization. The main points of focus are accuracy,
+number of synchronizations (a.k.a. communication rounds) and execution time.
+1This work was supported by computational time granted from the National Infrastructures for Re-
+search and Technology S.A. (GRNET S.A.) in the National HPC facility - ARIS - under project ID
+pa230902
+42
+
+--- Page 53 ---
+5.3. Results
+0 5 10 15 20
+Training Time (mins)
+0.96
+0.97
+0.98
+0.99Accuracy
+Linear FDA
+Naive FDA
+Sketch FDA
+Synchronous
+0 10 20 30 40 50
+Epoch
+0
+20
+40
+60
+80Synchronizations
+5850 synchronizations for "Synchronous"
+Linear FDA
+Naive FDA
+Sketch FDA
+(a) 4 Clients
+0 5 10 15 20
+Training Time (mins)
+0.94
+0.95
+0.96
+0.97
+0.98
+0.99Accuracy
+Linear FDA
+Naive FDA
+Sketch FDA
+Synchronous
+0 10 20 30 40 50
+Epoch
+5
+10
+15
+20
+25
+30
+35Synchronizations
+2900 synchronizations for "Synchronous"
+Linear FDA
+Naive FDA
+Sketch FDA
+(b) 8 Clients
+0.0 2.5 5.0 7.5 10.0 12.5 15.0
+Training Time (mins)
+0.800
+0.825
+0.850
+0.875
+0.900
+0.925
+0.950
+0.975
+1.000Accuracy
+ Linear FDA
+Naive FDA
+Sketch FDA
+Synchronous
+0 10 20 30 40 50
+Epoch
+2.5
+5.0
+7.5
+10.0
+12.5
+15.0
+17.5
+20.0Synchronizations
+1450 synchronizations for "Synchronous"
+Linear FDA
+Naive FDA
+Sketch FDA
+(c) 16 Clients
+0 2 4 6 8 10
+Training Time (mins)
+0.800
+0.825
+0.850
+0.875
+0.900
+0.925
+0.950
+0.975
+1.000Accuracy
+ Linear FDA
+Naive FDA
+Sketch FDA
+Synchronous
+0 10 20 30 40 50
+Epoch
+2
+4
+6
+8
+10Synchronizations
+700 synchronizations for "Synchronous"
+Linear FDA
+Naive FDA
+Sketch FDA
+(d) 32 Clients
+Figure 5.3: Accuracy and synchronizations metrics with variable number of clients
+As the number of clients increases, the variance between the local models and their
+average is reducing and thus fewer synchronizations are performed. The FDA methods
+outperform the baseline algorithm in terms of training duration and accuracy. The dura-
+tion advantage of the FDA methods becomes more prominent with the increase of clients
+in the network as communication becomes more and more expensive. For the detailed
+43
+
+--- Page 54 ---
+Chapter 5. Experiments and Results
+training duration results refer to the Appendices’ Table A.1. In real time the FDA meth-
+ods are equally superior to Synchronous in terms of accuracy as they repeatedly reach
+high accuracy prematurely.
+0 5 10 15 20 25 30
+Training Time (mins)
+0.825
+0.850
+0.875
+0.900
+0.925
+0.950
+0.975
+1.000Accuracy
+Linear FDA
+Naive FDA
+Sketch FDA
+Synchronous
+0 10 20 30 40 50
+Epoch
+10
+20
+30
+40Synchronizations
+2900 synchronizations for "Synchronous"
+Linear FDA
+Naive FDA
+Sketch FDA
+(a) Batch Size 64
+0.0 2.5 5.0 7.5 10.0 12.5 15.0
+Training Time (mins)
+0.800
+0.825
+0.850
+0.875
+0.900
+0.925
+0.950
+0.975
+1.000Accuracy
+ Linear FDA
+Naive FDA
+Sketch FDA
+Synchronous
+0 10 20 30 40 50
+Epoch
+2.5
+5.0
+7.5
+10.0
+12.5
+15.0
+17.5
+20.0Synchronizations
+1450 synchronizations for "Synchronous"
+Linear FDA
+Naive FDA
+Sketch FDA
+(b) Batch Size 128
+0 2 4 6 8
+Training Time (mins)
+0.800
+0.825
+0.850
+0.875
+0.900
+0.925
+0.950
+0.975
+1.000Accuracy
+ Linear FDA
+Naive FDA
+Sketch FDA
+Synchronous
+0 10 20 30 40 50
+Epoch
+2
+4
+6
+8
+10Synchronizations
+700 synchronizations for "Synchronous"
+Linear FDA
+Naive FDA
+Sketch FDA
+(c) Batch Size 256
+Figure 5.4: Accuracy and synchronizations metrics with variable batch size
+The batch size like the number of clients reduces the number of synchronizations.
+Training steps are becoming larger and consequently each epoch has fewer steps. The
+number of synchronizations is inversely proportional to the batch size. Increasing the
+batch size by two, cuts synchronizations in half.
+Although the number of communication rounds decreases for larger batch sizes, the
+total training duration of the FDA Methods approaches more the duration of the Syn-
+chronous algorithm. This is because the Synchronous algorithm benefits more from the
+decreasing number of total steps. For the detailed training duration results see Table
+A.2. The same figures for 4, 8 and 32 clients are appended in Figures A.1, A.2 and A.3.
+44
+
+--- Page 55 ---
+5.3. Results
+0.0 2.5 5.0 7.5 10.0 12.5 15.0
+Training Time (mins)
+0.92
+0.94
+0.96
+0.98Accuracy
+Linear FDA
+Naive FDA
+Sketch FDA
+Synchronous
+0 10 20 30 40 50
+Epoch
+0
+50
+100
+150
+200
+250Synchronizations
+1450 synchronizations for "Synchronous"
+Linear FDA
+Naive FDA
+Sketch FDA
+(a) Threshold 1
+0.0 2.5 5.0 7.5 10.0 12.5 15.0
+Training Time (mins)
+0.800
+0.825
+0.850
+0.875
+0.900
+0.925
+0.950
+0.975
+1.000Accuracy
+ Linear FDA
+Naive FDA
+Sketch FDA
+Synchronous
+0 10 20 30 40 50
+Epoch
+5
+10
+15
+20
+25
+30
+35Synchronizations
+1450 synchronizations for "Synchronous"
+Linear FDA
+Naive FDA
+Sketch FDA
+(b) Threshold 25
+0.0 2.5 5.0 7.5 10.0 12.5 15.0
+Training Time (mins)
+0.800
+0.825
+0.850
+0.875
+0.900
+0.925
+0.950
+0.975
+1.000Accuracy
+ Linear FDA
+Naive FDA
+Sketch FDA
+Synchronous
+0 10 20 30 40 50
+Epoch
+2.5
+5.0
+7.5
+10.0
+12.5
+15.0
+17.5
+20.0Synchronizations
+1450 synchronizations for "Synchronous"
+Linear FDA
+Naive FDA
+Sketch FDA
+(c) Threshold 50
+0.0 2.5 5.0 7.5 10.0 12.5 15.0
+Training Time (mins)
+0.800
+0.825
+0.850
+0.875
+0.900
+0.925
+0.950
+0.975
+1.000Accuracy
+ Linear FDA
+Naive FDA
+Sketch FDA
+Synchronous
+0 10 20 30 40 50
+Epoch
+2
+4
+6
+8
+10Synchronizations
+1450 synchronizations for "Synchronous"
+Linear FDA
+Naive FDA
+Sketch FDA
+(d) Threshold 100
+0.0 2.5 5.0 7.5 10.0 12.5 15.0
+Training Time (mins)
+0.800
+0.825
+0.850
+0.875
+0.900
+0.925
+0.950
+0.975
+1.000Accuracy
+ Linear FDA
+Naive FDA
+Sketch FDA
+Synchronous
+0 10 20 30 40 50
+Epoch
+1
+2
+3
+4
+5
+6Synchronizations
+1450 synchronizations for "Synchronous"
+Linear FDA
+Naive FDA
+Sketch FDA
+(e) Threshold 200
+Figure 5.5: Accuracy and synchronizations metrics with variable threshold
+45
+
+--- Page 56 ---
+Chapter 5. Experiments and Results
+In Figure 5.5 accuracy and synchronizations results are shown with variable threshold.
+The smaller the threshold value the more the FDA methods emulate the performance of
+the Synchronous algorithm. They increase their accuracy quickly in the first few epochs
+and their graphs oscillate heavily. This is because the number of communication rounds is
+increasing. A larger threshold value means limited communication and decreased training
+duration, but at the expense of accuracy, especially in the first ten epochs. Nonetheless,
+still they outperform Synchronous in terms of accuracy, even for large threshold, but only
+for large numbers of clients.
+Training duration results can be found in Table A.3 and the equivalent figures for
+4, 8 and 32 clients in Figures A.4, A.5 and A.6. In Figures A.4 and A.5 and for large
+threshold values Synchronous has comparable accuracy performance.
+Clients
+5
+10
+15
+20
+25
+30Batch Size
+75 100125 150 175 200 225 250
+Mean Synchronizations
+0
+20
+40
+60
+80
+100
+120
+140
+160
+20
+40
+60
+80
+100
+120
+140
+160
+Figure 5.6: Synchronizations with variable number of clients and batch size
+5 10 15 20 25 30
+Clients
+1
+2
+3
+4
+5Training Time (mins)
+Linear FDA
+Naive FDA
+Sketch FDA
+Synchronous
+(a) Threshold 1
+5 10 15 20 25 30
+Clients
+1
+2
+3
+4
+5Training Time (mins)
+Linear FDA
+Naive FDA
+Sketch FDA
+Synchronous
+(b) Threshold 25
+Figure 5.7: Training time until accuracy of 99.3% is reached over the number of clients
+46
+
+--- Page 57 ---
+5.3. Results
+Figure 5.6 shows the mean number of synchronizations for the default threshold value
+50. It is clear that the number of communication rounds fluctuates despite the stable
+threshold value. The general pattern is that for a higher number of clients and larger
+batch size the number of communication rounds decreases.
+We can also observe that the number of synchronizations is equal for different ex-
+periments. For example, experiments with 4, 8, 16 clients and batch size 256, 128,
+64 correspondingly all have the same number of synchronizations. This can be ex-
+plained by the fact that the “global batch size” in those experiments stays the same,
+4 × 256 = 8 × 128 = 16 × 64 = 1024.
+In Figure 5.7 we show the training time needed to reach an accuracy of 99.3% by
+the several algorithms, in relation to the number of clients. We show results for the
+default batch size 128 and for threshold values 1 and 25. This is deliberate, as for higher
+threshold values and 32 clients, this accuracy value cannot be reached in just 50 epochs.
+This is another indication that not all threshold values are suitable for all scenarios. The
+difference in training time between the Synchronous and the FDA methods is pronounced,
+with the Sketch FDA method lagging a bit behind compared to Naive and Linear. What
+is quite worrying is that all algorithms record higher training time as the number of
+clients increases, although we would expect the higher computational parallelization to
+reduce it. This might mean that the MNIST dataset isn’t complicated enough to justify
+a large number of clients.
+2 4 6 8 10
+Communication Time (seconds)
+0
+2
+4
+6
+8
+10
+12Density
+Binary Tree
+Ring
+Star
+Figure 5.8: Communication time distribution with variable topology
+Moving on to the topology experiments, we have created a density graph for the
+communication time of each synchronization in Figure 5.8. The data used on this figure
+are taken from the Synchronous algorithm experiment as it had, by nature, many more
+synchronization data. So for this example, the measured communication time is the time
+needed to perform the all-reduce operation. We can evidently detect that the default ring
+topology is the optimal out of the three, with the binary tree topology closely lagging
+behind and the star topology being considerably slower.
+47
+
+--- Page 58 ---
+Chapter 5. Experiments and Results
+0 2 4 6 8 10
+Training Time (mins)
+0.70
+0.75
+0.80
+0.85
+0.90
+0.95
+1.00Accuracy
+ Linear FDA
+Naive FDA
+Sketch FDA
+Synchronous
+(a) Ring
+0 5 10 15 20
+Training Time (mins)
+0.75
+0.80
+0.85
+0.90
+0.95
+1.00Accuracy
+ Linear FDA
+Naive FDA
+Sketch FDA
+Synchronous (b) Binary Tree
+0 20 40 60 80 100
+Training Time (mins)
+0.80
+0.85
+0.90
+0.95
+1.00Accuracy
+ Linear FDA
+Naive FDA
+Sketch FDA
+Synchronous
+(c) Star
+Figure 5.9: Accuracy with variable topology
+Having in mind that communication is more expensive for the new network topologies,
+we assumed that the training performance of the FDA methods would be even more
+beneficial. This is clear in Figure 5.9, as the FDA methods perform much better in real
+training time for 50 epochs. While the FDA methods are around five times faster than the
+baseline algorithm for the default topology, they are around six and seven times faster
+for the binary tree and star topologies. This speed up happens without any accuracy
+trade-off.
+48
+
+--- Page 59 ---
+Chapter 6
+Conclusions
+The current thesis aims to develop a deployable Federated Learning tool using Tensorflow,
+that is based on the theoretic framework of the Geometric Approach. We have selected to
+extend the KungFu distributed learning library as it is offering state of the art throughput
+speeds and provides adaptive mechanisms especially on custom network topologies.
+The algorithms that we have chosen to implement were the three variations of Func-
+tional Dynamic Averaging (FDA), termed Naive, Linear and Sketch. We have verified
+what was already proven in theory. The FDA methods outperform a classic synchronous
+algorithm in a vast set of hyper-parameters. These positive results have been even more
+pronounced when executing in suboptimal network topologies that simulate real-life de-
+centralized networks of distant nodes. This is what convinces us that this work would have
+direct application on Federated Learning scenarios, where individual nodes communicate
+through poor internet connections.
+Something that stands out in the results is that the arbitrary value set as a threshold
+in the FDA methods does not fit all hyper-parameter configurations. To make training
+more adaptable, we could develop a functional solution to automatically set the threshold
+value based on the number of clients and the batch size and aiming for a stable number
+of synchronizations. This could save valuable time spent on threshold tuning. Regression
+models and exhaustive experimentation could be the solution to this problem.
+Although the work that have been done is significant, it is still a small portion of
+the available experimentation choices. We haven’t experimented with the use of other
+optimizers. Adam can be widely used in the field, but it is not the only one and isn’t
+suitable for all Machine Learning cases.
+It has been observed that the synchronous baseline algorithm used requires more time
+to achieve an accuracy goal as the number of nodes increases. This means that the com-
+plexity and duration of the training process is miniscule compared to the communication
+overload. This is an indication that we have reached the limits of the MNIST dataset,
+which may not offer enough complexity to justify the use of large networks of learners.
+Consequently, we would like to test our work on more complex and demanding datasets
+to extract more variable results.
+49
+
+--- Page 60 ---
+
+
+--- Page 61 ---
+Appendices
+51
+
+--- Page 62 ---
+
+
+--- Page 63 ---
+Appendix A
+Additional Results
+0 5 10 15 20 25 30 35 40
+Training Time (mins)
+0.975
+0.980
+0.985
+0.990
+0.995Accuracy
+Linear FDA
+Naive FDA
+Sketch FDA
+Synchronous
+0 10 20 30 40 50
+Epoch
+0
+25
+50
+75
+100
+125
+150
+175Synchronizations
+11700 synchronizations for "Synchronous"
+Linear FDA
+Naive FDA
+Sketch FDA
+(a) Batch Size 64
+0 5 10 15 20
+Training Time (mins)
+0.96
+0.97
+0.98
+0.99Accuracy
+Linear FDA
+Naive FDA
+Sketch FDA
+Synchronous
+0 10 20 30 40 50
+Epoch
+0
+20
+40
+60
+80Synchronizations
+5850 synchronizations for "Synchronous"
+Linear FDA
+Naive FDA
+Sketch FDA
+(b) Batch Size 128
+0 2 4 6 8 10 12
+Training Time (mins)
+0.86
+0.88
+0.90
+0.92
+0.94
+0.96
+0.98
+1.00Accuracy
+Linear FDA
+Naive FDA
+Sketch FDA
+Synchronous
+0 10 20 30 40 50
+Epoch
+5
+10
+15
+20
+25
+30
+35Synchronizations
+2900 synchronizations for "Synchronous"
+Linear FDA
+Naive FDA
+Sketch FDA
+(c) Batch Size 256
+Figure A.1: Accuracy and synchronizations metrics with variable batch size (4 Clients)
+53
+
+--- Page 64 ---
+Appendix A. Additional Results
+0 10 20 30 40
+Training Time (mins)
+0.95
+0.96
+0.97
+0.98
+0.99Accuracy
+Linear FDA
+Naive FDA
+Sketch FDA
+Synchronous
+0 10 20 30 40 50
+Epoch
+20
+40
+60
+80Synchronizations
+5850 synchronizations for "Synchronous"
+Linear FDA
+Naive FDA
+Sketch FDA
+(a) Batch Size 64
+0 5 10 15 20
+Training Time (mins)
+0.94
+0.95
+0.96
+0.97
+0.98
+0.99Accuracy
+Linear FDA
+Naive FDA
+Sketch FDA
+Synchronous
+0 10 20 30 40 50
+Epoch
+5
+10
+15
+20
+25
+30
+35Synchronizations
+2900 synchronizations for "Synchronous"
+Linear FDA
+Naive FDA
+Sketch FDA
+(b) Batch Size 128
+0 2 4 6 8 10 12
+Training Time (mins)
+0.850
+0.875
+0.900
+0.925
+0.950
+0.975
+1.000Accuracy
+Linear FDA
+Naive FDA
+Sketch FDA
+Synchronous
+0 10 20 30 40 50
+Epoch
+2.5
+5.0
+7.5
+10.0
+12.5
+15.0
+17.5Synchronizations
+1450 synchronizations for "Synchronous"
+Linear FDA
+Naive FDA
+Sketch FDA
+(c) Batch Size 256
+Figure A.2: Accuracy and synchronizations metrics with variable batch size (8 Clients)
+54
+
+--- Page 65 ---
+0 5 10 15 20
+Training Time (mins)
+0.800
+0.825
+0.850
+0.875
+0.900
+0.925
+0.950
+0.975
+1.000Accuracy
+ Linear FDA
+Naive FDA
+Sketch FDA
+Synchronous
+0 10 20 30 40 50
+Epoch
+5
+10
+15
+20Synchronizations
+1450 synchronizations for "Synchronous"
+Linear FDA
+Naive FDA
+Sketch FDA
+(a) Batch Size 64
+0 2 4 6 8 10
+Training Time (mins)
+0.800
+0.825
+0.850
+0.875
+0.900
+0.925
+0.950
+0.975
+1.000Accuracy
+ Linear FDA
+Naive FDA
+Sketch FDA
+Synchronous
+0 10 20 30 40 50
+Epoch
+2
+4
+6
+8
+10Synchronizations
+700 synchronizations for "Synchronous"
+Linear FDA
+Naive FDA
+Sketch FDA
+(b) Batch Size 128
+0 1 2 3 4 5
+Training Time (mins)
+0.800
+0.825
+0.850
+0.875
+0.900
+0.925
+0.950
+0.975
+1.000Accuracy
+ Linear FDA
+Naive FDA
+Sketch FDA
+Synchronous
+0 10 20 30 40 50
+Epoch
+1
+2
+3
+4
+5
+6Synchronizations
+350 synchronizations for "Synchronous"
+Linear FDA
+Naive FDA
+Sketch FDA
+(c) Batch Size 256
+Figure A.3: Accuracy and synchronizations metrics with variable batch size (32 Clients)
+55
+

@@ -1,0 +1,345 @@
+\begin{thebibliography}{10}
+
+\bibitem{aghajanyan2021intrinsic}
+Armen Aghajanyan, Luke Zettlemoyer, and Sonal Gupta.
+\newblock \href{https://arxiv.org/abs/2012.13255}{Intrinsic Dimensionality
+  Explains the Effectiveness of Language Model Fine-Tuning}.
+\newblock In {\em Proceedings of the 59th Annual Meeting of the Association for
+  Computational Linguistics}, 2021.
+
+\bibitem{alon1996space}
+Noga Alon, Yossi Matias, and Mario Szegedy.
+\newblock The space complexity of approximating the frequency moments.
+\newblock In {\em Proceedings of the Twenty-Eighth Annual ACM Symposium on
+  Theory of Computing (STOC)}, pages 20--29, 1996.
+
+\bibitem{babakniya2023slora}
+Sara Babakniya, Souvik Ahmed, Yelong Shen, Bolin Ding, and Dawn Song.
+\newblock \href{https://arxiv.org/abs/2311.12310}{{SLoRA}: Federated
+  Parameter-Efficient Fine-Tuning with Sparse Low-Rank Adaptation}.
+\newblock {\em arXiv preprint arXiv:2311.12310}, 2023.
+
+\bibitem{bommasani2021opportunities}
+Rishi Bommasani, Drew~A Hudson, Ehsan Adeli, Russ Altman, Simran Arora, Sydney
+  von Arx, Michael~S Bernstein, Jeannette Bohg, Antoine Bosselut, Emma
+  Brunskill, et~al.
+\newblock \href{https://arxiv.org/abs/2108.07258}{On the Opportunities and
+  Risks of Foundation Models}.
+\newblock {\em arXiv preprint arXiv:2108.07258}, 2021.
+
+\bibitem{bottou2010large}
+L{\'e}on Bottou.
+\newblock \href{https://ieeexplore.ieee.org/document/5597950}{Large-Scale
+  Machine Learning with Stochastic Gradient Descent}.
+\newblock In {\em Proceedings of COMPSTAT'2010}, 2010.
+
+\bibitem{brown2020language}
+Tom~B Brown, Benjamin Mann, Nick Ryder, Melanie Subbiah, Jared Kaplan, Prafulla
+  Dhariwal, Arvind Neelakantan, Pranav Shyam, Girish Sastry, Amanda Askell,
+  et~al.
+\newblock \href{https://arxiv.org/abs/2005.14165}{Language Models are Few-Shot
+  Learners}.
+\newblock In {\em Advances in Neural Information Processing Systems}, 2020.
+
+\bibitem{chen2025robust}
+Shuangyi Chen, Yuanxin Guo, Yue Ju, Hardik Dalal, Zhongwen Zhu, and Ashish
+  Khisti.
+\newblock \href{https://arxiv.org/abs/2502.01755}{Robust Federated Finetuning
+  of {LLM}s via Alternating Optimization of {LoRA}}.
+\newblock In {\em 39th Conference on Neural Information Processing Systems
+  (NeurIPS 2025)}, 2025.
+
+\bibitem{dean2012large}
+Jeffrey Dean, Greg Corrado, Rajat Monga, Kai Chen, Matthieu Devin, Mark Mao,
+  Andrew Senior, Paul Tucker, Ke~Yang, Quoc~V Le, et~al.
+\newblock
+  \href{https://proceedings.neurips.cc/paper/2012/hash/6cdd60ea0045eb7a6ec44c54d29ed402-Abstract.html}{Large
+  Scale Distributed Deep Networks}.
+\newblock In {\em Advances in Neural Information Processing Systems}, 2012.
+
+\bibitem{dettmers2023qlora}
+Tim Dettmers, Artidoro Pagnoni, Ari Holtzman, and Luke Zettlemoyer.
+\newblock \href{https://arxiv.org/abs/2305.14314}{{QLoRA}: Efficient Finetuning
+  of Quantized Large Language Models}.
+\newblock In {\em Advances in Neural Information Processing Systems}, 2023.
+
+\bibitem{devlin2019bert}
+Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova.
+\newblock \href{https://arxiv.org/abs/1810.04805}{{BERT}: Pre-training of Deep
+  Bidirectional Transformers for Language Understanding}.
+\newblock In {\em Proceedings of the 2019 Conference of the North American
+  Chapter of the Association for Computational Linguistics}, 2019.
+
+\bibitem{frangias2023federated}
+Georgios Frangias.
+\newblock Federated learning at {TensorFlow} using the geometric approach.
+\newblock Diploma thesis, Technical University of Crete, 2023.
+
+\bibitem{frangias2023fda}
+Georgios Frangias.
+\newblock Federated learning at {TensorFlow} using the geometric approach.
+\newblock Diploma thesis, Technical University of Crete, 2023.
+
+\bibitem{goodfellow2016deep}
+Ian Goodfellow, Yoshua Bengio, and Aaron Courville.
+\newblock {\em \href{https://www.deeplearningbook.org/}{Deep Learning}}.
+\newblock MIT press, 2016.
+
+\bibitem{houlsby2019parameter}
+Neil Houlsby, Andrei Giurgiu, Stanislaw Jastrzebski, Bruna Morrone, Quentin
+  De~Laroussilhe, Andrea Gesmundo, Mona Attariyan, and Sylvain Gelly.
+\newblock \href{https://arxiv.org/abs/1902.00751}{Parameter-Efficient Transfer
+  Learning for {NLP}}.
+\newblock In {\em International Conference on Machine Learning}, 2019.
+
+\bibitem{hsu2019measuring}
+Tzu-Ming~Harry Hsu, Hang Qi, and Matthew Brown.
+\newblock \href{https://arxiv.org/abs/1909.06335}{Measuring the Effects of
+  Non-Identical Data Distribution for Federated Visual Classification}.
+\newblock {\em arXiv preprint arXiv:1909.06335}, 2019.
+
+\bibitem{hu2022lora}
+Edward~J Hu, Yelong Shen, Phillip Wallis, Zeyuan Allen-Zhu, Yuanzhi Li, Shean
+  Wang, Lu~Wang, and Weizhu Chen.
+\newblock \href{https://arxiv.org/abs/2106.09685}{{LoRA}: Low-Rank Adaptation
+  of Large Language Models}.
+\newblock In {\em International Conference on Learning Representations}, 2022.
+
+\bibitem{kairouz2021advances}
+Peter Kairouz, H~Brendan McMahan, Brendan Avent, Aur{\'e}lien Bellet, Mehdi
+  Bennis, Arjun~Nitin Bhagoji, Kallista Bonawitz, Zachary Charles, Graham
+  Cormode, Rachel Cummings, et~al.
+\newblock \href{https://arxiv.org/abs/1912.04977}{Advances and Open Problems in
+  Federated Learning}.
+\newblock {\em Foundations and Trends in Machine Learning}, 14(1--2):1--210,
+  2021.
+
+\bibitem{karimireddy2020scaffold}
+Sai~Praneeth Karimireddy, Satyen Kale, Mehryar Mohri, Sashank Reddi, Sebastian
+  Stich, and Ananda~Theertha Suresh.
+\newblock \href{https://arxiv.org/abs/1910.06378}{{SCAFFOLD}: Stochastic
+  Controlled Averaging for Federated Learning}.
+\newblock In {\em International Conference on Machine Learning}, 2020.
+
+\bibitem{kelaidis2025federated}
+Kanakis Kelaidis.
+\newblock Federated {LoRA}-tuning for large language models.
+\newblock Diploma thesis, Technical University of Crete, 2025.
+
+\bibitem{kingma2015adam}
+Diederik~P Kingma and Jimmy Ba.
+\newblock \href{https://arxiv.org/abs/1412.6980}{Adam: A Method for Stochastic
+  Optimization}.
+\newblock In {\em International Conference on Learning Representations}, 2015.
+
+\bibitem{kuang2023federatedscope}
+Weirui Kuang, Bingyi Qian, Zitao Li, Daoyuan Chen, Dawei Gao, Xuchen Pan,
+  Yuexiang Xie, Yaliang Li, Bolin Ding, and Jingren Zhou.
+\newblock \href{https://arxiv.org/abs/2309.00363}{{FederatedScope-LLM}: A
+  Comprehensive Package for Federated Fine-Tuning of Large Language Models}.
+\newblock {\em arXiv preprint arXiv:2309.00363}, 2023.
+
+\bibitem{lai2021oort}
+Fan Lai, Xiangfeng Zhu, Harsha~V Madhyastha, and Mosharaf Chowdhury.
+\newblock
+  \href{https://www.usenix.org/conference/osdi21/presentation/lai}{Oort:
+  Efficient Federated Learning via Guided Participant Selection}.
+\newblock In {\em 13th USENIX Symposium on Operating Systems Design and
+  Implementation (OSDI 21)}, pages 269--282, 2021.
+
+\bibitem{li2020federated}
+Tian Li, Anit~Kumar Sahu, Manzil Zaheer, Maziar Sanjabi, Ameet Talwalkar, and
+  Virginia Smith.
+\newblock \href{https://arxiv.org/abs/1812.06127}{Federated Optimization in
+  Heterogeneous Networks}.
+\newblock In {\em Proceedings of Machine Learning and Systems}, 2020.
+
+\bibitem{li2020convergence}
+Xiang Li, Kaixuan Huang, Wenhao Yang, Shusen Wang, and Zhihua Zhang.
+\newblock \href{https://arxiv.org/abs/1907.02189}{On the Convergence of
+  {FedAvg} on Non-{IID} Data}.
+\newblock In {\em International Conference on Learning Representations}, 2020.
+
+\bibitem{li2021prefix}
+Xiang~Lisa Li and Percy Liang.
+\newblock \href{https://arxiv.org/abs/2101.00190}{Prefix-Tuning: Optimizing
+  Continuous Prompts for Generation}.
+\newblock In {\em Proceedings of the 59th Annual Meeting of the Association for
+  Computational Linguistics}, 2021.
+
+\bibitem{liu2019roberta}
+Yinhan Liu, Myle Ott, Naman Goyal, Jingfei Du, Mandar Joshi, Danqi Chen, Omer
+  Levy, Mike Lewis, Luke Zettlemoyer, and Veselin Stoyanov.
+\newblock \href{https://arxiv.org/abs/1907.11692}{{RoBERTa}: A Robustly
+  Optimized {BERT} Pretraining Approach}.
+\newblock {\em arXiv preprint arXiv:1907.11692}, 2019.
+
+\bibitem{loshchilov2019decoupled}
+Ilya Loshchilov and Frank Hutter.
+\newblock \href{https://arxiv.org/abs/1711.05101}{Decoupled Weight Decay
+  Regularization}.
+\newblock In {\em International Conference on Learning Representations}, 2019.
+
+\bibitem{mcmahan2017communication}
+Brendan McMahan, Eider Moore, Daniel Ramage, Seth Hampson, and Blaise~Aguera
+  y~Arcas.
+\newblock \href{https://arxiv.org/abs/1602.05629}{Communication-Efficient
+  Learning of Deep Networks from Decentralized Data}.
+\newblock In {\em Artificial Intelligence and Statistics}, pages 1273--1282.
+  PMLR, 2017.
+
+\bibitem{ouyang2022training}
+Long Ouyang, Jeffrey Wu, Xu~Jiang, Diogo Almeida, Carroll Wainwright, Pamela
+  Mishkin, Chong Zhang, Sandhini Agarwal, Katarina Slama, Alex Ray, et~al.
+\newblock
+  \href{https://proceedings.neurips.cc/paper_files/paper/2022/hash/b1efde53be364a73914f58805a001731-Abstract-Conference.html}{Training
+  language models to follow instructions with human feedback}.
+\newblock In {\em Advances in Neural Information Processing Systems},
+  volume~35, pages 27730--27744, 2022.
+
+\bibitem{reddi2021adaptive}
+Sashank Reddi, Zachary Charles, Manzil Zaheer, Zachary Garrett, Keith Rush,
+  Jakub Kone{\v{c}}n{\`y}, Sanjiv Kumar, and H~Brendan McMahan.
+\newblock \href{https://arxiv.org/abs/2003.00295}{Adaptive Federated
+  Optimization}.
+\newblock In {\em International Conference on Learning Representations}, 2021.
+
+\bibitem{robbins1951stochastic}
+Herbert Robbins and Sutton Monro.
+\newblock \href{https://doi.org/10.1214/aoms/1177729586}{A Stochastic
+  Approximation Method}.
+\newblock {\em The Annals of Mathematical Statistics}, pages 400--407, 1951.
+
+\bibitem{rumelhart1986learning}
+David~E Rumelhart, Geoffrey~E Hinton, and Ronald~J Williams.
+\newblock \href{https://doi.org/10.1038/323533a0}{Learning representations by
+  back-propagating errors}.
+\newblock {\em Nature}, 323(6088):533--536, 1986.
+
+\bibitem{sharfman2006geometric}
+Izchak Sharfman, Assaf Schuster, and Daniel Keren.
+\newblock \href{https://dl.acm.org/doi/10.1145/1142473.1142508}{A geometric
+  approach to monitoring threshold functions over distributed data streams}.
+\newblock In {\em Proceedings of the 2006 ACM SIGMOD international conference
+  on Management of data}, pages 301--312, 2006.
+
+\bibitem{socher2013recursive}
+Richard Socher, Alex Perelygin, Jean Wu, Jason Chuang, Christopher~D Manning,
+  Andrew~Y Ng, and Christopher Potts.
+\newblock Recursive deep models for semantic compositionality over a sentiment
+  treebank.
+\newblock In {\em Proceedings of the 2013 Conference on Empirical Methods in
+  Natural Language Processing (EMNLP)}, pages 1631--1642, 2013.
+
+\bibitem{subasi2023landscape}
+Omer Subasi, Oceane Bel, Joseph Manzano, and Kevin Barker.
+\newblock The landscape of modern machine learning: A review of machine,
+  distributed and federated learning.
+\newblock {\em arXiv preprint arXiv:2312.03120}, 2023.
+
+\bibitem{sun2024improving}
+Youbang Sun, Zitao Li, Yaliang Li, and Bolin Ding.
+\newblock \href{https://arxiv.org/abs/2403.04870}{Improving {LoRA} in
+  Privacy-preserving Federated Learning}.
+\newblock In {\em The Twelfth International Conference on Learning
+  Representations}, 2024.
+
+\bibitem{theologitis2023algorithms}
+Michail Theologitis.
+\newblock Algorithms for online federated machine learning.
+\newblock Diploma thesis, Technical University of Crete, 2023.
+
+\bibitem{theologitis2025fda}
+Michail Theologitis, Vasilis Samoladas, and Antonios Deligiannakis.
+\newblock \href{https://arxiv.org/abs/2505.04535}{{FDA-Opt}:
+  Communication-Efficient Federated Fine-Tuning of Language Models}.
+\newblock {\em arXiv preprint arXiv:2505.04535}, 2025.
+\newblock Code available at
+  \url{https://github.com/michaeltheologitis/FDA-Opt}.
+
+\bibitem{touvron2023llama}
+Hugo Touvron, Louis Martin, Kevin Stone, Peter Albert, Amjad Almahairi, Yasmine
+  Babaei, Nikolay Bashlykov, Soumya Batra, Prajjwal Bhargava, Shruti Bhosale,
+  et~al.
+\newblock \href{https://arxiv.org/abs/2307.09288}{Llama 2: Open Foundation and
+  Fine-Tuned Chat Models}.
+\newblock {\em arXiv preprint arXiv:2307.09288}, 2023.
+
+\bibitem{vaswani2017attention}
+Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones,
+  Aidan~N Gomez, {\L}ukasz Kaiser, and Illia Polosukhin.
+\newblock \href{https://arxiv.org/abs/1706.03762}{Attention Is All You Need}.
+\newblock In {\em Advances in Neural Information Processing Systems}, 2017.
+
+\bibitem{wang2019glue}
+Alex Wang, Amanpreet Singh, Julian Michael, Felix Hill, Omer Levy, and Samuel~R
+  Bowman.
+\newblock \href{https://arxiv.org/abs/1804.07461}{{GLUE}: A Multi-Task
+  Benchmark and Analysis Platform for Natural Language Understanding}.
+\newblock In {\em International Conference on Learning Representations}, 2019.
+
+\bibitem{wang2020tackling}
+Jianyu Wang, Qinghua Liu, Hao Liang, Gauri Joshi, and H~Vincent Poor.
+\newblock
+  \href{https://proceedings.neurips.cc/paper/2020/hash/564127c030d1ef78ce54cefaa9a872cc-Abstract.html}{Tackling
+  the Objective Inconsistency Problem in Heterogeneous Federated Optimization}.
+\newblock In {\em Advances in Neural Information Processing Systems},
+  volume~33, pages 7611--7623, 2020.
+
+\bibitem{wang2024flora}
+Ziyao Wang, Zheyu Shen, Yexiao He, Guoheng Sun, Hongyi Wang, Lingjuan Lyu, and
+  Ang Li.
+\newblock \href{https://arxiv.org/abs/2407.21045}{{FLoRA}: Federated
+  Fine-Tuning Large Language Models with Heterogeneous Low-Rank Adaptations}.
+\newblock In {\em NeurIPS}, 2024.
+
+\bibitem{williams2018broad}
+Adina Williams, Nikita Nangia, and Samuel~R Bowman.
+\newblock A broad-coverage challenge corpus for sentence understanding through
+  inference.
+\newblock In {\em Proceedings of the 2018 Conference of the North American
+  Chapter of the Association for Computational Linguistics: Human Language
+  Technologies (NAACL-HLT)}, pages 1112--1122, 2018.
+
+\bibitem{yang2025federated}
+Haibo Yang et~al.
+\newblock \href{https://arxiv.org/abs/2404.06423}{Federated Low-Rank
+  Adaptation: A Comprehensive Survey}.
+\newblock {\em arXiv preprint arXiv:2404.06423}, 2025.
+
+\bibitem{yurochkin2019bayesian}
+Mikhail Yurochkin, Mayank Agarwal, Soumya Banerjee, Rebecca Chen, Dennis Sun,
+  and Yasaman Khazaeni.
+\newblock \href{https://proceedings.mlr.press/v97/yurochkin19a.html}{Bayesian
+  Nonparametric Federated Learning of Neural Networks}.
+\newblock In {\em International Conference on Machine Learning (ICML)}, pages
+  7252--7261, 2019.
+
+\bibitem{zhang2023towards}
+Jianyi Zhang, Saeed Vahidian, Martin Kuo, Chunyuan Li, Ruiyi Zhang, Tong Yu,
+  Guoyin Wang, and Yiran Chen.
+\newblock \href{https://arxiv.org/abs/2305.05644}{Towards Building the
+  Federated {GPT}: Federated Instruction Tuning}.
+\newblock {\em arXiv preprint arXiv:2305.05644}, 2023.
+
+\bibitem{zhang2023adalora}
+Qingru Zhang, Minshuo Chen, Alexander Bukharin, Pengcheng He, Yu~Cheng, Weizhu
+  Chen, and Tuo Zhao.
+\newblock \href{https://arxiv.org/abs/2303.10512}{{AdaLoRA}: Adaptive Budget
+  Allocation for Parameter-Efficient Fine-Tuning}.
+\newblock In {\em International Conference on Learning Representations}, 2023.
+
+\bibitem{zhao2024loratheexplorer}
+Yang Zhao et~al.
+\newblock \href{https://arxiv.org/abs/2405.14238}{LoRA-the-Explorer: An
+  Efficient Framework for Training and Merging Low-Rank Adapters in Federated
+  Learning}.
+\newblock {\em arXiv preprint}, 2024.
+
+\bibitem{zhu2021federated}
+Zhuangdi Zhu, Junlin Hong, and Shiyu Ji.
+\newblock \href{https://arxiv.org/abs/2106.06843}{Federated Learning on
+  Non-{IID} Data: A Survey}.
+\newblock {\em Neurocomputing}, 465:371--390, 2021.
+
+\end{thebibliography}

@@ -1,0 +1,67 @@
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{Abstract}{\EnsureStandardFontEncoding {i}}{chapter*.1}%
+\contentsline {chapter}{Acknowledgements}{\EnsureStandardFontEncoding {iii}}{chapter*.2}%
+\contentsline {chapter}{List of Figures}{\EnsureStandardFontEncoding {vii}}{section*.4}%
+\contentsline {chapter}{List of Tables}{\EnsureStandardFontEncoding {ix}}{section*.6}%
+\contentsline {chapter}{List of Algorithms}{\EnsureStandardFontEncoding {xi}}{section*.8}%
+\contentsline {chapter}{List of Abbreviations}{\EnsureStandardFontEncoding {xiii}}{chapter*.10}%
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Federated Learning and Optimization}{1}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Foundation Models and Parameter-Efficient Fine-Tuning}{2}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Aggregation Inconsistency in Federated LoRA}{3}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Robust Low-Rank Adaptation}{3}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Proposed Method: FDA-RoLoRA}{4}{section.1.5}%
+\contentsline {section}{\numberline {1.6}Thesis Outline}{5}{section.1.6}%
+\contentsline {chapter}{\numberline {2}Background}{7}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Neural Networks and Optimization}{7}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Neural Networks}{7}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Gradient Descent}{8}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.3}Stochastic Gradient Descent}{8}{subsection.2.1.3}%
+\contentsline {section}{\numberline {2.2}Foundation Models and the Transformer Architecture}{8}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Distributed Machine Learning}{9}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Federated Learning and Communication Bottlenecks}{11}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Federated Averaging}{11}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}FedOpt: Server-Side Adaptive Optimization}{12}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.3}Client Drift and Statistical Heterogeneity}{13}{subsection.2.4.3}%
+\contentsline {subsection}{\numberline {2.4.4}Dirichlet-Based Data Partitioning}{13}{subsection.2.4.4}%
+\contentsline {subsection}{\numberline {2.4.5}Communication Cost Quantification}{13}{subsection.2.4.5}%
+\contentsline {section}{\numberline {2.5}Parameter-Efficient Fine-Tuning}{14}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}The PEFT Landscape}{14}{subsection.2.5.1}%
+\contentsline {subsection}{\numberline {2.5.2}Low-Rank Adaptation (LoRA)}{15}{subsection.2.5.2}%
+\contentsline {subsection}{\numberline {2.5.3}Structural and Dynamic Asymmetry in LoRA Matrices}{16}{subsection.2.5.3}%
+\contentsline {section}{\numberline {2.6}Federated Low-Rank Adaptation}{16}{section.2.6}%
+\contentsline {section}{\numberline {2.7}Robust Low-Rank Adaptation}{17}{section.2.7}%
+\contentsline {section}{\numberline {2.8}Federated Dynamic Averaging}{18}{section.2.8}%
+\contentsline {subsection}{\numberline {2.8.1}Geometric Monitoring Foundations}{18}{subsection.2.8.1}%
+\contentsline {chapter}{\numberline {3}Methodology}{21}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Combining Dynamic Averaging with Federated LoRA}{21}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Foundational Precursor Protocols: RoLoRA and FDA}{22}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Notation and Hyperparameters}{24}{section.3.3}%
+\contentsline {section}{\numberline {3.4}FDA-RoLoRA Initialization and Subspace Toggling}{26}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Local Training and Direct Subspace Variance}{26}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Server-Coordinated Synchronization Halt and Calibration}{27}{section.3.6}%
+\contentsline {section}{\numberline {3.7}Global Aggregation and Independent Threshold Evolution}{27}{section.3.7}%
+\contentsline {subsection}{\numberline {3.7.1}Numerical Walkthrough of Dual-Track Evolution}{28}{subsection.3.7.1}%
+\contentsline {section}{\numberline {3.8}Server Optimization and Pseudo-Gradient Dynamics}{29}{section.3.8}%
+\contentsline {chapter}{\numberline {4}Implementation}{31}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Software Architecture}{31}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Data Partitioning}{32}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Simulation Controls and Early Stopping}{32}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Model Configuration}{33}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Training Pipeline}{34}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Deployment Environment}{35}{section.4.6}%
+\contentsline {chapter}{\numberline {5}Evaluation}{37}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Experimental Setup for Foundation Models}{37}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Benchmark Tasks and Corpus Standardization}{37}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Statistical Data Partitioning}{38}{subsection.5.1.2}%
+\contentsline {subsection}{\numberline {5.1.3}Accuracy-Gated Early Stopping Protocol}{38}{subsection.5.1.3}%
+\contentsline {section}{\numberline {5.2}Comparative Baselines}{39}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Foundation Model Evaluation and Empirical Benchmarks}{39}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Homogeneous Benchmark Suite (IID Settings, $\alpha = 1000.0$)}{39}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Statistical Heterogeneity Benchmark Suite (Non-IID Settings, Dirichlet Skew $\alpha = 0.5$)}{41}{subsection.5.3.2}%
+\contentsline {subsection}{\numberline {5.3.3}Cross-Setting Synthesis: Communication and Geometric Stability}{42}{subsection.5.3.3}%
+\contentsline {chapter}{\numberline {6}Conclusion and Future Work}{45}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Synthesis of Results and Methodological Takeaways}{45}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Limitations}{46}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Future Work}{46}{section.6.3}%
+\contentsline {chapter}{Bibliography}{49}{section*.11}%
