@@ -1,10 +1,13 @@
 \babel@toc {english}{}\relax 
 \contentsline {chapter}{Abstract}{\EnsureStandardFontEncoding {i}}{chapter*.1}%
-\contentsline {chapter}{Acknowledgements}{\EnsureStandardFontEncoding {iii}}{chapter*.2}%
-\contentsline {chapter}{List of Figures}{\EnsureStandardFontEncoding {vii}}{section*.4}%
-\contentsline {chapter}{List of Tables}{\EnsureStandardFontEncoding {ix}}{section*.6}%
-\contentsline {chapter}{List of Algorithms}{\EnsureStandardFontEncoding {xi}}{section*.8}%
-\contentsline {chapter}{List of Abbreviations}{\EnsureStandardFontEncoding {xiii}}{chapter*.10}%
+\babel@toc {greek}{}\relax 
+\contentsline {chapter}{Περίληψη}{\EnsureStandardFontEncoding {iii}}{chapter*.2}%
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{Acknowledgements}{\EnsureStandardFontEncoding {v}}{chapter*.3}%
+\contentsline {chapter}{List of Figures}{\EnsureStandardFontEncoding {ix}}{section*.5}%
+\contentsline {chapter}{List of Tables}{\EnsureStandardFontEncoding {xi}}{section*.7}%
+\contentsline {chapter}{List of Algorithms}{\EnsureStandardFontEncoding {xiii}}{section*.9}%
+\contentsline {chapter}{List of Abbreviations}{\EnsureStandardFontEncoding {xv}}{chapter*.11}%
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Federated Learning and Optimization}{1}{section.1.1}%
 \contentsline {section}{\numberline {1.2}Foundation Models and Parameter-Efficient Fine-Tuning}{2}{section.1.2}%
@@ -39,10 +42,15 @@
 \contentsline {section}{\numberline {3.3}Notation and Hyperparameters}{24}{section.3.3}%
 \contentsline {section}{\numberline {3.4}FDA-RoLoRA Initialization and Subspace Toggling}{26}{section.3.4}%
 \contentsline {section}{\numberline {3.5}Local Training and Direct Subspace Variance}{26}{section.3.5}%
-\contentsline {section}{\numberline {3.6}Server-Coordinated Synchronization Halt and Calibration}{27}{section.3.6}%
+\contentsline {section}{\numberline {3.6}Server-Coordinated Synchronization Halt}{27}{section.3.6}%
 \contentsline {section}{\numberline {3.7}Global Aggregation and Independent Threshold Evolution}{27}{section.3.7}%
-\contentsline {subsection}{\numberline {3.7.1}Numerical Walkthrough of Dual-Track Evolution}{28}{subsection.3.7.1}%
-\contentsline {section}{\numberline {3.8}Server Optimization and Pseudo-Gradient Dynamics}{29}{section.3.8}%
+\contentsline {subsection}{\numberline {3.7.1}Foundational Midpoint Scaling from FDA-Opt}{27}{subsection.3.7.1}%
+\contentsline {subsection}{\numberline {3.7.2}From Canonical Midpoint to Tunable Epoch Setpoints}{28}{subsection.3.7.2}%
+\contentsline {section}{\numberline {3.8}Server Optimization and Aggregation Dynamics}{28}{section.3.8}%
+\contentsline {section}{\numberline {3.9}Architectural Exploration and Evolutionary Design Decisions}{29}{section.3.9}%
+\contentsline {subsection}{\numberline {3.9.1}Dense Product Reconstruction and SVD Factorization}{29}{subsection.3.9.1}%
+\contentsline {subsection}{\numberline {3.9.2}Single Shared Threshold vs. Decoupled Dual-Track}{29}{subsection.3.9.2}%
+\contentsline {subsection}{\numberline {3.9.3}Phase Lag in Threshold Smoothing (EMA and SMA)}{30}{subsection.3.9.3}%
 \contentsline {chapter}{\numberline {4}Implementation}{31}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Software Architecture}{31}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Data Partitioning}{32}{section.4.2}%
@@ -51,17 +59,25 @@
 \contentsline {section}{\numberline {4.5}Training Pipeline}{34}{section.4.5}%
 \contentsline {section}{\numberline {4.6}Deployment Environment}{35}{section.4.6}%
 \contentsline {chapter}{\numberline {5}Evaluation}{37}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Experimental Setup for Foundation Models}{37}{section.5.1}%
-\contentsline {subsection}{\numberline {5.1.1}Benchmark Tasks and Corpus Standardization}{37}{subsection.5.1.1}%
-\contentsline {subsection}{\numberline {5.1.2}Statistical Data Partitioning}{38}{subsection.5.1.2}%
-\contentsline {subsection}{\numberline {5.1.3}Accuracy-Gated Early Stopping Protocol}{38}{subsection.5.1.3}%
-\contentsline {section}{\numberline {5.2}Comparative Baselines}{39}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Foundation Model Evaluation and Empirical Benchmarks}{39}{section.5.3}%
-\contentsline {subsection}{\numberline {5.3.1}Homogeneous Benchmark Suite (IID Settings, $\alpha = 1000.0$)}{39}{subsection.5.3.1}%
-\contentsline {subsection}{\numberline {5.3.2}Statistical Heterogeneity Benchmark Suite (Non-IID Settings, Dirichlet Skew $\alpha = 0.5$)}{41}{subsection.5.3.2}%
-\contentsline {subsection}{\numberline {5.3.3}Cross-Setting Synthesis: Communication and Geometric Stability}{42}{subsection.5.3.3}%
-\contentsline {chapter}{\numberline {6}Conclusion and Future Work}{45}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Synthesis of Results and Methodological Takeaways}{45}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Limitations}{46}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Future Work}{46}{section.6.3}%
-\contentsline {chapter}{Bibliography}{49}{section*.11}%
+\contentsline {section}{\numberline {5.1}Experimental Setup and Benchmark Protocol}{37}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Executive Performance Scorecard}{40}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Benchmark Suite 1: Homogeneous Environments (IID, $\alpha = 1000.0$)}{40}{section.5.3}%
+\contentsline {paragraph}{Multi-Genre Natural Language Inference (MNLI).}{43}{table.5.3}%
+\contentsline {paragraph}{Question Natural Language Inference (QNLI).}{44}{figure.5.2}%
+\contentsline {paragraph}{Quora Question Pairs (QQP).}{44}{figure.5.4}%
+\contentsline {paragraph}{Stanford Sentiment Treebank (SST-2).}{44}{figure.5.6}%
+\contentsline {section}{\numberline {5.4}Benchmark Suite 2: Statistical Heterogeneity (Non-IID, $\alpha = 0.5$)}{53}{section.5.4}%
+\contentsline {paragraph}{Multi-Genre Inference (MNLI): Asymmetric Factor Allocation \bbl@greek@ampersand Post-Peak Collapse.}{53}{table.5.4}%
+\contentsline {paragraph}{Question Answering (QNLI): Scalability \bbl@greek@ampersand Suite-Leading Peak Accuracy.}{55}{figure.5.9}%
+\contentsline {paragraph}{The "Safety Brake" Mechanism \bbl@greek@ampersand Realized Epoch Dynamics.}{55}{figure.5.10}%
+\contentsline {paragraph}{Sentiment \bbl@greek@ampersand Paraphrase: Cross-Task Drift and Anti-Collapse Protection.}{55}{figure.5.11}%
+\contentsline {section}{\numberline {5.5}Cross-Regime Synthesis: Rounds vs. Communication Payload and Deployment Guidelines}{58}{section.5.5}%
+\contentsline {paragraph}{Rounds vs. Communication Payload to Milestone Targets.}{58}{section.5.5}%
+\contentsline {paragraph}{The Dual Frontier of Federated Adaptation.}{58}{table.5.5}%
+\contentsline {paragraph}{Asymmetric Low-Rank Factor Dynamics.}{59}{Item.21}%
+\contentsline {paragraph}{Practical Deployment Guidelines for Federated PEFT.}{59}{Item.21}%
+\contentsline {chapter}{\numberline {6}Conclusion and Future Work}{61}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Synthesis of Results and Methodological Takeaways}{61}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Limitations}{62}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Future Work}{62}{section.6.3}%
+\contentsline {chapter}{Bibliography}{65}{section*.12}%

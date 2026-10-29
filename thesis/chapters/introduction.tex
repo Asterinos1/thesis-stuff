@@ -33,7 +33,7 @@ Yet, this shift in model scale fundamentally breaks the physical viability of fu
 
 To overcome this spatial bottleneck, Parameter-Efficient Fine-Tuning (PEFT) has emerged as an indispensable methodology. Among PEFT strategies, Low-Rank Adaptation (LoRA) \cite{hu2022lora} has become the de facto standard. LoRA keeps the large pre-trained weight matrix $W_0 \in \mathbb{R}^{d \times k}$ frozen, and factorizes task-specific parameter updates into two low-rank matrices:
 \begin{equation}
-    W = W_0 + \Delta W = W_0 + A B
+    W = W_0 + \Delta W = W_0 + \frac{\alpha}{r} B A
     \label{eq:intro_lora_decomposition}
 \end{equation}
 where $A \in \mathbb{R}^{d \times r}$ denotes the down-projection matrix, $B \in \mathbb{R}^{r \times k}$ denotes the up-projection matrix, and the rank $r \ll \min(d, k)$ (typically $r \in \{4, 8, 16\}$). Because only $A$ and $B$ are updated during training, LoRA compresses the volume of communicated parameters by over $99\%$, providing a powerful spatial solution for edge and silo environments.
@@ -44,7 +44,7 @@ Given the spatial efficacy of LoRA, directly integrating low-rank adapters into 
 
 However, aggregating independently trained low-rank factors via standard FedAvg introduces a fatal mathematical failure mode: \emph{LoRA aggregation inconsistency} (or aggregation discordance) \cite{yang2025federated}. Because matrix multiplication is non-linear and non-commutative, averaging the factor matrices independently across clients fails to reconstruct the true average of their composite weight updates:
 \begin{equation}
-    \frac{1}{N}\sum_{i=1}^{N} (A_i B_i) \neq \left(\frac{1}{N}\sum_{i=1}^{N} A_i\right)\left(\frac{1}{N}\sum_{i=1}^{N} B_i\right)
+    \frac{1}{N}\sum_{i=1}^{N} (B_i A_i) \neq \left(\frac{1}{N}\sum_{i=1}^{N} B_i\right)\left(\frac{1}{N}\sum_{i=1}^{N} A_i\right)
     \label{eq:intro_inconsistency}
 \end{equation}
 
@@ -54,7 +54,7 @@ When the central server independently averages $A_i$ and $B_i$, the composite pr
 \label{sec:intro-rolora}
 To resolve this bilinear aggregation discordance, several structural workarounds have been explored in recent literature:
 \begin{itemize}
-    \item \textbf{Full Weight Reconstruction:} Clients could theoretically reconstruct the dense update $\Delta W_i = A_i B_i$ before transmission, or the server could perform Singular Value Decomposition (SVD) on the aggregated full matrix \cite{yang2025federated}. However, this completely nullifies the spatial communication savings of LoRA and imposes prohibitive computational overhead.
+    \item \textbf{Full Weight Reconstruction:} Clients could theoretically reconstruct the dense update $\Delta W_i = \frac{\alpha}{r} B_i A_i$ before transmission, or the server could perform Singular Value Decomposition (SVD) on the aggregated full matrix \cite{yang2025federated}. However, this completely nullifies the spatial communication savings of LoRA and imposes prohibitive computational overhead.
     \item \textbf{Static Down-Projection Freezing (FFA-LoRA):} FFA-LoRA \cite{sun2024improving} permanently freezes the down-projection matrix $A$ as a random projection across all clients, allowing clients to train and transmit only the up-projection matrix $B$. While this linearizes aggregation ($\frac{1}{N}\sum A B_i = A \frac{1}{N}\sum B_i$), permanently freezing half of the parameter degrees of freedom severely compromises adapter capacity and expressive power.
     \item \textbf{Heterogeneous Rank Assembly (FLoRA):} FLoRA \cite{wang2024flora} attempts to support variable client ranks by stacking updates, but still incurs heavy reconstruction overhead on the aggregation server.
 \end{itemize}
@@ -67,7 +67,7 @@ A decisive breakthrough resolving this dilemma without sacrificing model express
 
 Because one coordinate factor is held globally identical across all clients during any given aggregation phase, the averaging operation becomes strictly linear:
 \begin{equation}
-    \frac{1}{N} \sum_{i=1}^{N} (A_{\text{frozen}} B_i) = A_{\text{frozen}} \left( \frac{1}{N} \sum_{i=1}^{N} B_i \right)
+    \frac{1}{N} \sum_{i=1}^{N} (B_i A_{\text{frozen}}) = \left( \frac{1}{N} \sum_{i=1}^{N} B_i \right) A_{\text{frozen}}
     \label{eq:intro_rolora_linearity}
 \end{equation}
 By toggling the active subspace over alternating cycles, RoLoRA preserves the full representational rank and expressive capacity of standard LoRA while restoring mathematically exact federated averaging.
@@ -80,8 +80,8 @@ While RoLoRA successfully solves the spatial aggregation inconsistency, existing
 
 Conversely, while FDA-Opt \cite{theologitis2025fda} pioneered variance-driven dynamic synchronization, it was formulated exclusively for monolithic full-rank neural networks. Simply applying FDA-Opt directly to RoLoRA is impossible due to three fundamental obstacles:
 \begin{enumerate}
-    \item \textbf{Asymmetric Coordinate Geometries:} The down-projection matrix $A \in \mathbb{R}^{d \times r}$ and up-projection matrix $B \in \mathbb{R}^{r \times k}$ fulfill entirely different functional roles (compression vs. expansion). Furthermore, standard initialization schemes ($A \sim \mathcal{N}(0, \sigma^2)$ and $B = 0$) create highly divergent gradient dynamics, spectral velocities, and parameter drift magnitudes. A single scalar threshold cannot govern both spaces.
-    \item \textbf{Subspace Coordinate Variance:} If client variance were computed by projecting updates back to full-rank matrices ($\Delta W = AB$), all computational and memory benefits of PEFT would be lost. Client drift must be measured \emph{directly within the low-rank coordinate subspace}.
+    \item \textbf{Asymmetric Coordinate Geometries:} The down-projection matrix $A \in \mathbb{R}^{r \times d_{\text{in}}}$ and up-projection matrix $B \in \mathbb{R}^{d_{\text{out}} \times r}$ fulfill entirely different functional roles (compression vs. expansion). Furthermore, standard initialization schemes ($A \sim \mathcal{N}(0, \sigma^2)$ and $B = 0$) create highly divergent gradient dynamics, spectral velocities, and parameter drift magnitudes. A single scalar threshold cannot govern both spaces.
+    \item \textbf{Subspace Coordinate Variance:} If client variance were computed by projecting updates back to full-rank matrices ($\Delta W = \frac{\alpha}{r} BA$), all computational and memory benefits of PEFT would be lost. Client drift must be measured \emph{directly within the low-rank coordinate subspace}.
     \item \textbf{Geometric Cross-Contamination:} In alternating optimization, threshold evolution must not leak variance metrics between coordinate tracks. Dynamic thresholds for matrix $A$ must evolve independently from matrix $B$.
 \end{enumerate}
 
@@ -94,9 +94,9 @@ To evaluate this approach, we implement an end-to-end multi-process simulation t
 The remainder of this diploma thesis is organized as follows:
 
 \begin{itemize}
-    \item \textbf{Chapter~\ref{chap:background} (Theoretical Background)} establishes the theoretical foundations underpinning this work, reviewing stochastic gradient descent, foundation models, the Transformer architecture, client drift under statistical heterogeneity, server-side adaptive optimizers (FedOpt), Low-Rank Adaptation (LoRA), Robust LoRA (RoLoRA), and Federated Dynamic Averaging (FDA).
-    \item \textbf{Chapter~\ref{chap:methodology} (Methodology: FDA-RoLoRA)} presents the mathematical formulation of our proposed approach, detailing the alternating coordinate toggling protocol, direct subspace variance computation, independent halting criteria, dual-track threshold evolution strategies, and server-side adaptive optimization.
-    \item \textbf{Chapter~\ref{chap:implementation} (System Architecture and Implementation)} details the software engineering architecture of the simulation platform, covering PyTorch adapter injection, Dirichlet non-IID partitioning engines, multi-process inter-client communication, and cluster execution workflows.
-    \item \textbf{Chapter~\ref{chap:evaluation} (Experimental Evaluation \& Analysis)} defines the benchmarking protocol, comparative baseline algorithms, evaluation metrics across GLUE classification tasks, and presents an in-depth analytical investigation of expected convergence behaviors, communication trade-offs, and threshold dynamics under active empirical evaluation.
-    \item \textbf{Chapter~\ref{chap:conclusion} (Conclusion and Future Directions)} summarizes the scientific contributions of the thesis, reviews practical engineering limitations, and outlines promising trajectories for future research.
+    \item \textbf{Chapter~\ref{chap:background}} establishes the theoretical foundations underpinning this work, reviewing stochastic gradient descent, foundation models, the Transformer architecture, client drift under statistical heterogeneity, server-side adaptive optimizers (FedOpt), Low-Rank Adaptation (LoRA), Robust LoRA (RoLoRA), and Federated Dynamic Averaging (FDA).
+    \item \textbf{Chapter~\ref{chap:methodology}} details the mathematical formulation of the proposed FDA-RoLoRA methodology, describing the alternating coordinate toggling protocol, direct subspace variance computation, independent halting criteria, dual-track threshold evolution strategies, and server-side aggregation.
+    \item \textbf{Chapter~\ref{chap:implementation}} describes the software architecture and simulation platform, detailing PyTorch adapter injection, Dirichlet non-IID data partitioning, in-silico sequential GPU client simulation, and cluster execution workflows on dedicated accelerator infrastructure.
+    \item \textbf{Chapter~\ref{chap:evaluation}} presents the empirical evaluation framework and experimental results across 173 runs on the GLUE benchmark using \texttt{roberta-base}, analyzing convergence behaviors, anti-collapse safety braking under severe label skew, and communication payload reductions.
+    \item \textbf{Chapter~\ref{chap:conclusion}} summarizes the core contributions and methodological takeaways of the thesis, discusses practical engineering limitations, and outlines promising directions for future research.
 \end{itemize}

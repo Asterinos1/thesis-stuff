@@ -1,4 +1,6 @@
 \babel@toc {english}{}\relax 
+\babel@toc {greek}{}\relax 
+\babel@toc {english}{}\relax 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {2.1}{\ignorespaces Parameter Server Architecture for Asynchronous Distributed Learning. Workers independently pull the latest parameters and push computed gradients.}}{10}{figure.2.1}%
@@ -8,4 +10,17 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Multi-panel optimization telemetry on MNLI ($C=20, R_{\max }=50, \eta _c=0.1, \alpha =1000.0$) comparing FDA-RoLoRA against static RoLoRA baselines under homogeneous consensus.}}{45}{figure.5.1}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Multi-panel optimization telemetry on MNLI ($C=50, R_{\max }=30, \eta _c=0.1, \alpha =1000.0$) under expanded cohort scale $C=50$.}}{46}{figure.5.2}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Multi-panel optimization telemetry on QNLI ($C=20, R_{\max }=50, \eta _c=0.1, \alpha =1000.0$) comparing FDA-RoLoRA against static RoLoRA baselines under homogeneous consensus.}}{47}{figure.5.3}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Multi-panel optimization telemetry on QNLI ($C=50, R_{\max }=30, \eta _c=0.1, \alpha =1000.0$) under expanded cohort scale $C=50$.}}{48}{figure.5.4}%
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Multi-panel optimization telemetry on QQP ($C=20, R_{\max }=50, \eta _c=0.1, \alpha =1000.0$) comparing FDA-RoLoRA against static RoLoRA baselines under homogeneous consensus.}}{49}{figure.5.5}%
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Multi-panel optimization telemetry on QQP ($C=50, R_{\max }=30, \eta _c=0.1, \alpha =1000.0$) under expanded cohort scale $C=50$.}}{50}{figure.5.6}%
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Multi-panel optimization telemetry on SST-2 ($C=20, R_{\max }=50, \eta _c=0.1, \alpha =1000.0$) comparing FDA-RoLoRA against static RoLoRA baselines under homogeneous consensus.}}{51}{figure.5.7}%
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Multi-panel optimization telemetry on SST-2 ($C=50, R_{\max }=30, \eta _c=0.1, \alpha =1000.0$) under expanded cohort scale $C=50$.}}{52}{figure.5.8}%
+\contentsline {figure}{\numberline {5.9}{\ignorespaces Multi-panel optimization telemetry on MNLI under Dirichlet label skew ($\alpha =0.5, C=20, R_{\max }=50, \eta _c=0.1$) comparing FDA-RoLoRA against static baselines.}}{54}{figure.5.9}%
+\contentsline {figure}{\numberline {5.10}{\ignorespaces Multi-panel optimization telemetry on QNLI under Dirichlet label skew ($\alpha =0.5, C=20, R_{\max }=50, \eta _c=0.1$) comparing FDA-RoLoRA against static baselines.}}{56}{figure.5.10}%
+\contentsline {figure}{\numberline {5.11}{\ignorespaces Empirical local epoch allocation dynamics under severe statistical heterogeneity (Dirichlet label skew $\alpha =0.5$), illustrating the closed-loop safety-braking behavior of FDA-RoLoRA across GLUE sequence classification benchmarks.}}{57}{figure.5.11}%
+\contentsline {figure}{\numberline {5.12}{\ignorespaces Comprehensive multi-task convergence and log-scale client drift variance trajectories across GLUE benchmarks under severe Dirichlet statistical heterogeneity ($\alpha = 0.5$). Top panels present validation accuracy trajectories; bottom panels present log-scale client coordinate drift variance ($\log _{10} \sigma _t^2$).}}{57}{figure.5.12}%
+\contentsline {figure}{\numberline {5.13}{\ignorespaces The Dual Frontier of FDA-RoLoRA: Closed-loop variance tracking automatically accelerates local computation in consensus regimes while enforcing safety braking under statistical heterogeneity.}}{59}{figure.5.13}%
 \addvspace {10\p@ }

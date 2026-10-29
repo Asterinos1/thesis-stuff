@@ -1,5 +1,5 @@
 \relax 
-\providecommand\babel@aux[2]{}
+\providecommand \babel@aux [2]{\global \let \babel@toc \@gobbletwo }
 \@nameuse{bbl@beforestart}
 \providecommand\hyper@newdestlabel[2]{}
 \providecommand\HyField@AuxAddToFields[1]{}
@@ -7,12 +7,15 @@
 \providecommand \oddpage@label [2]{}
 \babel@aux{english}{}
 \@writefile{toc}{\contentsline {chapter}{Abstract}{\EnsureStandardFontEncoding {i}}{chapter*.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{Acknowledgements}{\EnsureStandardFontEncoding {iii}}{chapter*.2}\protected@file@percent }
+\babel@aux{greek}{}
+\@writefile{toc}{\contentsline {chapter}{Περίληψη}{\EnsureStandardFontEncoding {iii}}{chapter*.2}\protected@file@percent }
+\babel@aux{english}{}
+\@writefile{toc}{\contentsline {chapter}{Acknowledgements}{\EnsureStandardFontEncoding {v}}{chapter*.3}\protected@file@percent }
 \citation{theologitis2025fda}
-\@writefile{toc}{\contentsline {chapter}{List of Figures}{\EnsureStandardFontEncoding {vii}}{section*.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{List of Tables}{\EnsureStandardFontEncoding {ix}}{section*.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{List of Algorithms}{\EnsureStandardFontEncoding {xi}}{section*.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{List of Abbreviations}{\EnsureStandardFontEncoding {xiii}}{chapter*.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{List of Figures}{\EnsureStandardFontEncoding {ix}}{section*.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{List of Tables}{\EnsureStandardFontEncoding {xi}}{section*.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{List of Algorithms}{\EnsureStandardFontEncoding {xiii}}{section*.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{List of Abbreviations}{\EnsureStandardFontEncoding {xv}}{chapter*.11}\protected@file@percent }
 \citation{kairouz2021advances,mcmahan2017communication}
 \citation{mcmahan2017communication}
 \citation{li2020federated,karimireddy2020scaffold}
@@ -32,7 +35,7 @@
 \citation{yang2025federated,zhang2023towards}
 \@writefile{toc}{\contentsline {section}{\numberline {1.2}Foundation Models and Parameter-Efficient Fine-Tuning}{2}{section.1.2}\protected@file@percent }
 \newlabel{sec:intro-foundation-peft}{{1.2}{2}{Foundation Models and Parameter-Efficient Fine-Tuning}{section.1.2}{}}
-\newlabel{eq:intro_lora_decomposition}{{1.1}{2}{Foundation Models and Parameter-Efficient Fine-Tuning}{equation.1.2.1}{}}
+\newlabel{eq:intro_lora_decomposition}{{1.1}{2}{Foundation Models and Parameter-Efficient Fine-Tuning}{equation.1.1}{}}
 \citation{yang2025federated}
 \citation{yang2025federated}
 \citation{sun2024improving}
@@ -40,11 +43,11 @@
 \citation{chen2025robust}
 \@writefile{toc}{\contentsline {section}{\numberline {1.3}Aggregation Inconsistency in Federated LoRA}{3}{section.1.3}\protected@file@percent }
 \newlabel{sec:intro-inconsistency}{{1.3}{3}{Aggregation Inconsistency in Federated LoRA}{section.1.3}{}}
-\newlabel{eq:intro_inconsistency}{{1.2}{3}{Aggregation Inconsistency in Federated LoRA}{equation.1.3.2}{}}
+\newlabel{eq:intro_inconsistency}{{1.2}{3}{Aggregation Inconsistency in Federated LoRA}{equation.1.2}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {1.4}Robust Low-Rank Adaptation}{3}{section.1.4}\protected@file@percent }
 \newlabel{sec:intro-rolora}{{1.4}{3}{Robust Low-Rank Adaptation}{section.1.4}{}}
 \citation{theologitis2025fda}
-\newlabel{eq:intro_rolora_linearity}{{1.3}{4}{Robust Low-Rank Adaptation}{equation.1.4.3}{}}
+\newlabel{eq:intro_rolora_linearity}{{1.3}{4}{Robust Low-Rank Adaptation}{equation.1.3}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {1.5}Proposed Method: FDA-RoLoRA}{4}{section.1.5}\protected@file@percent }
 \newlabel{sec:intro-fdarolora}{{1.5}{4}{Proposed Method: FDA-RoLoRA}{section.1.5}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {1.6}Thesis Outline}{5}{section.1.6}\protected@file@percent }
@@ -57,16 +60,16 @@
 \@writefile{toc}{\contentsline {section}{\numberline {2.1}Neural Networks and Optimization}{7}{section.2.1}\protected@file@percent }
 \newlabel{sec:nn_sgd}{{2.1}{7}{Neural Networks and Optimization}{section.2.1}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1.1}Neural Networks}{7}{subsection.2.1.1}\protected@file@percent }
-\newlabel{eq:forward_pass}{{2.1}{7}{Neural Networks}{equation.2.1.1}{}}
-\newlabel{eq:empirical_loss}{{2.2}{7}{Neural Networks}{equation.2.1.2}{}}
+\newlabel{eq:forward_pass}{{2.1}{7}{Neural Networks}{equation.2.1}{}}
+\newlabel{eq:empirical_loss}{{2.2}{7}{Neural Networks}{equation.2.2}{}}
 \citation{bommasani2021opportunities}
 \citation{brown2020language}
 \citation{liu2019roberta}
 \citation{touvron2023llama}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1.2}Gradient Descent}{8}{subsection.2.1.2}\protected@file@percent }
-\newlabel{eq:gd_update}{{2.3}{8}{Gradient Descent}{equation.2.1.3}{}}
+\newlabel{eq:gd_update}{{2.3}{8}{Gradient Descent}{equation.2.3}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1.3}Stochastic Gradient Descent}{8}{subsection.2.1.3}\protected@file@percent }
-\newlabel{eq:sgd_update}{{2.4}{8}{Stochastic Gradient Descent}{equation.2.1.4}{}}
+\newlabel{eq:sgd_update}{{2.4}{8}{Stochastic Gradient Descent}{equation.2.4}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {2.2}Foundation Models and the Transformer Architecture}{8}{section.2.2}\protected@file@percent }
 \newlabel{sec:foundation_models}{{2.2}{8}{Foundation Models and the Transformer Architecture}{section.2.2}{}}
 \citation{vaswani2017attention}
@@ -74,7 +77,7 @@
 \citation{ouyang2022training}
 \citation{subasi2023landscape}
 \citation{subasi2023landscape}
-\newlabel{eq:self_attention}{{2.5}{9}{Foundation Models and the Transformer Architecture}{equation.2.2.5}{}}
+\newlabel{eq:self_attention}{{2.5}{9}{Foundation Models and the Transformer Architecture}{equation.2.5}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {2.3}Distributed Machine Learning}{9}{section.2.3}\protected@file@percent }
 \newlabel{sec:distributed_ml}{{2.3}{9}{Distributed Machine Learning}{section.2.3}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2.1}{\ignorespaces Parameter Server Architecture for Asynchronous Distributed Learning. Workers independently pull the latest parameters and push computed gradients.}}{10}{figure.2.1}\protected@file@percent }
@@ -85,19 +88,19 @@
 \citation{mcmahan2017communication}
 \@writefile{toc}{\contentsline {section}{\numberline {2.4}Federated Learning and Communication Bottlenecks}{11}{section.2.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.4.1}Federated Averaging}{11}{subsection.2.4.1}\protected@file@percent }
-\newlabel{eq:fl_objective}{{2.6}{11}{Federated Averaging}{equation.2.4.6}{}}
+\newlabel{eq:fl_objective}{{2.6}{11}{Federated Averaging}{equation.2.6}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2.2}{\ignorespaces Chronological sequence of a Federated Learning communication round (broadcast, local client training, update collection, and server aggregation). Figure reproduced from Theologitis et al. \cite  {theologitis2025fda}.}}{11}{figure.2.2}\protected@file@percent }
 \newlabel{fig:fl_overview}{{2.2}{11}{Chronological sequence of a Federated Learning communication round (broadcast, local client training, update collection, and server aggregation). Figure reproduced from Theologitis et al. \cite {theologitis2025fda}}{figure.2.2}{}}
-\newlabel{eq:fedavg_sgd}{{2.7}{11}{Federated Averaging}{equation.2.4.7}{}}
+\newlabel{eq:fedavg_sgd}{{2.7}{11}{Federated Averaging}{equation.2.7}{}}
 \citation{reddi2021adaptive}
 \citation{kingma2015adam}
 \citation{loshchilov2019decoupled}
 \citation{zhu2021federated}
-\newlabel{eq:fedavg_agg}{{2.8}{12}{Federated Averaging}{equation.2.4.8}{}}
+\newlabel{eq:fedavg_agg}{{2.8}{12}{Federated Averaging}{equation.2.8}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.4.2}FedOpt: Server-Side Adaptive Optimization}{12}{subsection.2.4.2}\protected@file@percent }
-\newlabel{eq:fedopt_displacement}{{2.9}{12}{FedOpt: Server-Side Adaptive Optimization}{equation.2.4.9}{}}
-\newlabel{eq:fedopt_pseudo}{{2.10}{12}{FedOpt: Server-Side Adaptive Optimization}{equation.2.4.10}{}}
-\newlabel{eq:fedopt_update}{{2.11}{12}{FedOpt: Server-Side Adaptive Optimization}{equation.2.4.11}{}}
+\newlabel{eq:fedopt_displacement}{{2.9}{12}{FedOpt: Server-Side Adaptive Optimization}{equation.2.9}{}}
+\newlabel{eq:fedopt_pseudo}{{2.10}{12}{FedOpt: Server-Side Adaptive Optimization}{equation.2.10}{}}
+\newlabel{eq:fedopt_update}{{2.11}{12}{FedOpt: Server-Side Adaptive Optimization}{equation.2.11}{}}
 \citation{karimireddy2020scaffold}
 \citation{li2020convergence}
 \citation{li2020federated}
@@ -121,8 +124,8 @@
 \citation{zhang2023adalora}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.5.2}Low-Rank Adaptation (LoRA)}{15}{subsection.2.5.2}\protected@file@percent }
 \newlabel{sec:lora}{{2.5.2}{15}{Low-Rank Adaptation (LoRA)}{subsection.2.5.2}{}}
-\newlabel{eq:lora_factorization}{{2.12}{15}{Low-Rank Adaptation (LoRA)}{equation.2.5.12}{}}
-\newlabel{eq:lora_forward}{{2.13}{15}{Low-Rank Adaptation (LoRA)}{equation.2.5.13}{}}
+\newlabel{eq:lora_factorization}{{2.12}{15}{Low-Rank Adaptation (LoRA)}{equation.2.12}{}}
+\newlabel{eq:lora_forward}{{2.13}{15}{Low-Rank Adaptation (LoRA)}{equation.2.13}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2.3}{\ignorespaces Low-Rank Adaptation (LoRA) schematic: decomposition of weight updates into low-rank matrices $A$ and $B$ alongside frozen pretrained weights $W$.}}{15}{figure.2.3}\protected@file@percent }
 \newlabel{fig:lora_schematic}{{2.3}{15}{Low-Rank Adaptation (LoRA) schematic: decomposition of weight updates into low-rank matrices $A$ and $B$ alongside frozen pretrained weights $W$}{figure.2.3}{}}
 \citation{yang2025federated}
@@ -136,7 +139,7 @@
 \newlabel{sec:lora_asymmetry}{{2.5.3}{16}{Structural and Dynamic Asymmetry in LoRA Matrices}{subsection.2.5.3}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {2.6}Federated Low-Rank Adaptation}{16}{section.2.6}\protected@file@percent }
 \newlabel{sec:fedlora}{{2.6}{16}{Federated Low-Rank Adaptation}{section.2.6}{}}
-\newlabel{eq:lora_inconsistency}{{2.14}{16}{Federated Low-Rank Adaptation}{equation.2.6.14}{}}
+\newlabel{eq:lora_inconsistency}{{2.14}{16}{Federated Low-Rank Adaptation}{equation.2.14}{}}
 \citation{chen2025robust}
 \citation{chen2025robust}
 \citation{hu2022lora}
@@ -144,19 +147,19 @@
 \newlabel{sec:rolora}{{2.7}{17}{Robust Low-Rank Adaptation}{section.2.7}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2.4}{\ignorespaces Robust Low-Rank Adaptation (RoLoRA) alternating optimization scheme. In each round, one low-rank matrix is frozen globally while the other is trained and aggregated linearly.}}{17}{figure.2.4}\protected@file@percent }
 \newlabel{fig:rolora_framework}{{2.4}{17}{Robust Low-Rank Adaptation (RoLoRA) alternating optimization scheme. In each round, one low-rank matrix is frozen globally while the other is trained and aggregated linearly}{figure.2.4}{}}
-\newlabel{eq:rolora_B_agg}{{2.15}{17}{Robust Low-Rank Adaptation}{equation.2.7.15}{}}
-\newlabel{eq:rolora_B_proof}{{2.16}{17}{Robust Low-Rank Adaptation}{equation.2.7.16}{}}
-\newlabel{eq:rolora_A_agg}{{2.17}{17}{Robust Low-Rank Adaptation}{equation.2.7.17}{}}
+\newlabel{eq:rolora_B_agg}{{2.15}{17}{Robust Low-Rank Adaptation}{equation.2.15}{}}
+\newlabel{eq:rolora_B_proof}{{2.16}{17}{Robust Low-Rank Adaptation}{equation.2.16}{}}
+\newlabel{eq:rolora_A_agg}{{2.17}{17}{Robust Low-Rank Adaptation}{equation.2.17}{}}
 \citation{theologitis2025fda}
 \citation{sharfman2006geometric}
-\newlabel{eq:rolora_A_proof}{{2.18}{18}{Robust Low-Rank Adaptation}{equation.2.7.18}{}}
+\newlabel{eq:rolora_A_proof}{{2.18}{18}{Robust Low-Rank Adaptation}{equation.2.18}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {2.8}Federated Dynamic Averaging}{18}{section.2.8}\protected@file@percent }
 \newlabel{sec:fda}{{2.8}{18}{Federated Dynamic Averaging}{section.2.8}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.8.1}Geometric Monitoring Foundations}{18}{subsection.2.8.1}\protected@file@percent }
-\newlabel{eq:fda_pseudo}{{2.19}{18}{Geometric Monitoring Foundations}{equation.2.8.19}{}}
+\newlabel{eq:fda_pseudo}{{2.19}{18}{Geometric Monitoring Foundations}{equation.2.19}{}}
 \citation{alon1996space}
-\newlabel{eq:fda_variance}{{2.20}{19}{Geometric Monitoring Foundations}{equation.2.8.20}{}}
-\newlabel{eq:fda_threshold}{{2.21}{19}{Geometric Monitoring Foundations}{equation.2.8.21}{}}
+\newlabel{eq:fda_variance}{{2.20}{19}{Geometric Monitoring Foundations}{equation.2.20}{}}
+\newlabel{eq:fda_threshold}{{2.21}{19}{Geometric Monitoring Foundations}{equation.2.21}{}}
 \citation{theologitis2025fda}
 \citation{hu2022lora}
 \citation{mcmahan2017communication}
@@ -185,29 +188,32 @@
 \newlabel{alg:fda_rolora}{{3}{25}{Notation and Hyperparameters}{algocf.3}{}}
 \citation{robbins1951stochastic}
 \@writefile{toc}{\contentsline {section}{\numberline {3.4}FDA-RoLoRA Initialization and Subspace Toggling}{26}{section.3.4}\protected@file@percent }
-\newlabel{eq:active_threshold}{{3.1}{26}{FDA-RoLoRA Initialization and Subspace Toggling}{equation.3.4.1}{}}
-\newlabel{eq:client_init}{{3.2}{26}{FDA-RoLoRA Initialization and Subspace Toggling}{equation.3.4.2}{}}
+\newlabel{eq:active_threshold}{{3.1}{26}{FDA-RoLoRA Initialization and Subspace Toggling}{equation.3.1}{}}
+\newlabel{eq:client_init}{{3.2}{26}{FDA-RoLoRA Initialization and Subspace Toggling}{equation.3.2}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3.5}Local Training and Direct Subspace Variance}{26}{section.3.5}\protected@file@percent }
-\newlabel{eq:local_sgd}{{3.3}{26}{Local Training and Direct Subspace Variance}{equation.3.5.3}{}}
-\newlabel{eq:drift}{{3.4}{26}{Local Training and Direct Subspace Variance}{equation.3.5.4}{}}
-\newlabel{eq:subspace_var}{{3.5}{26}{Local Training and Direct Subspace Variance}{equation.3.5.5}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.6}Server-Coordinated Synchronization Halt and Calibration}{27}{section.3.6}\protected@file@percent }
-\newlabel{eq:halt_cond}{{3.6}{27}{Server-Coordinated Synchronization Halt and Calibration}{equation.3.6.6}{}}
-\newlabel{eq:bootstrap_init}{{3.7}{27}{Server-Coordinated Synchronization Halt and Calibration}{equation.3.6.7}{}}
+\newlabel{eq:local_sgd}{{3.3}{26}{Local Training and Direct Subspace Variance}{equation.3.3}{}}
+\newlabel{eq:drift}{{3.4}{26}{Local Training and Direct Subspace Variance}{equation.3.4}{}}
+\newlabel{eq:subspace_var}{{3.5}{26}{Local Training and Direct Subspace Variance}{equation.3.5}{}}
+\citation{theologitis2025fda}
+\@writefile{toc}{\contentsline {section}{\numberline {3.6}Server-Coordinated Synchronization Halt}{27}{section.3.6}\protected@file@percent }
+\newlabel{eq:halt_cond}{{3.6}{27}{Server-Coordinated Synchronization Halt}{equation.3.6}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3.7}Global Aggregation and Independent Threshold Evolution}{27}{section.3.7}\protected@file@percent }
-\newlabel{eq:pseudo_grad}{{3.8}{27}{Global Aggregation and Independent Threshold Evolution}{equation.3.7.8}{}}
-\newlabel{eq:std_update}{{3.9}{27}{Global Aggregation and Independent Threshold Evolution}{equation.3.7.9}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.7.1}Numerical Walkthrough of Dual-Track Evolution}{28}{subsection.3.7.1}\protected@file@percent }
-\newlabel{subsec:numerical_walkthrough}{{3.7.1}{28}{Numerical Walkthrough of Dual-Track Evolution}{subsection.3.7.1}{}}
-\citation{reddi2021adaptive}
-\@writefile{toc}{\contentsline {section}{\numberline {3.8}Server Optimization and Pseudo-Gradient Dynamics}{29}{section.3.8}\protected@file@percent }
-\newlabel{sec:server_optimizer}{{3.8}{29}{Server Optimization and Pseudo-Gradient Dynamics}{section.3.8}{}}
-\newlabel{eq:server_sgd}{{3.10}{29}{Server Optimization and Pseudo-Gradient Dynamics}{equation.3.8.10}{}}
-\newlabel{eq:server_fedavg}{{3.11}{29}{Server Optimization and Pseudo-Gradient Dynamics}{equation.3.8.11}{}}
-\citation{kingma2015adam}
-\citation{loshchilov2019decoupled}
-\newlabel{eq:adam}{{3.15}{30}{Server Optimization and Pseudo-Gradient Dynamics}{equation.3.8.15}{}}
-\newlabel{eq:adamw}{{3.16}{30}{Server Optimization and Pseudo-Gradient Dynamics}{equation.3.8.16}{}}
+\newlabel{eq:pseudo_grad}{{3.7}{27}{Global Aggregation and Independent Threshold Evolution}{equation.3.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.7.1}Foundational Midpoint Scaling from FDA-Opt}{27}{subsection.3.7.1}\protected@file@percent }
+\newlabel{subsec:canonical_midpoint}{{3.7.1}{27}{Foundational Midpoint Scaling from FDA-Opt}{subsection.3.7.1}{}}
+\newlabel{eq:std_update}{{3.8}{27}{Foundational Midpoint Scaling from FDA-Opt}{equation.3.8}{}}
+\citation{theologitis2025fda}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.7.2}From Canonical Midpoint to Tunable Epoch Setpoints}{28}{subsection.3.7.2}\protected@file@percent }
+\newlabel{subsec:tunable_setpoints}{{3.7.2}{28}{From Canonical Midpoint to Tunable Epoch Setpoints}{subsection.3.7.2}{}}
+\newlabel{eq:generalized_update}{{3.9}{28}{From Canonical Midpoint to Tunable Epoch Setpoints}{equation.3.9}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.8}Server Optimization and Aggregation Dynamics}{28}{section.3.8}\protected@file@percent }
+\newlabel{sec:server_optimizer}{{3.8}{28}{Server Optimization and Aggregation Dynamics}{section.3.8}{}}
+\newlabel{eq:server_fedavg}{{3.10}{28}{Server Optimization and Aggregation Dynamics}{equation.3.10}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.9}Architectural Exploration and Evolutionary Design Decisions}{29}{section.3.9}\protected@file@percent }
+\newlabel{sec:architectural_exploration}{{3.9}{29}{Architectural Exploration and Evolutionary Design Decisions}{section.3.9}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.9.1}Dense Product Reconstruction and SVD Factorization}{29}{subsection.3.9.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.9.2}Single Shared Threshold vs. Decoupled Dual-Track}{29}{subsection.3.9.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.9.3}Phase Lag in Threshold Smoothing (EMA and SMA)}{30}{subsection.3.9.3}\protected@file@percent }
 \citation{theologitis2025fda}
 \citation{chen2025robust}
 \citation{kuang2023federatedscope}
@@ -232,62 +238,98 @@
 \newlabel{sec:impl_training_pipeline}{{4.5}{34}{Training Pipeline}{section.4.5}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {4.6}Deployment Environment}{35}{section.4.6}\protected@file@percent }
 \newlabel{sec:impl_deployment}{{4.6}{35}{Deployment Environment}{section.4.6}{}}
-\citation{wang2019glue}
-\citation{socher2013recursive}
-\citation{williams2018broad}
 \@writefile{toc}{\contentsline {chapter}{\numberline {5}Evaluation}{37}{chapter.5}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{loa}{\addvspace {10\p@ }}
 \newlabel{chap:evaluation}{{5}{37}{Evaluation}{chapter.5}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.1}Experimental Setup for Foundation Models}{37}{section.5.1}\protected@file@percent }
-\newlabel{sec:eval_setup_foundation}{{5.1}{37}{Experimental Setup for Foundation Models}{section.5.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.1}Benchmark Tasks and Corpus Standardization}{37}{subsection.5.1.1}\protected@file@percent }
-\newlabel{sec:eval_tasks_partitioning}{{5.1.1}{37}{Benchmark Tasks and Corpus Standardization}{subsection.5.1.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.1}Experimental Setup and Benchmark Protocol}{37}{section.5.1}\protected@file@percent }
+\newlabel{sec:eval_setup}{{5.1}{37}{Experimental Setup and Benchmark Protocol}{section.5.1}{}}
+\newlabel{sec:eval_infrastructure}{{1}{37}{Experimental Setup and Benchmark Protocol}{Item.10}{}}
 \citation{chen2025robust}
 \citation{chen2025robust}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.2}Statistical Data Partitioning}{38}{subsection.5.1.2}\protected@file@percent }
-\newlabel{sec:eval_partitioning_settings}{{5.1.2}{38}{Statistical Data Partitioning}{subsection.5.1.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.3}Accuracy-Gated Early Stopping Protocol}{38}{subsection.5.1.3}\protected@file@percent }
-\newlabel{sec:eval_early_stopping}{{5.1.3}{38}{Accuracy-Gated Early Stopping Protocol}{subsection.5.1.3}{}}
-\newlabel{sec:eval_resource_controls}{{5.1.3}{38}{Accuracy-Gated Early Stopping Protocol}{subsection.5.1.3}{}}
-\newlabel{sec:eval_model_config}{{5.1.3}{38}{Accuracy-Gated Early Stopping Protocol}{subsection.5.1.3}{}}
 \citation{chen2025robust}
-\citation{sun2024improving}
+\newlabel{sec:eval_model_param}{{2}{38}{Experimental Setup and Benchmark Protocol}{Item.11}{}}
+\newlabel{eq:payload_formulation}{{5.1}{38}{Experimental Setup and Benchmark Protocol}{equation.5.1}{}}
+\newlabel{sec:eval_capacity}{{3}{38}{Experimental Setup and Benchmark Protocol}{Item.12}{}}
+\newlabel{sec:eval_corpus}{{4}{38}{Experimental Setup and Benchmark Protocol}{Item.13}{}}
 \citation{chen2025robust}
-\citation{mcmahan2017communication,hu2022lora}
-\citation{chen2025robust}
-\@writefile{toc}{\contentsline {section}{\numberline {5.2}Comparative Baselines}{39}{section.5.2}\protected@file@percent }
-\newlabel{sec:eval_baselines}{{5.2}{39}{Comparative Baselines}{section.5.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.3}Foundation Model Evaluation and Empirical Benchmarks}{39}{section.5.3}\protected@file@percent }
-\newlabel{sec:foundation_results_status}{{5.3}{39}{Foundation Model Evaluation and Empirical Benchmarks}{section.5.3}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {5.1}{\ignorespaces Comparative performance metrics on foundation model benchmarks (\texttt  {roberta-base} on GLUE tasks, $C=20$ clients) across evaluated baselines and the proposed FDA-RoLoRA framework.}}{39}{table.5.1}\protected@file@percent }
-\newlabel{tab:results_comparison}{{5.1}{39}{Comparative performance metrics on foundation model benchmarks (\texttt {roberta-base} on GLUE tasks, $C=20$ clients) across evaluated baselines and the proposed FDA-RoLoRA framework}{table.5.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.1}Homogeneous Benchmark Suite (IID Settings, $\alpha = 1000.0$)}{39}{subsection.5.3.1}\protected@file@percent }
-\newlabel{subsec:iid_benchmarks}{{5.3.1}{39}{Homogeneous Benchmark Suite (IID Settings, \texorpdfstring {$\alpha = 1000.0$}{alpha = 1000.0})}{subsection.5.3.1}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {5.2}{\ignorespaces Empirical evaluation on the homogeneous benchmark suite (IID, Dirichlet $\alpha = 1000.0$) across GLUE sequence classification tasks on \texttt  {roberta-base}.}}{40}{table.5.2}\protected@file@percent }
-\newlabel{tab:iid_detailed_benchmarks}{{5.2}{40}{Empirical evaluation on the homogeneous benchmark suite (IID, Dirichlet $\alpha = 1000.0$) across GLUE sequence classification tasks on \texttt {roberta-base}}{table.5.2}{}}
+\newlabel{sec:eval_regimes}{{5}{39}{Experimental Setup and Benchmark Protocol}{Item.14}{}}
+\newlabel{sec:eval_hyperparameters}{{6}{39}{Experimental Setup and Benchmark Protocol}{Item.15}{}}
+\newlabel{sec:eval_early_stopping}{{6}{39}{Experimental Setup and Benchmark Protocol}{Item.15}{}}
+\newlabel{sec:eval_metrics}{{7}{39}{Experimental Setup and Benchmark Protocol}{Item.16}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.2}Executive Performance Scorecard}{40}{section.5.2}\protected@file@percent }
+\newlabel{sec:eval_scorecard}{{5.2}{40}{Executive Performance Scorecard}{section.5.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.3}Benchmark Suite 1: Homogeneous Environments (IID, $\alpha = 1000.0$)}{40}{section.5.3}\protected@file@percent }
+\newlabel{sec:eval_iid}{{5.3}{40}{Benchmark Suite 1: Homogeneous Environments (IID, \texorpdfstring {$\alpha = 1000.0$}{alpha = 1000.0})}{section.5.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.1}{\ignorespaces Executive performance scorecard for the homogeneous consensus suite (IID, Dirichlet $\alpha = 1000.0$) contrasting FDA-RoLoRA configurations against best-performing fixed RoLoRA baselines on \texttt  {roberta-base}.}}{41}{table.5.1}\protected@file@percent }
+\newlabel{tab:scorecard_iid}{{5.1}{41}{Executive performance scorecard for the homogeneous consensus suite (IID, Dirichlet $\alpha = 1000.0$) contrasting FDA-RoLoRA configurations against best-performing fixed RoLoRA baselines on \texttt {roberta-base}}{table.5.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.2}{\ignorespaces Executive performance scorecard for the heterogeneous label skew suite (Dirichlet $\alpha = 0.5$) contrasting FDA-RoLoRA configurations against best-performing fixed RoLoRA baselines on \texttt  {roberta-base}.}}{42}{table.5.2}\protected@file@percent }
+\newlabel{tab:scorecard_non_iid}{{5.2}{42}{Executive performance scorecard for the heterogeneous label skew suite (Dirichlet $\alpha = 0.5$) contrasting FDA-RoLoRA configurations against best-performing fixed RoLoRA baselines on \texttt {roberta-base}}{table.5.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.3}{\ignorespaces Empirical evaluation on the homogeneous benchmark suite (IID, Dirichlet $\alpha = 1000.0$) across GLUE sequence classification tasks on \texttt  {roberta-base}, comparing static RoLoRA schedules ($E \in \{5, 10, 15, 20\}$) against dynamic FDA-RoLoRA ($k \in \{0.5, 1.0\}$).}}{43}{table.5.3}\protected@file@percent }
+\newlabel{tab:iid_detailed_benchmarks}{{5.3}{43}{Empirical evaluation on the homogeneous benchmark suite (IID, Dirichlet $\alpha = 1000.0$) across GLUE sequence classification tasks on \texttt {roberta-base}, comparing static RoLoRA schedules ($E \in \{5, 10, 15, 20\}$) against dynamic FDA-RoLoRA ($k \in \{0.5, 1.0\}$)}{table.5.3}{}}
+\@writefile{toc}{\contentsline {paragraph}{Multi-Genre Natural Language Inference (MNLI).}{43}{table.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Question Natural Language Inference (QNLI).}{44}{figure.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Quora Question Pairs (QQP).}{44}{figure.5.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Stanford Sentiment Treebank (SST-2).}{44}{figure.5.6}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces Multi-panel optimization telemetry on MNLI ($C=20, R_{\max }=50, \eta _c=0.1, \alpha =1000.0$) comparing FDA-RoLoRA against static RoLoRA baselines under homogeneous consensus.}}{45}{figure.5.1}\protected@file@percent }
+\newlabel{fig:telemetry_mnli_c20_iid}{{5.1}{45}{Multi-panel optimization telemetry on MNLI ($C=20, R_{\max }=50, \eta _c=0.1, \alpha =1000.0$) comparing FDA-RoLoRA against static RoLoRA baselines under homogeneous consensus}{figure.5.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces Multi-panel optimization telemetry on MNLI ($C=50, R_{\max }=30, \eta _c=0.1, \alpha =1000.0$) under expanded cohort scale $C=50$.}}{46}{figure.5.2}\protected@file@percent }
+\newlabel{fig:telemetry_mnli_c50_iid}{{5.2}{46}{Multi-panel optimization telemetry on MNLI ($C=50, R_{\max }=30, \eta _c=0.1, \alpha =1000.0$) under expanded cohort scale $C=50$}{figure.5.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.3}{\ignorespaces Multi-panel optimization telemetry on QNLI ($C=20, R_{\max }=50, \eta _c=0.1, \alpha =1000.0$) comparing FDA-RoLoRA against static RoLoRA baselines under homogeneous consensus.}}{47}{figure.5.3}\protected@file@percent }
+\newlabel{fig:telemetry_qnli_c20_iid}{{5.3}{47}{Multi-panel optimization telemetry on QNLI ($C=20, R_{\max }=50, \eta _c=0.1, \alpha =1000.0$) comparing FDA-RoLoRA against static RoLoRA baselines under homogeneous consensus}{figure.5.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.4}{\ignorespaces Multi-panel optimization telemetry on QNLI ($C=50, R_{\max }=30, \eta _c=0.1, \alpha =1000.0$) under expanded cohort scale $C=50$.}}{48}{figure.5.4}\protected@file@percent }
+\newlabel{fig:telemetry_qnli_c50_iid}{{5.4}{48}{Multi-panel optimization telemetry on QNLI ($C=50, R_{\max }=30, \eta _c=0.1, \alpha =1000.0$) under expanded cohort scale $C=50$}{figure.5.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.5}{\ignorespaces Multi-panel optimization telemetry on QQP ($C=20, R_{\max }=50, \eta _c=0.1, \alpha =1000.0$) comparing FDA-RoLoRA against static RoLoRA baselines under homogeneous consensus.}}{49}{figure.5.5}\protected@file@percent }
+\newlabel{fig:telemetry_qqp_c20_iid}{{5.5}{49}{Multi-panel optimization telemetry on QQP ($C=20, R_{\max }=50, \eta _c=0.1, \alpha =1000.0$) comparing FDA-RoLoRA against static RoLoRA baselines under homogeneous consensus}{figure.5.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.6}{\ignorespaces Multi-panel optimization telemetry on QQP ($C=50, R_{\max }=30, \eta _c=0.1, \alpha =1000.0$) under expanded cohort scale $C=50$.}}{50}{figure.5.6}\protected@file@percent }
+\newlabel{fig:telemetry_qqp_c50_iid}{{5.6}{50}{Multi-panel optimization telemetry on QQP ($C=50, R_{\max }=30, \eta _c=0.1, \alpha =1000.0$) under expanded cohort scale $C=50$}{figure.5.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.7}{\ignorespaces Multi-panel optimization telemetry on SST-2 ($C=20, R_{\max }=50, \eta _c=0.1, \alpha =1000.0$) comparing FDA-RoLoRA against static RoLoRA baselines under homogeneous consensus.}}{51}{figure.5.7}\protected@file@percent }
+\newlabel{fig:telemetry_sst2_c20_iid}{{5.7}{51}{Multi-panel optimization telemetry on SST-2 ($C=20, R_{\max }=50, \eta _c=0.1, \alpha =1000.0$) comparing FDA-RoLoRA against static RoLoRA baselines under homogeneous consensus}{figure.5.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.8}{\ignorespaces Multi-panel optimization telemetry on SST-2 ($C=50, R_{\max }=30, \eta _c=0.1, \alpha =1000.0$) under expanded cohort scale $C=50$.}}{52}{figure.5.8}\protected@file@percent }
+\newlabel{fig:telemetry_sst2_c50_iid}{{5.8}{52}{Multi-panel optimization telemetry on SST-2 ($C=50, R_{\max }=30, \eta _c=0.1, \alpha =1000.0$) under expanded cohort scale $C=50$}{figure.5.8}{}}
 \citation{chen2025robust}
 \citation{hsu2019measuring,zhu2021federated}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.2}Statistical Heterogeneity Benchmark Suite (Non-IID Settings, Dirichlet Skew $\alpha = 0.5$)}{41}{subsection.5.3.2}\protected@file@percent }
-\newlabel{subsec:non_iid_benchmarks}{{5.3.2}{41}{Statistical Heterogeneity Benchmark Suite (Non-IID Settings, Dirichlet Skew \texorpdfstring {$\alpha = 0.5$}{alpha = 0.5})}{subsection.5.3.2}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {5.3}{\ignorespaces Empirical evaluation on the statistical heterogeneity benchmark suite (Non-IID Dirichlet $\alpha = 0.5$) across GLUE tasks on \texttt  {roberta-base}.}}{41}{table.5.3}\protected@file@percent }
-\newlabel{tab:non_iid_detailed_benchmarks}{{5.3}{41}{Empirical evaluation on the statistical heterogeneity benchmark suite (Non-IID Dirichlet $\alpha = 0.5$) across GLUE tasks on \texttt {roberta-base}}{table.5.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.3}Cross-Setting Synthesis: Communication and Geometric Stability}{42}{subsection.5.3.3}\protected@file@percent }
-\newlabel{subsec:cross_setting_synthesis}{{5.3.3}{42}{Cross-Setting Synthesis: Communication and Geometric Stability}{subsection.5.3.3}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {6}Conclusion and Future Work}{45}{chapter.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.4}Benchmark Suite 2: Statistical Heterogeneity (Non-IID, $\alpha = 0.5$)}{53}{section.5.4}\protected@file@percent }
+\newlabel{sec:eval_non_iid}{{5.4}{53}{Benchmark Suite 2: Statistical Heterogeneity (Non-IID, \texorpdfstring {$\alpha = 0.5$}{alpha = 0.5})}{section.5.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.4}{\ignorespaces Empirical evaluation on GLUE sequence classification tasks under severe Dirichlet label skew ($\alpha = 0.5$), detailing performance metrics, communication volume, and factor-decomposed local epoch allocations ($\bar  {e}_A$ vs. $\bar  {e}_B$) enabled by dual-track variance monitoring.}}{53}{table.5.4}\protected@file@percent }
+\newlabel{tab:non_iid_detailed_benchmarks}{{5.4}{53}{Empirical evaluation on GLUE sequence classification tasks under severe Dirichlet label skew ($\alpha = 0.5$), detailing performance metrics, communication volume, and factor-decomposed local epoch allocations ($\bar {e}_A$ vs. $\bar {e}_B$) enabled by dual-track variance monitoring}{table.5.4}{}}
+\@writefile{toc}{\contentsline {paragraph}{Multi-Genre Inference (MNLI): Asymmetric Factor Allocation \bbl@greek@ampersand   Post-Peak Collapse.}{53}{table.5.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.9}{\ignorespaces Multi-panel optimization telemetry on MNLI under Dirichlet label skew ($\alpha =0.5, C=20, R_{\max }=50, \eta _c=0.1$) comparing FDA-RoLoRA against static baselines.}}{54}{figure.5.9}\protected@file@percent }
+\newlabel{fig:telemetry_mnli_non_iid}{{5.9}{54}{Multi-panel optimization telemetry on MNLI under Dirichlet label skew ($\alpha =0.5, C=20, R_{\max }=50, \eta _c=0.1$) comparing FDA-RoLoRA against static baselines}{figure.5.9}{}}
+\@writefile{toc}{\contentsline {paragraph}{Question Answering (QNLI): Scalability \bbl@greek@ampersand   Suite-Leading Peak Accuracy.}{55}{figure.5.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{The "Safety Brake" Mechanism \bbl@greek@ampersand   Realized Epoch Dynamics.}{55}{figure.5.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Sentiment \bbl@greek@ampersand   Paraphrase: Cross-Task Drift and Anti-Collapse Protection.}{55}{figure.5.11}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.10}{\ignorespaces Multi-panel optimization telemetry on QNLI under Dirichlet label skew ($\alpha =0.5, C=20, R_{\max }=50, \eta _c=0.1$) comparing FDA-RoLoRA against static baselines.}}{56}{figure.5.10}\protected@file@percent }
+\newlabel{fig:telemetry_qnli_non_iid}{{5.10}{56}{Multi-panel optimization telemetry on QNLI under Dirichlet label skew ($\alpha =0.5, C=20, R_{\max }=50, \eta _c=0.1$) comparing FDA-RoLoRA against static baselines}{figure.5.10}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.11}{\ignorespaces Empirical local epoch allocation dynamics under severe statistical heterogeneity (Dirichlet label skew $\alpha =0.5$), illustrating the closed-loop safety-braking behavior of FDA-RoLoRA across GLUE sequence classification benchmarks.}}{57}{figure.5.11}\protected@file@percent }
+\newlabel{fig:non_iid_epoch_dynamics}{{5.11}{57}{Empirical local epoch allocation dynamics under severe statistical heterogeneity (Dirichlet label skew $\alpha =0.5$), illustrating the closed-loop safety-braking behavior of FDA-RoLoRA across GLUE sequence classification benchmarks}{figure.5.11}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.12}{\ignorespaces Comprehensive multi-task convergence and log-scale client drift variance trajectories across GLUE benchmarks under severe Dirichlet statistical heterogeneity ($\alpha = 0.5$). Top panels present validation accuracy trajectories; bottom panels present log-scale client coordinate drift variance ($\log _{10} \sigma _t^2$).}}{57}{figure.5.12}\protected@file@percent }
+\newlabel{fig:non_iid_benchmark_telemetry}{{5.12}{57}{Comprehensive multi-task convergence and log-scale client drift variance trajectories across GLUE benchmarks under severe Dirichlet statistical heterogeneity ($\alpha = 0.5$). Top panels present validation accuracy trajectories; bottom panels present log-scale client coordinate drift variance ($\log _{10} \sigma _t^2$)}{figure.5.12}{}}
+\citation{theologitis2023algorithms}
+\@writefile{toc}{\contentsline {section}{\numberline {5.5}Cross-Regime Synthesis: Rounds vs. Communication Payload and Deployment Guidelines}{58}{section.5.5}\protected@file@percent }
+\newlabel{sec:eval_synthesis}{{5.5}{58}{Cross-Regime Synthesis: Rounds vs. Communication Payload and Deployment Guidelines}{section.5.5}{}}
+\@writefile{toc}{\contentsline {paragraph}{Rounds vs. Communication Payload to Milestone Targets.}{58}{section.5.5}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5.5}{\ignorespaces Milestone synthesis evaluating communication efficiency: rounds ($R$) and cumulative network communication ($\text  {Total MB}$) required to cross predefined target validation accuracy gates on $C=20$ clients.}}{58}{table.5.5}\protected@file@percent }
+\newlabel{tab:milestone_synthesis}{{5.5}{58}{Milestone synthesis evaluating communication efficiency: rounds ($R$) and cumulative network communication ($\text {Total MB}$) required to cross predefined target validation accuracy gates on $C=20$ clients}{table.5.5}{}}
+\@writefile{toc}{\contentsline {paragraph}{The Dual Frontier of Federated Adaptation.}{58}{table.5.5}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.13}{\ignorespaces The Dual Frontier of FDA-RoLoRA: Closed-loop variance tracking automatically accelerates local computation in consensus regimes while enforcing safety braking under statistical heterogeneity.}}{59}{figure.5.13}\protected@file@percent }
+\newlabel{fig:dual_frontier}{{5.13}{59}{The Dual Frontier of FDA-RoLoRA: Closed-loop variance tracking automatically accelerates local computation in consensus regimes while enforcing safety braking under statistical heterogeneity}{figure.5.13}{}}
+\@writefile{toc}{\contentsline {paragraph}{Asymmetric Low-Rank Factor Dynamics.}{59}{Item.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Practical Deployment Guidelines for Federated PEFT.}{59}{Item.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {6}Conclusion and Future Work}{61}{chapter.6}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{loa}{\addvspace {10\p@ }}
-\newlabel{chap:conclusion}{{6}{45}{Conclusion and Future Work}{chapter.6}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {6.1}Synthesis of Results and Methodological Takeaways}{45}{section.6.1}\protected@file@percent }
-\newlabel{sec:synthesis_results}{{6.1}{45}{Synthesis of Results and Methodological Takeaways}{section.6.1}{}}
+\newlabel{chap:conclusion}{{6}{61}{Conclusion and Future Work}{chapter.6}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.1}Synthesis of Results and Methodological Takeaways}{61}{section.6.1}\protected@file@percent }
+\newlabel{sec:synthesis_results}{{6.1}{61}{Synthesis of Results and Methodological Takeaways}{section.6.1}{}}
 \citation{babakniya2023slora}
 \citation{sun2024improving}
-\@writefile{toc}{\contentsline {section}{\numberline {6.2}Limitations}{46}{section.6.2}\protected@file@percent }
-\newlabel{sec:limitations}{{6.2}{46}{Limitations}{section.6.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {6.3}Future Work}{46}{section.6.3}\protected@file@percent }
-\newlabel{sec:future_work}{{6.3}{46}{Future Work}{section.6.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.2}Limitations}{62}{section.6.2}\protected@file@percent }
+\newlabel{sec:limitations}{{6.2}{62}{Limitations}{section.6.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.3}Future Work}{62}{section.6.3}\protected@file@percent }
+\newlabel{sec:future_work}{{6.3}{62}{Future Work}{section.6.3}{}}
 \citation{dettmers2023qlora}
 \citation{kuang2023federatedscope}
 \citation{*}
@@ -304,7 +346,7 @@
 \bibcite{dettmers2023qlora}{9}
 \bibcite{devlin2019bert}{10}
 \bibcite{frangias2023federated}{11}
-\@writefile{toc}{\contentsline {chapter}{Bibliography}{49}{section*.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Bibliography}{65}{section*.12}\protected@file@percent }
 \bibcite{frangias2023fda}{12}
 \bibcite{goodfellow2016deep}{13}
 \bibcite{houlsby2019parameter}{14}
@@ -344,4 +386,4 @@
 \bibcite{zhang2023adalora}{48}
 \bibcite{zhao2024loratheexplorer}{49}
 \bibcite{zhu2021federated}{50}
-\gdef \@abspage@last{69}
+\gdef \@abspage@last{87}
