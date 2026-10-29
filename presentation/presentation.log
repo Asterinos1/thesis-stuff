@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.10.26)  28 OCT 2026 19:40
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.10.26)  29 OCT 2026 19:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1471,14 +1471,14 @@ File: tikzlibrarypositioning.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 )
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\\' on input line 45.
+(hyperref)                removing `\\' on input line 46.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\\' on input line 45.
+(hyperref)                removing `\\' on input line 46.
 
 LaTeX Font Info:    Trying to load font information for T1+lmss on input line 6
-0.
+1.
 (C:\Users\GKaralis\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmss.fd
 File: t1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
@@ -1489,32 +1489,32 @@ File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 ) (presentation.aux)
 \openout1 = `presentation.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for LGR/cmr/m/n on input line 60.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 61.
+LaTeX Font Info:    ... okay on input line 61.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 61.
+LaTeX Font Info:    ... okay on input line 61.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 61.
+LaTeX Font Info:    ... okay on input line 61.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 61.
+LaTeX Font Info:    ... okay on input line 61.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 61.
+LaTeX Font Info:    ... okay on input line 61.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 61.
+LaTeX Font Info:    ... okay on input line 61.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 61.
+LaTeX Font Info:    ... okay on input line 61.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 61.
+LaTeX Font Info:    ... okay on input line 61.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 61.
+LaTeX Font Info:    ... okay on input line 61.
+LaTeX Font Info:    Checking defaults for LGR/cmr/m/n on input line 61.
 LaTeX Font Info:    Trying to load font information for LGR+cmr on input line 6
-0.
+1.
 
 (C:\Users\GKaralis\AppData\Local\Programs\MiKTeX\tex/latex/cbfonts-fd\lgrcmr.fd
 File: lgrcmr.fd 2017/07/29 v1.2 Greek European Computer Regular
 )
-LaTeX Font Info:    ... okay on input line 60.
+LaTeX Font Info:    ... okay on input line 61.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -1576,57 +1576,57 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 s.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
-Package hyperref Info: Link coloring OFF on input line 60.
+Package hyperref Info: Link coloring OFF on input line 61.
  (presentation.out) (presentation.out)
 \@outlinefile=\write5
 \openout5 = `presentation.out'.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/lmr/m/n --> OT1/cmss/m/n on input line 60.
+(Font)                  OT1/lmr/m/n --> OT1/cmss/m/n on input line 61.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/lmr/bx/n --> OT1/cmss/b/n on input line 60.
+(Font)                  OT1/lmr/bx/n --> OT1/cmss/b/n on input line 61.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/lmss/m/n on input line 60.
+(Font)                  OT1/cmss/m/n --> OT1/lmss/m/n on input line 61.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmss/b/n --> OT1/lmss/b/n on input line 60.
+(Font)                  OT1/cmss/b/n --> OT1/lmss/b/n on input line 61.
 \symnumbers=\mathgroup6
 \sympureletters=\mathgroup7
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/lmss/m/n --> T1/lmr/m/n on input line 60.
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 60.
+(Font)                  OT1/lmss/m/n --> T1/lmr/m/n on input line 61.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 61.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/lmr/bx/n --> T1/lmss/b/n on input line 60.
+(Font)                  OT1/lmr/bx/n --> T1/lmss/b/n on input line 61.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/lmr/bx/n --> T1/lmss/b/n on input line 60.
-LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 60.
+(Font)                  OT1/lmr/bx/n --> T1/lmss/b/n on input line 61.
+LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 61.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/lmss/m/n --> T1/lmss/m/n on input line 60.
+(Font)                  OT1/lmss/m/n --> T1/lmss/m/n on input line 61.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/lmss/bx/n --> T1/lmss/m/n on input line 60.
-LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 60.
+(Font)                  OT1/lmss/bx/n --> T1/lmss/m/n on input line 61.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 61.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/lmr/m/it --> T1/lmss/m/it on input line 60.
+(Font)                  OT1/lmr/m/it --> T1/lmss/m/it on input line 61.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/lmr/bx/it --> T1/lmss/m/it on input line 60.
-LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 60.
+(Font)                  OT1/lmr/bx/it --> T1/lmss/m/it on input line 61.
+LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 61.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/lmtt/m/n --> T1/lmtt/m/n on input line 60.
+(Font)                  OT1/lmtt/m/n --> T1/lmtt/m/n on input line 61.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/lmtt/m/n --> T1/lmtt/m/n on input line 60.
+(Font)                  OT1/lmtt/m/n --> T1/lmtt/m/n on input line 61.
 LaTeX Font Info:    Overwriting symbol font `numbers' in version `bold'
-(Font)                  T1/lmss/m/n --> T1/lmss/b/n on input line 60.
+(Font)                  T1/lmss/m/n --> T1/lmss/b/n on input line 61.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  T1/lmss/m/it --> T1/lmss/b/it on input line 60.
+(Font)                  T1/lmss/m/it --> T1/lmss/b/it on input line 61.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
-(Font)                  OT1/lmss/b/n --> T1/lmr/b/n on input line 60.
+(Font)                  OT1/lmss/b/n --> T1/lmr/b/n on input line 61.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  T1/lmss/b/n --> T1/lmss/b/n on input line 60.
+(Font)                  T1/lmss/b/n --> T1/lmss/b/n on input line 61.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  T1/lmss/m/n --> T1/lmss/b/n on input line 60.
+(Font)                  T1/lmss/m/n --> T1/lmss/b/n on input line 61.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  T1/lmss/m/it --> T1/lmss/b/it on input line 60.
+(Font)                  T1/lmss/m/it --> T1/lmss/b/it on input line 61.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  T1/lmtt/m/n --> T1/lmtt/b/n on input line 60.
+(Font)                  T1/lmtt/m/n --> T1/lmtt/b/n on input line 61.
 
 (C:\Users\GKaralis\AppData\Local\Programs\MiKTeX\tex/latex/translator\translato
 r-basic-dictionary-English.dict
@@ -1665,71 +1665,71 @@ LaTeX Encoding Info:    Redeclaring text command \textmu (encoding PU) on input
 LaTeX Encoding Info:    Redeclaring text command \textohm (encoding PU) on inpu
 t line 451.
 ) (presentation.nav)
-<tuc_logo.png, id=38, 200.75pt x 200.75pt>
+<tuc_logo.png, id=35, 200.75pt x 200.75pt>
 File: tuc_logo.png Graphic file (type png)
 <use tuc_logo.png>
-Package pdftex.def Info: tuc_logo.png  used on input line 111.
+Package pdftex.def Info: tuc_logo.png  used on input line 112.
 (pdftex.def)             Requested size: 38.40938pt x 38.41139pt.
 LaTeX Font Info:    Trying to load font information for OT1+lmss on input line 
-111.
+112.
 
 (C:\Users\GKaralis\AppData\Local\Programs\MiKTeX\tex/latex/lm\ot1lmss.fd
 File: ot1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
-11.
+12.
 
 (C:\Users\GKaralis\AppData\Local\Programs\MiKTeX\tex/latex/lm\omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-111.
+112.
 
 (C:\Users\GKaralis\AppData\Local\Programs\MiKTeX\tex/latex/lm\omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-111.
+112.
 
 (C:\Users\GKaralis\AppData\Local\Programs\MiKTeX\tex/latex/lm\omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 111.
+(Font)              <10.95> on input line 112.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 111.
+(Font)              <8> on input line 112.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 111.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 111
+(Font)              <6> on input line 112.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 112
 .
 
 (C:\Users\GKaralis\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 111
+LaTeX Font Info:    Trying to load font information for U+msb on input line 112
 .
 
 (C:\Users\GKaralis\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <10.95> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 111.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 112.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <8> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 111.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 112.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <6> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 111.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 112.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 111.
+(Font)              <10> on input line 112.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 111.
+(Font)              <7> on input line 112.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 111.
+(Font)              <5> on input line 112.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <10> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 111.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 112.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <7> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 111.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 112.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <5> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 111.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 112.
 
 [1
 
@@ -1740,71 +1740,67 @@ ogo.png>] (presentation.toc) [2
 
 ] (presentation.toc) [3
 
-] [4
-
-]
-LaTeX Font Info:    Font shape `T1/lmss/bx/it' in size <10.95> not available
-(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 159.
-
- [5
-
-{C:/Users/GKaralis/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.e
-nc}{C:/Users/GKaralis/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.en
-c}]
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1
-69.
-
-(C:\Users\GKaralis\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.fd
-File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-[6
-
-] (presentation.toc) [7
-
 ]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 199.
+(Font)              <9> on input line 158.
+LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <9> not available
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 158.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <12> on input line 158.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <12> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 199.
- [8
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 158.
+ [4
 
-{C:/Users/GKaralis/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathex.e
-nc}]
-<figures/lora_figure.png, id=353, 925.95938pt x 746.03719pt>
+{C:/Users/GKaralis/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}{
+C:/Users/GKaralis/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathex.en
+c}{C:/Users/GKaralis/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit
+.enc}]
+<figures/lora_figure.png, id=217, 925.95938pt x 746.03719pt>
 File: figures/lora_figure.png Graphic file (type png)
 <use figures/lora_figure.png>
-Package pdftex.def Info: figures/lora_figure.png  used on input line 226.
-(pdftex.def)             Requested size: 182.0037pt x 146.6321pt.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 226.
-LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <9> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 226.
- [9
+Package pdftex.def Info: figures/lora_figure.png  used on input line 187.
+(pdftex.def)             Requested size: 160.16412pt x 129.03305pt.
+ [5
 
- <./figures/lora_figure.png>] [10
+ <./figures/lora_figure.png>] [6
 
 ]
-<figures/rolora_framework.png, id=439, 1145.4795pt x 219.82124pt>
+<figures/rolora_framework.png, id=303, 1145.4795pt x 219.82124pt>
 File: figures/rolora_framework.png Graphic file (type png)
 <use figures/rolora_framework.png>
-Package pdftex.def Info: figures/rolora_framework.png  used on input line 273.
+Package pdftex.def Info: figures/rolora_framework.png  used on input line 234.
 (pdftex.def)             Requested size: 152.79585pt x 29.31903pt.
- [11
+ [7
 
- <./figures/rolora_framework.png>] [12
+ <./figures/rolora_framework.png>] [8
+
+] [9
+
+]
+(presentation.toc) [10
+
+] [11
+
+] [12
 
 ] [13
 
-] (presentation.toc) [14
+] [14
 
 ] [15
 
-] [16
+] (presentation.toc) [16
 
 ]
 [17
 
-] [18
+]
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 4
+90.
+ (C:\Users\GKaralis\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.fd
+File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+[18
 
 ] [19
 
@@ -1812,83 +1808,73 @@ Package pdftex.def Info: figures/rolora_framework.png  used on input line 273.
 
 ] [21
 
-] [22
-
-] [23
-
-] (presentation.toc)
-[24
-
-] [25
-
 ]
 LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <10.95> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 627.
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 595.
 LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <8> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 627.
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 595.
 LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <6> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 627.
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 595.
 LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <5> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 627.
- [26
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 595.
+LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <9> not available
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 595.
+ [22
 
 ]
-<figures/10_QQP_C50_R30_LR0.1_all6_telemetry_stacked.png, id=1206, 1156.32pt x 
+<figures/10_QQP_C50_R30_LR0.1_all6_telemetry_stacked.png, id=1064, 1156.32pt x 
 975.645pt>
 File: figures/10_QQP_C50_R30_LR0.1_all6_telemetry_stacked.png Graphic file (typ
 e png)
 <use figures/10_QQP_C50_R30_LR0.1_all6_telemetry_stacked.png>
 Package pdftex.def Info: figures/10_QQP_C50_R30_LR0.1_all6_telemetry_stacked.pn
-g  used on input line 659.
-(pdftex.def)             Requested size: 196.16599pt x 165.51587pt.
+g  used on input line 628.
+(pdftex.def)             Requested size: 184.62682pt x 155.78117pt.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <14.4> on input line 659.
+(Font)              <14.4> on input line 628.
 LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <14.4> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 659.
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 628.
 LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <10> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 659.
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 628.
 LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <7> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 659.
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 628.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <14.4> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 659.
- [27
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 628.
+ [23
 
  <./figures/10_QQP_C50_R30_LR0.1_all6_telemetry_stacked.png>]
-<figures/18_QNLI_C20_R50_LR0.1_A0.5_all6_telemetry_stacked.png, id=1259, 1156.3
+<figures/18_QNLI_C20_R50_LR0.1_A0.5_all6_telemetry_stacked.png, id=1119, 1156.3
 2pt x 975.645pt>
 File: figures/18_QNLI_C20_R50_LR0.1_A0.5_all6_telemetry_stacked.png Graphic fil
 e (type png)
 <use figures/18_QNLI_C20_R50_LR0.1_A0.5_all6_telemetry_stacked.png>
 Package pdftex.def Info: figures/18_QNLI_C20_R50_LR0.1_A0.5_all6_telemetry_stac
-ked.png  used on input line 691.
-(pdftex.def)             Requested size: 190.3964pt x 160.65038pt.
-[28
+ked.png  used on input line 661.
+(pdftex.def)             Requested size: 181.73318pt x 153.34842pt.
+ [24
 
- <./figures/18_QNLI_C20_R50_LR0.1_A0.5_all6_telemetry_stacked.png>]
-LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <9> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 735.
- [29
+ <./figures/18_QNLI_C20_R50_LR0.1_A0.5_all6_telemetry_stacked.png>] [25
 
 ]
 LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <12> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 778.
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 748.
+ [26
 
-[30
+] [27
+
+] [28
+
+] (presentation.toc) [29
+
+] [30
 
 ] [31
 
-] [32
-
-] (presentation.toc) [33
-
-] [34
-
-] [35
-
-] [36
+]
+[32
 
  <C:/Users/GKaralis/AppData/Local/Programs/MiKTeX/tex/latex/beamer/beamericonar
-ticle.pdf>] [37
+ticle.pdf>] [33
 
 ]
 \tf@nav=\write6
@@ -1900,21 +1886,20 @@ ticle.pdf>] [37
 \tf@snm=\write8
 \openout8 = `presentation.snm'.
 
-
-(presentation.aux)
+ (presentation.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
  ***********
 Package rerunfilecheck Info: File `presentation.out' has not changed.
-(rerunfilecheck)             Checksum: 1F298EF7A1DEE7E5B72D2EC1964A2DB0;1003.
+(rerunfilecheck)             Checksum: 4D90C9D03B59987FC7D953D906F9E0C9;950.
  ) 
 Here is how much of TeX's memory you used:
- 29599 strings out of 467871
- 600213 string characters out of 5416923
- 966798 words of memory out of 5000000
- 57766 multiletter control sequences out of 15000+600000
- 751027 words of font info for 124 fonts, out of 8000000 for 9000
+ 29573 strings out of 467871
+ 599846 string characters out of 5416923
+ 968472 words of memory out of 5000000
+ 57752 multiletter control sequences out of 15000+600000
+ 748225 words of font info for 123 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  128i,19n,123p,497b,1096s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/GKaralis/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmex10
@@ -1929,26 +1914,25 @@ ublic/lm/lmmi9.pfb><C:/Users/GKaralis/AppData/Local/Programs/MiKTeX/fonts/type1
 pe1/public/lm/lmss12.pfb><C:/Users/GKaralis/AppData/Local/Programs/MiKTeX/fonts
 /type1/public/lm/lmss8.pfb><C:/Users/GKaralis/AppData/Local/Programs/MiKTeX/fon
 ts/type1/public/lm/lmss9.pfb><C:/Users/GKaralis/AppData/Local/Programs/MiKTeX/f
-onts/type1/public/lm/lmssbo10.pfb><C:/Users/GKaralis/AppData/Local/Programs/MiK
-TeX/fonts/type1/public/lm/lmssbx10.pfb><C:/Users/GKaralis/AppData/Local/Program
-s/MiKTeX/fonts/type1/public/lm/lmsso10.pfb><C:/Users/GKaralis/AppData/Local/Pro
-grams/MiKTeX/fonts/type1/public/lm/lmsso12.pfb><C:/Users/GKaralis/AppData/Local
-/Programs/MiKTeX/fonts/type1/public/lm/lmsso8.pfb><C:/Users/GKaralis/AppData/Lo
-cal/Programs/MiKTeX/fonts/type1/public/lm/lmsso9.pfb><C:/Users/GKaralis/AppData
-/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/GKaralis/AppD
-ata/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy5.pfb><C:/Users/GKaralis/Ap
-pData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy6.pfb><C:/Users/GKaralis/
-AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy7.pfb><C:/Users/GKarali
-s/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb><C:/Users/GKara
-lis/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy9.pfb><C:/Users/GKa
-ralis/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C:/Users/
-GKaralis/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt8.pfb><C:/User
-s/GKaralis/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt9.pfb><C:/Us
-ers/GKaralis/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/
-msbm10.pfb>
-Output written on presentation.pdf (37 pages, 2611916 bytes).
+onts/type1/public/lm/lmssbx10.pfb><C:/Users/GKaralis/AppData/Local/Programs/MiK
+TeX/fonts/type1/public/lm/lmsso10.pfb><C:/Users/GKaralis/AppData/Local/Programs
+/MiKTeX/fonts/type1/public/lm/lmsso12.pfb><C:/Users/GKaralis/AppData/Local/Prog
+rams/MiKTeX/fonts/type1/public/lm/lmsso8.pfb><C:/Users/GKaralis/AppData/Local/P
+rograms/MiKTeX/fonts/type1/public/lm/lmsso9.pfb><C:/Users/GKaralis/AppData/Loca
+l/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/GKaralis/AppData/L
+ocal/Programs/MiKTeX/fonts/type1/public/lm/lmsy5.pfb><C:/Users/GKaralis/AppData
+/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy6.pfb><C:/Users/GKaralis/AppDa
+ta/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy7.pfb><C:/Users/GKaralis/App
+Data/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb><C:/Users/GKaralis/A
+ppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy9.pfb><C:/Users/GKaralis
+/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C:/Users/GKara
+lis/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt8.pfb><C:/Users/GKa
+ralis/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt9.pfb><C:/Users/G
+Karalis/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm1
+0.pfb>
+Output written on presentation.pdf (33 pages, 2552103 bytes).
 PDF statistics:
- 1823 PDF objects out of 2073 (max. 8388607)
- 86 named destinations out of 1000 (max. 500000)
- 1742 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1676 PDF objects out of 1728 (max. 8388607)
+ 77 named destinations out of 1000 (max. 500000)
+ 1674 words of extra memory for PDF output out of 10000 (max. 10000000)
 

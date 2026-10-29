@@ -17,6 +17,7 @@
 \usepackage{multirow}
 \usepackage{array}
 \usepackage{hyperref}
+\hypersetup{hidelinks}
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta, positioning}
 
@@ -44,8 +45,8 @@
     \textbf{Committee:} Prof.~Antonios Deligiannakis, Prof.~Minos Garofalakis
 }
 \institute[]{
-    School of Electrical \& Computer Engineering\\
-    Technical University of Crete
+    \href{https://www.ece.tuc.gr/}{School of Electrical \& Computer Engineering}\\
+    \href{https://www.tuc.gr/}{Technical University of Crete}
 }
 \date[October 2026]{October 2026}
 \titlegraphic{}
@@ -67,11 +68,11 @@
     %% Institutional Masthead: TUC Logo + University & School
     \begin{columns}[c]
         \begin{column}{0.10\textwidth}
-            \includegraphics[height=1.35cm,keepaspectratio]{tuc_logo.png}
+            \href{https://www.tuc.gr/}{\includegraphics[height=1.35cm,keepaspectratio]{tuc_logo.png}}
         \end{column}
         \begin{column}{0.88\textwidth}
-            {\large \textbf{\color{tucblue}TECHNICAL UNIVERSITY OF CRETE}}\\[0.18em]
-            {\small \color{tucgray}School of Electrical \& Computer Engineering}
+            {\large \href{https://www.tuc.gr/}{\textbf{\color{tucblue}TECHNICAL UNIVERSITY OF CRETE}}}\\[0.18em]
+            {\small \href{https://www.ece.tuc.gr/}{\color{tucgray}School of Electrical \& Computer Engineering}}
         \end{column}
     \end{columns}
     
@@ -116,70 +117,19 @@
 
 
 % ==============================================================================
-% SECTION 1: Introduction
+% SECTION 1: Background Knowledge & Problem Statement
 % ==============================================================================
-\section{Introduction}
+\section{Background Knowledge \& Problem Statement}
 
-\begin{frame}{Introduction : Federated Fine-Tuning of Foundation Models}
-    \begin{itemize}
-        \item \textbf{Federated Learning (FL)}: Privacy-preserving collaborative model optimization across decentralized edge devices or institutional silos without centralizing raw data.
-        \item \textbf{Foundation Model Scaling}: Adaptation of large pre-trained transformer models (e.g., RoBERTa 125M/355M, Llama-2 7B) to downstream domains is vital across healthcare, finance, and legal domains.
-        \item \textbf{The Core Constraint}: Transmitting billions of parameters over bandwidth-limited edge networks makes standard centralized or full-parameter federated learning computationally and communicatively intractable.
-    \end{itemize}
-    
-    \begin{block}{Central Research Question}
-        How can we jointly optimize both the \textbf{spatial parameter volume} and the \textbf{temporal synchronization frequency} in federated learning without sacrificing global aggregation fidelity?
-    \end{block}
-\end{frame}
-
-\begin{frame}{Introduction : The Dual Communication Bottleneck}
-    \begin{columns}
-        \begin{column}{0.48\textwidth}
-            \begin{block}{1. Spatial Bottleneck}
-                \begin{itemize}
-                    \item \textbf{Physical Volume}: Data transferred per synchronization round.
-                    \item Full parameter transfers require gigabytes per client per round (e.g., 28~GB for Llama-2-7B in FP32).
-                    \item Addressed via alternating low-rank adaptation (\textbf{RoLoRA}, Chen et al., NeurIPS 2025).
-                \end{itemize}
-            \end{block}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{block}{2. Temporal Bottleneck}
-                \begin{itemize}
-                    \item \textbf{Synchronization Cadence}: Frequency of communication rounds.
-                    \item Static schedules ($\tau = E$) ignore local optimization dynamics and statistical data drift.
-                    \item Addressed in full models via dynamic averaging (\textbf{FDA-Opt}, Theologitis et al., 2025).
-                \end{itemize}
-            \end{block}
-        \end{column}
-    \end{columns}
-    \vspace{0.8em}
-    \centering
-    \textit{True communication efficiency requires co-optimizing both dimensions simultaneously: \textbf{FDA-Opt} (Temporal) + \textbf{RoLoRA} (Spatial).}
-\end{frame}
-
-\begin{frame}{Introduction : Core Objectives \& Scientific Contributions}
-    \begin{itemize}
-        \item \textbf{Conceptual Integration}: First formulation uniting temporal dynamic averaging (\textbf{FDA-Opt}, Theologitis et al., 2025) with alternating parameter-efficient adaptation (\textbf{RoLoRA}, Chen et al., NeurIPS 2025).
-        \item \textbf{FDA-RoLoRA Framework}: Embeds variance-driven dynamic synchronization into RoLoRA's alternating optimization scheme with independent per-matrix variance thresholds $(\theta_A, \theta_B)$.
-        \item \textbf{Direct Subspace Variance Tracking}: Formulates variance tracking operating strictly within low-rank coordinate tensors, avoiding full-parameter expansion overhead.
-        \item \textbf{Decoupled Subspace Threshold Evolution}: Dynamically updates synchronization thresholds for each matrix track independently via midpoint scaling, avoiding cross-phase geometric interference.
-        \item \textbf{Software Architecture \& Foundation Model Testbed}: Extended the open-source \textbf{FDA-Opt} codebase to build an end-to-end framework on PyTorch, Transformers, and PEFT, benchmarked on foundation models (\texttt{roberta-base}) across GLUE tasks on an enterprise GPU cluster.
-    \end{itemize}
-\end{frame}
-
-
-% ==============================================================================
-% SECTION 2: Background & Problem Statement
-% ==============================================================================
-\section{Background \& Problem Statement}
-
-\begin{frame}{Background : Distributed Learning, FedAvg \& Client Drift}
+\begin{frame}{Background Knowledge : Distributed Learning, FedAvg \& Client Drift}
+    \vspace{-0.3em}
     \begin{columns}
         \begin{column}{0.55\textwidth}
             \begin{itemize}
+                \footnotesize
+                \item \textbf{Federated Learning (FL)}: Privacy-preserving collaborative optimization of foundation models without centralizing client data.
                 \item \textbf{Federated Averaging (FedAvg)}:
-                $$w_{t+1} = w_t + \frac{1}{|S_t|} \sum_{k \in S_t} \Delta_t^{(k)}$$
+                {\small $$w_{t+1} = w_t + \frac{1}{|S_t|} \sum_{k \in S_t} \Delta_t^{(k)}$$}
                 Clients execute $\tau$ local SGD steps on private data $\mathcal{D}_k$.
                 \item \textbf{Statistical Heterogeneity (Non-IID)}:
                 Client distributions differ in label, quantity, or features. Modeled via \textbf{Dirichlet distribution} $p_k \sim \text{Dir}(\alpha)$.
@@ -188,20 +138,31 @@
         \end{column}
         \begin{column}{0.42\textwidth}
             \begin{block}{Dirichlet Heterogeneity ($\alpha$)}
+                \footnotesize
                 \begin{itemize}
                     \item $\alpha \to 0$: Extreme label skew (clients hold single-class data).
                     \item $\alpha \to \infty$: Uniform IID distribution.
                     \item Key benchmark lever for evaluating drift robustness.
                 \end{itemize}
             \end{block}
+            \vspace{0.2em}
+            \begin{block}{The Dual Communication Bottleneck}
+                \footnotesize
+                \begin{itemize}
+                    \item \textbf{Spatial}: Model parameter volume (billions of weights).
+                    \item \textbf{Temporal}: Rigid synchronization cadence ($\tau = E$).
+                \end{itemize}
+            \end{block}
         \end{column}
     \end{columns}
 \end{frame}
 
-\begin{frame}{Background : Low-Rank Adaptation (LoRA) \& Factor Asymmetry}
+\begin{frame}{Background Knowledge : Low-Rank Adaptation (LoRA) \& Factor Asymmetry}
+    \vspace{-0.3em}
     \begin{columns}
         \begin{column}{0.55\textwidth}
             \begin{itemize}
+                \footnotesize
                 \item Pre-trained weights $W_0 \in \mathbb{R}^{d \times k}$ are kept \textbf{frozen}.
                 \item Updates factorized into low-rank matrices:
                 $$\Delta W = A B, \quad A \in \mathbb{R}^{d \times r}, \, B \in \mathbb{R}^{r \times k}$$
@@ -218,14 +179,14 @@
         \end{column}
         \begin{column}{0.42\textwidth}
             \centering
-            \includegraphics[width=\textwidth]{figures/lora_figure.png}
-            \vspace{0.2em}
+            \includegraphics[width=0.88\textwidth]{figures/lora_figure.png}
+            \vspace{0.1em}
             \footnotesize{\textbf{Figure}: LoRA decomposition with frozen weights $W_0$.}
         \end{column}
     \end{columns}
 \end{frame}
 
-\begin{frame}{Background : The LoRA Aggregation Inconsistency Problem}
+\begin{frame}{Background Knowledge : The LoRA Aggregation Inconsistency Problem}
     \begin{alertblock}{Mathematical Non-Commutativity (Bilinear Distortion)}
         Independent server-side averaging of client low-rank factors fails to reconstruct the composite weight update:
         $$\frac{1}{N}\sum_{i=1}^{N} (A_i B_i) \neq \left(\frac{1}{N}\sum_{i=1}^{N} A_i\right) \left(\frac{1}{N}\sum_{i=1}^{N} B_i\right)$$
@@ -243,7 +204,7 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Background : Robust Low-Rank Adaptation (RoLoRA)}
+\begin{frame}{Background Knowledge : Robust Low-Rank Adaptation (RoLoRA)}
     \framesubtitle{Chen et al., NeurIPS 2025 -- Alternating Coordinate Optimization}
     \vspace{-0.3em}
     \begin{columns}
@@ -272,7 +233,7 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{Background : FDA-Opt \& Geometric Monitoring}
+\begin{frame}{Background Knowledge : FDA-Opt \& Geometric Monitoring}
     \framesubtitle{Theologitis, Samoladas \& Deligiannakis, 2025 -- Dynamic Variance Halting}
     \begin{columns}
         \begin{column}{0.55\textwidth}
@@ -299,7 +260,7 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{Background : Comparison of Foundational Precursors}
+\begin{frame}{Background Knowledge : Synthesis of Foundational Precursors}
     \framesubtitle{Synthesizing RoLoRA (Spatial) and FDA-Opt (Temporal)}
     \centering
     \scriptsize
@@ -326,9 +287,9 @@
 
 
 % ==============================================================================
-% SECTION 3: Proposed Methodology: FDA RoLoRA
+% SECTION 2: Proposed Methodology: FDA-RoLoRA
 % ==============================================================================
-\section{Proposed Methodology: FDA RoLoRA}
+\section{Proposed Methodology: FDA-RoLoRA}
 
 \begin{frame}{Methodology : Dynamic Averaging in Federated LoRA}
     \begin{block}{Taxonomy of Integration Avenues}
@@ -368,23 +329,30 @@
 \begin{frame}{Methodology : Independent Halting \& Local Training Bounds}
     \begin{columns}
         \begin{column}{0.50\textwidth}
-            \begin{block}{Local Epoch Bounds}
-                Client training is bounded between $[e_{\min}, e_{\max}]$ to prevent extreme stagnation or runaway drift:
+            \begin{block}{Local Epoch Bounds ($e_{\min}=1$)}
+                \footnotesize
+                Client training bounded in $[e_{\min}, e_{\max}]$ with $e_{\min}=1$ standardized everywhere to guarantee baseline progress:
                 $$\text{Halt if } \text{Var}_{\text{subspace}}(\Delta^{(e)}) > \theta_{\text{current}}^{(r)} \;\lor\; e \ge e_{\max}$$
                 Evaluated at epoch boundaries $e \ge e_{\min}$.
             \end{block}
         \end{column}
         \begin{column}{0.46\textwidth}
-            \begin{block}{Target Threshold Proposal}
-                Targets midpoint training progress ($e_{\max}/2$):
-                $$\theta_{\text{target}}^{(r)} = \left(\frac{e_{\max}/2}{e^*}\right) \text{Var}_{\text{subspace}}(\Delta^{(e^*)})$$
-                where $e^*$ is the realized epoch count at termination.
+            \begin{block}{Threshold Controller ($k \cdot e_{\max}$)}
+                \footnotesize
+                Scales threshold toward target horizon $k \cdot e_{\max}$:
+                $$\theta_{\text{target}}^{(r)} = \left(\frac{k \cdot e_{\max}}{e^*}\right) \text{Var}_{\text{subspace}}(\Delta^{(e^*)})$$
+                \begin{itemize}
+                    \item \textbf{Default ($k=0.5$)}: FDA-Opt midpoint ($e_{\max}/2$).
+                    \item \textbf{Aggressive ($k=1.0$)}: Full ceiling target ($e_{\max}$).
+                \end{itemize}
             \end{block}
         \end{column}
     \end{columns}
-    \vspace{0.6em}
-    \begin{alertblock}{Prevention of Cross-Matrix Contamination}
-        The inactive matrix threshold remains strictly frozen during the alternate round, preserving optimization state and respecting factor asymmetry.
+    \vspace{0.25em}
+    \begin{alertblock}{Controller Dynamics: Non-IID Success vs. IID Midpoint Lag}
+        \scriptsize
+        \textbf{Non-IID}: Default $k=0.5$ works almost perfectly containing drift and preventing collapse.\\
+        \textbf{IID}: $k=0.5$ fails to reach the midpoint ($e_{\max}/2$); $k=1.0$ pushes epochs higher (e.g. toward 20 under $e_{\max}=40$), but overall struggles against static schedules.
     \end{alertblock}
 \end{frame}
 
@@ -444,7 +412,7 @@
 
 
 % ==============================================================================
-% SECTION 4: System Implementation
+% SECTION 3: System Implementation
 % ==============================================================================
 \section{System Implementation}
 
@@ -570,49 +538,49 @@
                     \item \textbf{Cohorts}: $C \in \{20, 50\}$ clients (full participation).
                     \item \textbf{Regimes}: Homogeneous ($\alpha=1000.0$) vs. Dirichlet Label Skew ($\alpha=0.5$).
                     \item \textbf{Baselines}: Fixed RoLoRA $E \in \{5, 10, 15, 20\}$.
-                    \item \textbf{FDA-RoLoRA}: $[e_{\min}, e_{\max}] = [1, 20]$ (and $[1, 40]$), scaling factor $k \in \{0.5, 1.0\}$.
+                    \item \textbf{FDA-RoLoRA}: Standardized $e_{\min}=1$ everywhere; $E_{\max} \in \{20, 40\}$; controller $k \in \{0.5, 1.0\}$.
                     \item \textbf{Scale}: \textbf{173 completed runs} across 86 configs.
                 \end{itemize}
             \end{block}
         \end{column}
     \end{columns}
     \vspace{0.2em}
-    \begin{alertblock}{Architectural Capacity Context}
-        Validation accuracies reflect the 125M-parameter \texttt{roberta-base} capacity. We perform an exact head-to-head comparison isolating the algorithmic contribution of dynamic variance tracking.
+    \begin{alertblock}{Controller Horizon Dynamics: Default ($k=0.5$) vs Aggressive ($k=1.0$)}
+        FDA-Opt default $k=0.5$ targets midpoint ($E_{\max}/2$). In Non-IID, it worked near-perfectly to halt drift. In IID, $k=0.5$ lagged behind midpoint (e.g., failed to reach $\bar{e}=20$ for $E_{\max}=40$); $k=1.0$ pushed epochs close to 20, but overall struggled against static baselines.
     \end{alertblock}
 \end{frame}
 
 \begin{frame}{Evaluation : Executive Performance Scorecard}
-    \framesubtitle{Comprehensive Synthesis Across GLUE Benchmarks on \texttt{roberta-base}}
+    \framesubtitle{Comprehensive Synthesis Across GLUE Benchmarks on \texttt{roberta-base} ($e_{\min}=1$)}
     \centering
     \resizebox{0.95\textwidth}{!}{%
     \begin{tabular}{lllcccc}
         \toprule
-        \textbf{Task \& Cohort} & \textbf{Regime} & \textbf{Top FDA-RoLoRA} & \textbf{FDA Peak Acc. (\%)} & \textbf{Top RoLoRA Baseline} & \textbf{RoLoRA Peak (\%)} & $\Delta$ \textbf{Acc.} \\
+        \textbf{Task \& Cohort} & \textbf{Regime} & \textbf{Top FDA-RoLoRA ($e_{\min}=1$)} & \textbf{FDA Peak Acc. (\%)} & \textbf{Top RoLoRA Baseline} & \textbf{RoLoRA Peak (\%)} & $\Delta$ \textbf{Acc.} \\
         \midrule
         \multirow{2}{*}{\textbf{MNLI} ($C=20$)} 
-        & IID ($\alpha=1000$)      & FDA ($k=1.0$) & $\mathbf{76.86 \pm 0.07}$ & RoLoRA ($E=10$) & $76.60 \pm 0.60$ & \textbf{+0.26\%} \\
-        & Non-IID ($\alpha=0.5$)   & FDA ($k=1.0$) & $\mathbf{74.47 \pm 0.08}$ & RoLoRA ($E=10$) & $74.24 \pm 0.09$ & \textbf{+0.23\%} \\
+        & IID ($\alpha=1000$)      & FDA ($E_{\max}=20, k=1.0$) & $\mathbf{76.86 \pm 0.07}$ & RoLoRA ($E=10$) & $76.60 \pm 0.60$ & \textbf{+0.26\%} \\
+        & Non-IID ($\alpha=0.5$)   & FDA ($E_{\max}=20, k=1.0$) & $\mathbf{74.47 \pm 0.08}$ & RoLoRA ($E=10$) & $74.24 \pm 0.09$ & \textbf{+0.23\%} \\
         \cmidrule{1-7}
         \multirow{2}{*}{\textbf{MNLI} ($C=50$)} 
-        & IID ($\alpha=1000$)      & FDA ($k=1.0$) & $\mathbf{69.85 \pm 2.38}$ & RoLoRA ($E=10$) & $65.85 \pm 2.02$ & \textbf{+4.00\%} \\
-        & Non-IID ($\alpha=0.5$)   & FDA ($k=0.5$) & $55.56 \pm 1.17$          & RoLoRA ($E=10$) & $\mathbf{56.55 \pm 4.90}$ & -0.99\% \\
+        & IID ($\alpha=1000$)      & FDA ($E_{\max}=20, k=1.0$) & $\mathbf{69.85 \pm 2.38}$ & RoLoRA ($E=10$) & $65.85 \pm 2.02$ & \textbf{+4.00\%} \\
+        & Non-IID ($\alpha=0.5$)   & FDA ($E_{\max}=20, k=0.5$) & $55.56 \pm 1.17$          & RoLoRA ($E=10$) & $\mathbf{56.55 \pm 4.90}$ & -0.99\% \\
         \midrule
         \multirow{2}{*}{\textbf{QNLI} ($C=20$)} 
-        & IID ($\alpha=1000$)      & FDA ($k=1.0$) & $\mathbf{83.14 \pm 0.24}$ & RoLoRA ($E=10$) & $81.83 \pm 0.65$ & \textbf{+1.31\%} \\
-        & Non-IID ($\alpha=0.5$)   & FDA ($k=1.0$) & $\mathbf{84.22 \pm 0.29}$ & RoLoRA ($E=10$) & $83.50 \pm 1.18$ & \textbf{+0.72\%} \\
+        & IID ($\alpha=1000$)      & FDA ($E_{\max}=20, k=1.0$) & $\mathbf{83.14 \pm 0.24}$ & RoLoRA ($E=10$) & $81.83 \pm 0.65$ & \textbf{+1.31\%} \\
+        & Non-IID ($\alpha=0.5$)   & FDA ($E_{\max}=20, k=1.0$) & $\mathbf{84.22 \pm 0.29}$ & RoLoRA ($E=10$) & $83.50 \pm 1.18$ & \textbf{+0.72\%} \\
         \cmidrule{1-7}
         \multirow{2}{*}{\textbf{QNLI} ($C=50$)} 
-        & IID ($\alpha=1000$)      & FDA ($k=1.0$) & $82.77 \pm 1.51$          & RoLoRA ($E=20$) & $\mathbf{88.14 \pm 0.00}$ & -5.37\% \\
-        & Non-IID ($\alpha=0.5$)   & FDA ($k=0.5$) & $\mathbf{75.69 \pm 1.17}$ & RoLoRA ($E=10$) & $74.61 \pm 7.18$ & \textbf{+1.08\%} \\
+        & IID ($\alpha=1000$)      & FDA ($E_{\max}=20, k=1.0$) & $82.77 \pm 1.51$          & RoLoRA ($E=20$) & $\mathbf{88.14 \pm 0.00}$ & -5.37\% \\
+        & Non-IID ($\alpha=0.5$)   & FDA ($E_{\max}=20, k=0.5$) & $\mathbf{75.69 \pm 1.17}$ & RoLoRA ($E=10$) & $74.61 \pm 7.18$ & \textbf{+1.08\%} \\
         \midrule
         \multirow{2}{*}{\textbf{QQP} ($C=20$)} 
-        & IID ($\alpha=1000$)      & FDA ($k=1.0$) & $\mathbf{78.57 \pm 2.99}$ & RoLoRA ($E=10$) & $75.47 \pm 0.84$ & \textbf{+3.10\%} \\
-        & Non-IID ($\alpha=0.5$)   & FDA ($k=1.0$) & $\mathbf{77.88 \pm 0.46}$ & RoLoRA ($E=10$) & $77.69 \pm 1.54$ & \textbf{+0.19\%} \\
+        & IID ($\alpha=1000$)      & FDA ($E_{\max}=20, k=1.0$) & $\mathbf{78.57 \pm 2.99}$ & RoLoRA ($E=10$) & $75.47 \pm 0.84$ & \textbf{+3.10\%} \\
+        & Non-IID ($\alpha=0.5$)   & FDA ($E_{\max}=20, k=1.0$) & $\mathbf{77.88 \pm 0.46}$ & RoLoRA ($E=10$) & $77.69 \pm 1.54$ & \textbf{+0.19\%} \\
         \midrule
         \multirow{2}{*}{\textbf{SST-2} ($C=50$)} 
-        & IID ($\alpha=1000$)      & FDA ($k=1.0$) & $89.68 \pm 0.80$          & RoLoRA ($E=20$) & $\mathbf{92.01 \pm 0.46}$ & -2.33\% \\
-        & Non-IID ($\alpha=0.5$)   & FDA ($k=1.0$) & $\mathbf{85.95 \pm 3.96}$ & RoLoRA ($E=10$) & $59.00 \pm 7.86$ & \textbf{+26.95\%} \\
+        & IID ($\alpha=1000$)      & FDA ($E_{\max}=20, k=1.0$) & $89.68 \pm 0.80$          & RoLoRA ($E=20$) & $\mathbf{92.01 \pm 0.46}$ & -2.33\% \\
+        & Non-IID ($\alpha=0.5$)   & FDA ($E_{\max}=20, k=1.0$) & $\mathbf{85.95 \pm 3.96}$ & RoLoRA ($E=10$) & $59.00 \pm 7.86$ & \textbf{+26.95\%} \\
         \bottomrule
     \end{tabular}%
     }
@@ -628,30 +596,31 @@
 
 \begin{frame}{Evaluation : Homogeneous Consensus (IID, $\alpha=1000.0$)}
     \framesubtitle{The Compute Accelerator Mechanism in Shared-Gradient Environments}
+    \vspace{-0.3em}
     \begin{columns}
         \begin{column}{0.48\textwidth}
-            \begin{block}{Optimization Dynamics}
+            \begin{block}{Optimization Dynamics \& Controller Behavior}
                 \scriptsize
                 \begin{itemize}
-                    \item \textbf{Aligned Gradients}: Client updates point along near-consensus trajectories toward global optimum.
-                    \item \textbf{Suppressed Variance}: Coordinate variance remains low ($\bar{\nu} \le 1.0$).
-                    \item \textbf{Safe Epoch Expansion}: Controller elevates $\theta$, expanding local training to $\bar{e} \approx 11\text{--}13$ epochs per round.
+                    \item \textbf{Consensus}: Updates align along shared trajectory ($\bar{\nu} \le 1.0$).
+                    \item \textbf{Default ($k=0.5$)}: FDA-Opt $E_{\max}/2$ lagged below midpoint ($E_{\max}=40$ failed to reach $\bar{e}=20$).
+                    \item \textbf{Aggressive ($k=1.0$)}: Pushed epochs higher ($\bar{e} \to 20$), but struggled overall against static baselines.
                 \end{itemize}
             \end{block}
-            
+            \vspace{-0.2em}
             \begin{exampleblock}{Empirical Highlights}
                 \scriptsize
                 \begin{itemize}
-                    \item \textbf{QQP ($C=50$)}: Early stops in \textbf{14.0 rounds} ($164.1\,\text{MB}$) vs. 30.0 rounds ($351.6\,\text{MB}$) $\to$ \textbf{53.3\% bandwidth savings}.
-                    \item \textbf{MNLI ($C=50$)}: Advances to $\mathbf{69.85\%}$ vs. RoLoRA's $65.85\%$ plateau ($\mathbf{+4.00\%}$).
-                    \item \textbf{QNLI ($C=20$)}: Peak accuracy $\mathbf{83.14\%}$ vs. $81.83\%$.
+                    \item \textbf{QQP ($C=50$)}: Early stops in \textbf{14.0 rd} ($164\,\text{MB}$) vs 30 rd ($352\,\text{MB}$) $\to$ \textbf{53.3\% bandwidth cut}.
+                    \item \textbf{MNLI ($C=50$)}: Reaches $\mathbf{69.85\%}$ vs 65.85\% plateau ($\mathbf{+4.00\%}$).
+                    \item \textbf{QNLI ($C=20$)}: Peak accuracy $\mathbf{83.14\%}$ vs $81.83\%$.
                 \end{itemize}
             \end{exampleblock}
         \end{column}
         
         \begin{column}{0.50\textwidth}
             \centering
-            \includegraphics[height=0.68\textheight,keepaspectratio]{figures/10_QQP_C50_R30_LR0.1_all6_telemetry_stacked.png}
+            \includegraphics[height=0.64\textheight,keepaspectratio]{figures/10_QQP_C50_R30_LR0.1_all6_telemetry_stacked.png}
             \vspace{-0.2em}
             \tiny \textbf{Figure}: Multi-panel telemetry on QQP ($C=50$, IID): (a) Acc/Rounds; (b) Acc/MB; (c) Epochs; (d) $\theta$; (e) $\bar{\nu}$; (f) Var/Epochs.
         \end{column}
@@ -660,17 +629,18 @@
 
 \begin{frame}{Evaluation : Statistical Heterogeneity (Non-IID, $\alpha=0.5$)}
     \framesubtitle{The Safety Brake Mechanism \& Anti-Collapse Protection Under Label Skew}
+    \vspace{-0.3em}
     \begin{columns}
         \begin{column}{0.48\textwidth}
-            \begin{alertblock}{The "Safety Brake" Mechanism}
+            \begin{alertblock}{The "Safety Brake": Near-Flawless Performance}
                 \scriptsize
                 \begin{itemize}
+                    \item Under Non-IID, FDA-Opt's controller worked \textbf{almost perfectly}.
                     \item Dirichlet skew ($\alpha=0.5$) causes drift variance to surge $\mathbf{4.0\times}$.
-                    \item Static schedules force deep epochs $\to$ post-peak collapse.
-                    \item FDA controller senses spikes and \textbf{throttles local epochs}, preserving decision boundaries.
+                    \item Senses spikes and \textbf{throttles local epochs}, preventing catastrophic collapse (+26.95\% SST-2).
                 \end{itemize}
             \end{alertblock}
-            
+            \vspace{-0.2em}
             \begin{block}{Empirical Highlights}
                 \scriptsize
                 \begin{itemize}
@@ -683,7 +653,7 @@
         
         \begin{column}{0.50\textwidth}
             \centering
-            \includegraphics[height=0.66\textheight,keepaspectratio]{figures/18_QNLI_C20_R50_LR0.1_A0.5_all6_telemetry_stacked.png}
+            \includegraphics[height=0.63\textheight,keepaspectratio]{figures/18_QNLI_C20_R50_LR0.1_A0.5_all6_telemetry_stacked.png}
             \vspace{-0.2em}
             \tiny \textbf{Figure}: Multi-panel telemetry on QNLI under Dirichlet skew ($\alpha=0.5, C=20$): closed-loop tracking securing $84.22\%$ accuracy.
         \end{column}
@@ -716,11 +686,11 @@
                 \toprule
                 \textbf{Task \& Cohort} & \textbf{Config} & \textbf{Mean $\bar{e}$} & $\mathbf{\bar{e}_A}$ & $\mathbf{\bar{e}_B}$ \\
                 \midrule
-                MNLI ($C=20$, Non-IID) & $k=1.0$ & $17.49$ & $17.19$ & $\mathbf{17.76}$ \\
-                MNLI ($C=50$, Non-IID) & $k=0.5$ & $10.13$ & $9.47$  & $\mathbf{10.80}$ \\
-                QNLI ($C=20$, Non-IID) & $k=1.0$ & $16.73$ & $16.63$ & $\mathbf{16.81}$ \\
-                QNLI ($C=50$, Non-IID) & $k=0.5$ & $10.48$ & $9.83$  & $\mathbf{11.13}$ \\
-                QQP ($C=50$, Non-IID)  & $k=1.0$ & $14.26$ & $13.83$ & $\mathbf{14.63}$ \\
+                MNLI ($C=20$, Non-IID) & $E_{\max}=20, k=1.0$ & $17.49$ & $17.19$ & $\mathbf{17.76}$ \\
+                MNLI ($C=50$, Non-IID) & $E_{\max}=20, k=0.5$ & $10.13$ & $9.47$  & $\mathbf{10.80}$ \\
+                QNLI ($C=20$, Non-IID) & $E_{\max}=20, k=1.0$ & $16.73$ & $16.63$ & $\mathbf{16.81}$ \\
+                QNLI ($C=50$, Non-IID) & $E_{\max}=20, k=0.5$ & $10.48$ & $9.83$  & $\mathbf{11.13}$ \\
+                QQP ($C=50$, Non-IID)  & $E_{\max}=20, k=1.0$ & $14.26$ & $13.83$ & $\mathbf{14.63}$ \\
                 \bottomrule
             \end{tabular}%
             }
@@ -745,17 +715,17 @@
         \multirow{2}{*}{\textbf{SST-2}} 
         & \multirow{2}{*}{Non-IID ($\alpha=0.5$)} 
         & RoLoRA ($E=10$)      & R@80\%: $23$ rd ($107.8\,\text{MB}$) & R@85\%: $24$ rd ($112.5\,\text{MB}$) & R@88\%: $24$ rd ($112.5\,\text{MB}$) & $117.2\,\text{MB}$ \\
-        & & \textbf{FDA-RoLoRA ($k=1.0$)} & \textbf{R@80\%: 8 rd (37.5 MB)} & \textbf{R@85\%: 8 rd (37.5 MB)} & \textbf{R@88\%: 9 rd (42.2 MB)} & $\mathbf{65.6\,\text{MB}}$ \\
+        & & \textbf{FDA-RoLoRA ($E_{\max}=20, k=1.0$)} & \textbf{R@80\%: 8 rd (37.5 MB)} & \textbf{R@85\%: 8 rd (37.5 MB)} & \textbf{R@88\%: 9 rd (42.2 MB)} & $\mathbf{65.6\,\text{MB}}$ \\
         \midrule
         \multirow{2}{*}{\textbf{MNLI}} 
         & \multirow{2}{*}{Non-IID ($\alpha=0.5$)} 
         & RoLoRA ($E=10$)      & R@65\%: $28$ rd ($131.2\,\text{MB}$) & R@72\%: $43$ rd ($201.6\,\text{MB}$) & R@74\%: $50$ rd ($234.4\,\text{MB}$) & $234.4\,\text{MB}$ \\
-        & & \textbf{FDA-RoLoRA ($k=1.0$)} & \textbf{R@65\%: 19 rd (89.1 MB)} & \textbf{R@72\%: 25 rd (117.2 MB)} & \textbf{R@74\%: 36 rd (168.8 MB)} & $\mathbf{178.1\,\text{MB}}$ \\
+        & & \textbf{FDA-RoLoRA ($E_{\max}=20, k=1.0$)} & \textbf{R@65\%: 19 rd (89.1 MB)} & \textbf{R@72\%: 25 rd (117.2 MB)} & \textbf{R@74\%: 36 rd (168.8 MB)} & $\mathbf{178.1\,\text{MB}}$ \\
         \midrule
         \multirow{2}{*}{\textbf{QNLI}} 
         & \multirow{2}{*}{Non-IID ($\alpha=0.5$)} 
         & RoLoRA ($E=10$)      & R@80\%: $17$ rd ($79.7\,\text{MB}$)  & R@83\%: $25$ rd ($117.2\,\text{MB}$) & R@84\%: --- (Unattained) & $154.7\,\text{MB}$ \\
-        & & \textbf{FDA-RoLoRA ($k=1.0$)} & \textbf{R@80\%: 15 rd (70.3 MB)} & \textbf{R@83\%: 21 rd (98.4 MB)} & \textbf{R@84\%: 25 rd (117.2 MB)} & $\mathbf{124.2\,\text{MB}}$ \\
+        & & \textbf{FDA-RoLoRA ($E_{\max}=20, k=1.0$)} & \textbf{R@80\%: 15 rd (70.3 MB)} & \textbf{R@83\%: 21 rd (98.4 MB)} & \textbf{R@84\%: 25 rd (117.2 MB)} & $\mathbf{124.2\,\text{MB}}$ \\
         \bottomrule
     \end{tabular}%
     }
@@ -819,17 +789,17 @@
     \framesubtitle{Four Core Architectural Principles for Real-World Federated Systems}
     \begin{columns}[t]
         \begin{column}{0.48\textwidth}
-            \begin{block}{1. Guarantee Base Progress ($e_{\min} = 1$)}
+            \begin{block}{1. Universal Base Progress ($e_{\min} = 1$)}
                 \footnotesize
-                Setting $e_{\min} \ge 1$ ensures clients complete meaningful SGD steps before variance checks can trigger, preventing round stagnation.
+                Standardize $e_{\min} = 1$ universally everywhere to ensure baseline progress (exploratory runs testing $e_{\min}=3$ showed negligible difference).
             \end{block}
             
             \vspace{0.3em}
-            \begin{block}{2. Horizon Selection ($k$)}
+            \begin{block}{2. Controller Dynamics in IID vs. Non-IID}
                 \footnotesize
                 \begin{itemize}
-                    \item \textbf{$k=1.0$ (Aggressive)}: Best for homogeneous / cross-silo setups to maximize compute and cut rounds.
-                    \item \textbf{$k=0.5$ (Midpoint)}: Best for acute non-IID edge networks to strictly contain client drift.
+                    \item \textbf{Non-IID ($k=0.5$)}: FDA-Opt default ($E_{\max}/2$) works near-perfectly to contain drift and prevent collapse.
+                    \item \textbf{IID ($k=1.0$ vs $0.5$)}: $k=0.5$ lags below midpoint; $k=1.0$ pushes epochs higher (toward 20 for $E_{\max}=40$), but struggles against static schedules.
                 \end{itemize}
             \end{block}
         \end{column}
@@ -851,7 +821,7 @@
 
 
 % ==============================================================================
-% SECTION 6: Conclusion \& Future Work
+% SECTION 5: Conclusion \& Future Work
 % ==============================================================================
 \section{Conclusion \& Future Work}
 
@@ -930,9 +900,10 @@
     
     \vspace{1.5em}
     \normalsize
-    Asterinos Karalis -- Technical University of Crete\\
+    Asterinos Karalis -- \href{https://www.tuc.gr/}{\textbf{\color{tucblue}Technical University of Crete}}\\[0.2em]
+    \href{https://www.ece.tuc.gr/}{\small \color{tucgray}School of Electrical \& Computer Engineering}\\
     \vspace{0.5em}
-    \small Open-Source Repository: \url{https://github.com/Asterinos1/FDA-LoRA}
+    \small Open-Source Repository: \url{https://github.com/Asterinos1/FDA-RoLoRA}
 \end{frame}
 
 \end{document}

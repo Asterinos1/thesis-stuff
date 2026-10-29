@@ -36,7 +36,7 @@ To overcome this spatial bottleneck, Parameter-Efficient Fine-Tuning (PEFT) has 
     W = W_0 + \Delta W = W_0 + \frac{\alpha}{r} B A
     \label{eq:intro_lora_decomposition}
 \end{equation}
-where $A \in \mathbb{R}^{d \times r}$ denotes the down-projection matrix, $B \in \mathbb{R}^{r \times k}$ denotes the up-projection matrix, and the rank $r \ll \min(d, k)$ (typically $r \in \{4, 8, 16\}$). Because only $A$ and $B$ are updated during training, LoRA compresses the volume of communicated parameters by over $99\%$, providing a powerful spatial solution for edge and silo environments.
+where $A \in \mathbb{R}^{r \times k}$ denotes the down-projection matrix, $B \in \mathbb{R}^{d \times r}$ denotes the up-projection matrix, and the rank $r \ll \min(d, k)$ (typically $r \in \{4, 8, 16\}$). Because only $A$ and $B$ are updated during training, LoRA compresses the volume of communicated parameters by over $99\%$, providing a powerful spatial solution for edge and silo environments.
 
 \section{Aggregation Inconsistency in Federated LoRA}
 \label{sec:intro-inconsistency}
@@ -55,7 +55,7 @@ When the central server independently averages $A_i$ and $B_i$, the composite pr
 To resolve this bilinear aggregation discordance, several structural workarounds have been explored in recent literature:
 \begin{itemize}
     \item \textbf{Full Weight Reconstruction:} Clients could theoretically reconstruct the dense update $\Delta W_i = \frac{\alpha}{r} B_i A_i$ before transmission, or the server could perform Singular Value Decomposition (SVD) on the aggregated full matrix \cite{yang2025federated}. However, this completely nullifies the spatial communication savings of LoRA and imposes prohibitive computational overhead.
-    \item \textbf{Static Down-Projection Freezing (FFA-LoRA):} FFA-LoRA \cite{sun2024improving} permanently freezes the down-projection matrix $A$ as a random projection across all clients, allowing clients to train and transmit only the up-projection matrix $B$. While this linearizes aggregation ($\frac{1}{N}\sum A B_i = A \frac{1}{N}\sum B_i$), permanently freezing half of the parameter degrees of freedom severely compromises adapter capacity and expressive power.
+    \item \textbf{Static Down-Projection Freezing (FFA-LoRA):} FFA-LoRA \cite{sun2024improving} permanently freezes the down-projection matrix $A$ as a random projection across all clients, allowing clients to train and transmit only the up-projection matrix $B$. While this linearizes aggregation ($\frac{1}{N}\sum_{i=1}^N (B_i A) = \left(\frac{1}{N}\sum_{i=1}^N B_i\right) A$), permanently freezing half of the parameter degrees of freedom severely compromises adapter capacity and expressive power.
     \item \textbf{Heterogeneous Rank Assembly (FLoRA):} FLoRA \cite{wang2024flora} attempts to support variable client ranks by stacking updates, but still incurs heavy reconstruction overhead on the aggregation server.
 \end{itemize}
 

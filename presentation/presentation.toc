@@ -1,7 +1,6 @@
 \babel@toc {english}{}\relax 
-\beamer@sectionintoc {1}{Introduction}{3}{0}{1}
-\beamer@sectionintoc {2}{Background \bbl@greek@ampersand Problem Statement}{7}{0}{2}
-\beamer@sectionintoc {3}{Proposed Methodology: FDA RoLoRA}{14}{0}{3}
-\beamer@sectionintoc {4}{System Implementation}{20}{0}{4}
-\beamer@sectionintoc {5}{Evaluations \bbl@greek@ampersand Results}{24}{0}{5}
-\beamer@sectionintoc {6}{Conclusion \bbl@greek@ampersand Future Work}{33}{0}{6}
+\beamer@sectionintoc {1}{Background Knowledge \bbl@greek@ampersand Problem Statement}{3}{0}{1}
+\beamer@sectionintoc {2}{Proposed Methodology: FDA-RoLoRA}{10}{0}{2}
+\beamer@sectionintoc {3}{System Implementation}{16}{0}{3}
+\beamer@sectionintoc {4}{Evaluations \bbl@greek@ampersand Results}{20}{0}{4}
+\beamer@sectionintoc {5}{Conclusion \bbl@greek@ampersand Future Work}{29}{0}{5}
