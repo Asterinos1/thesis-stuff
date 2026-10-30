@@ -157,7 +157,7 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{Background Knowledge : Low-Rank Adaptation (LoRA) \& Factor Asymmetry}
+\begin{frame}{Background Knowledge : Low-Rank Adaptation (LoRA)}
     \vspace{-0.3em}
     \begin{columns}
         \begin{column}{0.55\textwidth}
@@ -165,23 +165,23 @@
                 \footnotesize
                 \item Pre-trained weights $W_0 \in \mathbb{R}^{d \times k}$ are kept \textbf{frozen}.
                 \item Updates factorized into low-rank matrices:
-                $$\Delta W = A B, \quad A \in \mathbb{R}^{d \times r}, \, B \in \mathbb{R}^{r \times k}$$
-                where rank $r \ll \min(d,k)$.
-                \item Forward pass: $h = W_0 x + A B x$.
+                $$\Delta W = \frac{\alpha_{\text{lora}}}{r} B A, \quad A \in \mathbb{R}^{r \times d_{\text{in}}}, \, B \in \mathbb{R}^{d_{\text{out}} \times r}$$
+                where rank $r \ll \min(d_{\text{in}}, d_{\text{out}})$.
+                \item Forward pass: $h = W_0 x + \frac{\alpha_{\text{lora}}}{r} B A x$.
                 \item Trainable parameters reduced by $>99\%$.
-                \item \textbf{Factor Asymmetry}:
+                \item \textbf{LoRA Adapter Hyperparameters}:
                 \begin{itemize}
-                    \item $A$: Down-projection (compression), Gaussian init.
-                    \item $B$: Up-projection (expansion), zero init.
-                    \item Exhibits distinct gradient flows and variance dynamics.
+                    \item \textbf{Rank} $r = 4$: Low-rank bottleneck dimension.
+                    \item \textbf{Scaling} $\alpha_{\text{lora}} = 8$: Scaling factor $\frac{\alpha_{\text{lora}}}{r} = 2.0$.
+                    \item \textbf{Target Modules}: Query ($W_q$) and Value ($W_v$) projections.
+                    \item \textbf{Initialization}: Gaussian for $A$, Zero for $B$ (ensures $\Delta W = 0$ at start).
                 \end{itemize}
             \end{itemize}
         \end{column}
         \begin{column}{0.42\textwidth}
             \centering
-            \includegraphics[width=0.88\textwidth]{figures/lora_figure.png}
-            \vspace{0.1em}
-            \footnotesize{\textbf{Figure}: LoRA decomposition with frozen weights $W_0$.}
+            \includegraphics[width=0.88\textwidth,height=4.6cm,keepaspectratio]{figures/lora_figure.png}\\[0.2em]
+            {\footnotesize \textbf{Figure}: LoRA decomposition with frozen weights $W_0$.}
         \end{column}
     \end{columns}
 \end{frame}
@@ -207,30 +207,22 @@
 \begin{frame}{Background Knowledge : Robust Low-Rank Adaptation (RoLoRA)}
     \framesubtitle{Chen et al., NeurIPS 2025 -- Alternating Coordinate Optimization}
     \vspace{-0.3em}
-    \begin{columns}
-        \begin{column}{0.55\textwidth}
-            \begin{block}{Alternating Coordinate Optimization}
-                \footnotesize
-                \textbf{RoLoRA} resolves the LoRA bilinear aggregation inconsistency by alternating the active trainable matrix while freezing the other globally.
-            \end{block}
-            \vspace{-0.4em}
-            \begin{itemize}
-                \footnotesize
-                \item \textbf{Odd Rounds (B-Track)}: Freeze $A^t$; train $B$:
-                {\scriptsize $$\frac{1}{N}\sum_{i=1}^N (A^t B^{t+1}_i) = A^t \bar{B}^{t+1} = A^t B^{t+1}$$}
-                \vspace{-0.4em}
-                \item \textbf{Even Rounds (A-Track)}: Freeze $B^{t+1}$; train $A$:
-                {\scriptsize $$\frac{1}{N}\sum_{i=1}^N (A^{t+1}_i B^{t+1}) = \bar{A}^{t+1} B^{t+1} = A^{t+1} B^{t+1}$$}
-                \item \textbf{Limitation}: Enforces a rigid, static local epoch schedule ($E$), leaving temporal synchronization unoptimized.
-            \end{itemize}
-        \end{column}
-        \begin{column}{0.43\textwidth}
-            \centering
-            \includegraphics[width=0.82\textwidth]{figures/rolora_framework.png}
-            \vspace{0.1em}
-            \footnotesize{\textbf{Figure}: RoLoRA alternating framework.}
-        \end{column}
-    \end{columns}
+    \begin{block}{Alternating Coordinate Optimization Restores Aggregation Linearity}
+        \footnotesize
+        \textbf{RoLoRA} resolves the bilinear inconsistency by alternating the active trainable matrix while freezing the other globally across all clients:
+        \begin{itemize}
+            \item \textbf{Odd Rounds (Train $B$, Freeze $A$)}:
+            $\frac{1}{N}\sum_{i=1}^N (B_i A) = \left(\frac{1}{N}\sum_{i=1}^N B_i\right) A = \bar{B} A$
+            \item \textbf{Even Rounds (Train $A$, Freeze $B$)}:
+            $\frac{1}{N}\sum_{i=1}^N (B A_i) = B \left(\frac{1}{N}\sum_{i=1}^N A_i\right) = B \bar{A}$
+            \item \textbf{Core Limitation}: Enforces a rigid, static local epoch schedule ($E$), leaving temporal synchronization completely unoptimized.
+        \end{itemize}
+    \end{block}
+    \vspace{0.1em}
+    
+    \centering
+    \includegraphics[width=0.90\textwidth,height=2.0cm,keepaspectratio]{figures/rolora_framework.png}\\[0.15em]
+    {\scriptsize \textbf{Figure}: RoLoRA alternating framework across communication rounds.}
 \end{frame}
 
 \begin{frame}{Background Knowledge : FDA-Opt \& Geometric Monitoring}
