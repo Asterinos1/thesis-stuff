@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.10.26)  31 OCT 2026 00:06
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.10.26)  31 OCT 2026 01:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**./presentation.tex
-(presentation.tex
+**./presentation/presentation.tex
+(presentation/presentation.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
 (C:\Users\GKaralis\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamer.cls
@@ -1486,7 +1486,8 @@ File: t1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 pdftex.def
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count388
-) (presentation.aux)
+)
+(C:\Users\GKaralis\Documents\GitHub\thesis-stuff\presentation\presentation.aux)
 \openout1 = `presentation.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 61.
@@ -1577,7 +1578,9 @@ s.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
 Package hyperref Info: Link coloring OFF on input line 61.
- (presentation.out) (presentation.out)
+
+(C:\Users\GKaralis\Documents\GitHub\thesis-stuff\presentation\presentation.out)
+(C:\Users\GKaralis\Documents\GitHub\thesis-stuff\presentation\presentation.out)
 \@outlinefile=\write5
 \openout5 = `presentation.out'.
 
@@ -1664,7 +1667,8 @@ LaTeX Encoding Info:    Redeclaring text command \textmu (encoding PU) on input
  line 179.
 LaTeX Encoding Info:    Redeclaring text command \textohm (encoding PU) on inpu
 t line 451.
-) (presentation.nav)
+)
+(C:\Users\GKaralis\Documents\GitHub\thesis-stuff\presentation\presentation.nav)
 <tuc_logo.png, id=35, 200.75pt x 200.75pt>
 File: tuc_logo.png Graphic file (type png)
 <use tuc_logo.png>
@@ -1672,7 +1676,6 @@ Package pdftex.def Info: tuc_logo.png  used on input line 112.
 (pdftex.def)             Requested size: 38.40938pt x 38.41139pt.
 LaTeX Font Info:    Trying to load font information for OT1+lmss on input line 
 112.
-
 (C:\Users\GKaralis\AppData\Local\Programs\MiKTeX\tex/latex/lm\ot1lmss.fd
 File: ot1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
@@ -1735,10 +1738,14 @@ LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <5> not available
 
 {C:/Users/GKaralis/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/G
 Karalis/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}{C:/Users/GK
-aralis/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc} <./tuc_l
-ogo.png>] (presentation.toc) [2
+aralis/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc} <C:/User
+s/GKaralis/Documents/GitHub/thesis-stuff/presentation/tuc_logo.png>]
+(C:\Users\GKaralis\Documents\GitHub\thesis-stuff\presentation\presentation.toc)
+[2
 
-] (presentation.toc) [3
+]
+(C:\Users\GKaralis\Documents\GitHub\thesis-stuff\presentation\presentation.toc)
+[3
 
 ]
 LaTeX Font Info:    External font `lmex10' loaded for size
@@ -1762,7 +1769,8 @@ Package pdftex.def Info: figures/lora_figure.png  used on input line 187.
 (pdftex.def)             Requested size: 160.15202pt x 129.03305pt.
  [5
 
- <./figures/lora_figure.png>] [6
+ <C:/Users/GKaralis/Documents/GitHub/thesis-stuff/presentation/figures/lora_fig
+ure.png>] [6
 
 ]
 <figures/rolora_framework.png, id=305, 1145.4795pt x 219.82124pt>
@@ -1772,12 +1780,14 @@ Package pdftex.def Info: figures/rolora_framework.png  used on input line 226.
 (pdftex.def)             Requested size: 296.52423pt x 56.90396pt.
  [7
 
- <./figures/rolora_framework.png>] [8
+ <C:/Users/GKaralis/Documents/GitHub/thesis-stuff/presentation/figures/rolora_f
+ramework.png>] [8
 
 ] [9
 
 ]
-(presentation.toc) [10
+(C:\Users\GKaralis\Documents\GitHub\thesis-stuff\presentation\presentation.toc)
+[10
 
 ] [11
 
@@ -1789,22 +1799,26 @@ Package pdftex.def Info: figures/rolora_framework.png  used on input line 226.
 
 ] [15
 
-] (presentation.toc) [16
-
 ]
-[17
+(C:\Users\GKaralis\Documents\GitHub\thesis-stuff\presentation\presentation.toc)
+[16
+
+] [17
 
 ]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 4
 82.
- (C:\Users\GKaralis\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.fd
+
+(C:\Users\GKaralis\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 [18
 
 ] [19
 
-] (presentation.toc) [20
+]
+(C:\Users\GKaralis\Documents\GitHub\thesis-stuff\presentation\presentation.toc)
+[20
 
 ] [21
 
@@ -1842,7 +1856,8 @@ LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <14.4> not available
 (Font)              Font shape `T1/lmss/m/sl' tried instead on input line 620.
  [23
 
- <./figures/10_QQP_C50_R30_LR0.1_all6_telemetry_stacked.png>]
+ <C:/Users/GKaralis/Documents/GitHub/thesis-stuff/presentation/figures/10_QQP_C
+50_R30_LR0.1_all6_telemetry_stacked.png>]
 <figures/18_QNLI_C20_R50_LR0.1_A0.5_all6_telemetry_stacked.png, id=1119, 1156.3
 2pt x 975.645pt>
 File: figures/18_QNLI_C20_R50_LR0.1_A0.5_all6_telemetry_stacked.png Graphic fil
@@ -1853,7 +1868,8 @@ ked.png  used on input line 653.
 (pdftex.def)             Requested size: 181.73318pt x 153.34842pt.
  [24
 
- <./figures/18_QNLI_C20_R50_LR0.1_A0.5_all6_telemetry_stacked.png>] [25
+ <C:/Users/GKaralis/Documents/GitHub/thesis-stuff/presentation/figures/18_QNLI_
+C20_R50_LR0.1_A0.5_all6_telemetry_stacked.png>] [25
 
 ]
 LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <12> not available
@@ -1864,14 +1880,15 @@ LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <12> not available
 
 ] [28
 
-] (presentation.toc) [29
+]
+(C:\Users\GKaralis\Documents\GitHub\thesis-stuff\presentation\presentation.toc)
+[29
 
 ] [30
 
 ] [31
 
-]
-[32
+] [32
 
  <C:/Users/GKaralis/AppData/Local/Programs/MiKTeX/tex/latex/beamer/beamericonar
 ticle.pdf>] [33
@@ -1886,7 +1903,8 @@ ticle.pdf>] [33
 \tf@snm=\write8
 \openout8 = `presentation.snm'.
 
- (presentation.aux)
+
+(C:\Users\GKaralis\Documents\GitHub\thesis-stuff\presentation\presentation.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
@@ -1895,13 +1913,13 @@ Package rerunfilecheck Info: File `presentation.out' has not changed.
 (rerunfilecheck)             Checksum: 4D90C9D03B59987FC7D953D906F9E0C9;950.
  ) 
 Here is how much of TeX's memory you used:
- 29570 strings out of 467871
- 599726 string characters out of 5416923
- 968460 words of memory out of 5000000
+ 29571 strings out of 467871
+ 600547 string characters out of 5416923
+ 968463 words of memory out of 5000000
  57749 multiletter control sequences out of 15000+600000
  748225 words of font info for 123 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 128i,19n,123p,497b,1096s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 128i,19n,123p,510b,1096s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/GKaralis/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmex10
 .pfb><C:/Users/GKaralis/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmm
 i10.pfb><C:/Users/GKaralis/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/
@@ -1930,7 +1948,8 @@ lis/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt8.pfb><C:/Users/GKa
 ralis/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt9.pfb><C:/Users/G
 Karalis/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm1
 0.pfb>
-Output written on presentation.pdf (33 pages, 2553266 bytes).
+Output written on C:\Users\GKaralis\Documents\GitHub\thesis-stuff\presentation\
+presentation.pdf (33 pages, 2553260 bytes).
 PDF statistics:
  1676 PDF objects out of 1728 (max. 8388607)
  77 named destinations out of 1000 (max. 500000)
