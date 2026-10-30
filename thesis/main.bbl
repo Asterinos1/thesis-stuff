@@ -75,11 +75,6 @@ Georgios Frangias.
 \newblock Federated learning at {TensorFlow} using the geometric approach.
 \newblock Diploma thesis, Technical University of Crete, 2023.
 
-\bibitem{frangias2023fda}
-Georgios Frangias.
-\newblock Federated learning at {TensorFlow} using the geometric approach.
-\newblock Diploma thesis, Technical University of Crete, 2023.
-
 \bibitem{goodfellow2016deep}
 Ian Goodfellow, Yoshua Bengio, and Aaron Courville.
 \newblock {\em \href{https://www.deeplearningbook.org/}{Deep Learning}}.
@@ -242,7 +237,7 @@ Youbang Sun, Zitao Li, Yaliang Li, and Bolin Ding.
 \newblock \href{https://arxiv.org/abs/2403.04870}{Improving {LoRA} in
   Privacy-preserving Federated Learning}.
 \newblock In {\em The Twelfth International Conference on Learning
-  Representations}, 2024.
+  Representations}, 2025.
 
 \bibitem{theologitis2023algorithms}
 Michail Theologitis.
@@ -291,7 +286,7 @@ Ziyao Wang, Zheyu Shen, Yexiao He, Guoheng Sun, Hongyi Wang, Lingjuan Lyu, and
   Ang Li.
 \newblock \href{https://arxiv.org/abs/2407.21045}{{FLoRA}: Federated
   Fine-Tuning Large Language Models with Heterogeneous Low-Rank Adaptations}.
-\newblock In {\em NeurIPS}, 2024.
+\newblock In {\em NeurIPS}, 2025.
 
 \bibitem{williams2018broad}
 Adina Williams, Nikita Nangia, and Samuel~R Bowman.
@@ -302,10 +297,11 @@ Adina Williams, Nikita Nangia, and Samuel~R Bowman.
   Technologies (NAACL-HLT)}, pages 1112--1122, 2018.
 
 \bibitem{yang2025federated}
-Haibo Yang et~al.
-\newblock \href{https://arxiv.org/abs/2404.06423}{Federated Low-Rank
-  Adaptation: A Comprehensive Survey}.
-\newblock {\em arXiv preprint arXiv:2404.06423}, 2025.
+Yiyuan Yang, Guodong Long, Qinghua Lu, Liming Zhu, Jing Jiang, and Chengqi
+  Zhang.
+\newblock \href{https://arxiv.org/abs/2505.13502}{Federated Low-Rank Adaptation
+  for Foundation Models: A Survey}.
+\newblock {\em arXiv preprint arXiv:2505.13502}, 2025.
 
 \bibitem{yurochkin2019bayesian}
 Mikhail Yurochkin, Mayank Agarwal, Soumya Banerjee, Rebecca Chen, Dennis Sun,
@@ -330,11 +326,11 @@ Qingru Zhang, Minshuo Chen, Alexander Bukharin, Pengcheng He, Yu~Cheng, Weizhu
 \newblock In {\em International Conference on Learning Representations}, 2023.
 
 \bibitem{zhao2024loratheexplorer}
-Yang Zhao et~al.
+Yang Zhao, Yue Xiu, Chengxiao Dai, Ning Wei, and Dusit Niyato.
 \newblock \href{https://arxiv.org/abs/2405.14238}{LoRA-the-Explorer: An
   Efficient Framework for Training and Merging Low-Rank Adapters in Federated
   Learning}.
-\newblock {\em arXiv preprint}, 2024.
+\newblock {\em arXiv preprint arXiv:2405.14238}, 2025.
 
 \bibitem{zhu2021federated}
 Zhuangdi Zhu, Junlin Hong, and Shiyu Ji.
