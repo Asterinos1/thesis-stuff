@@ -343,26 +343,28 @@
 
 ---
 
-### [Page 15 / Slide 15] Methodology : Server Adaptive Optimization & Protocol Flow
-- **Slide Title:** Methodology : Server Adaptive Optimization \& Protocol Flow
-- **Visual Display:** Left: Server FedAdamW optimizer equations (pseudo-gradient, first and second moments, decoupled weight decay). Right: Complete 8-step protocol execution lifecycle.
+### [Page 15 / Slide 15] Methodology : Coordinate-Wise FedAvg & Protocol Flow
+- **Slide Title:** Methodology : Coordinate-Wise FedAvg \& Protocol Flow
+- **Visual Display:** Left: Coordinate-wise FedAvg aggregation equations (client drift, average cohort drift, direct linear aggregation without server-side momentum). Right: Complete 8-step protocol execution lifecycle.
 - **Target Time:** 1:45 min | **Cumulative Time:** 19:30
 
 #### 🎙️ Spoken Script:
-> "To complete our methodology, slide 15 presents the server optimization step and the complete end-to-end protocol lifecycle.
+> "To complete our methodology, slide 15 presents the server aggregation step and the complete end-to-end protocol lifecycle.
 > 
-> Rather than simple FedAvg summation, our framework supports **Server FedAdamW**:
-> The server computes the aggregated pseudo-gradient $\nabla_{\text{pseudo}}$ from the realized client updates, maintains first and second momentum buffers $m$ and $v$, and applies adaptive moment updates with decoupled weight decay directly to the active low-rank coordinate matrix.
+> For server aggregation, our framework uses **direct coordinate-wise Federated Averaging (FedAvg)**:
+> The server collects the realized client subspace drifts $\Delta_i^{(e^*)}$, computes the average cohort drift $\bar{\Delta}^{(r)}$, and updates the active low-rank coordinate matrix directly with a server step size of $\eta_s = 1.0$.
+> 
+> Crucially, we do not use complex server-side adaptive optimizers like Adam or momentum buffers. Keeping the server aggregation as standard linear FedAvg ensures that all empirical efficiency and accuracy gains observed in our benchmarks stem strictly from our dynamic, variance-driven synchronization mechanism, with zero confounding optimizer artifacts.
 > 
 > The protocol lifecycle follows eight deterministic steps:
 > 1. The server toggles the active matrix track, alternating between $A$ and $B$.
 > 2. It broadcasts the active weights and active threshold $\theta_{\text{current}}$ to the participating client cohort.
-> 3. Clients train local SGD steps on private data.
+> 3. Clients train local SGD steps on private data ($\eta_c = 0.1$).
 > 4. Starting at $e_{\min}=1$, clients monitor subspace variance at epoch boundaries.
 > 5. Local training halts dynamically when variance exceeds $\theta$ or at $e_{\max}$.
-> 6. Clients upload their compact low-rank updates.
+> 6. Clients upload their compact low-rank drift vectors.
 > 7. The server updates the active threshold via midpoint scaling.
-> 8. The server optimizer updates the active global matrix, advancing to the next round."
+> 8. The server applies coordinate-wise FedAvg to update the active global matrix, advancing to the next round."
 
 #### 🎯 Delivery & Pointer Guidance:
 - Walk through the 8-step lifecycle on the right column like a state machine.

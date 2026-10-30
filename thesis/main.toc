@@ -60,13 +60,13 @@
 \contentsline {chapter}{\numberline {5}Evaluation}{37}{chapter.5}%
 \contentsline {section}{\numberline {5.1}Experimental Setup and Benchmark Protocol}{37}{section.5.1}%
 \contentsline {section}{\numberline {5.2}Executive Performance Scorecard}{39}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Benchmark Suite 1: Homogeneous Environments (IID, $\alpha = 1000.0$)}{41}{section.5.3}%
+\contentsline {section}{\numberline {5.3}Benchmark Suite 1: Homogeneous Environments}{41}{section.5.3}%
 \contentsline {paragraph}{Target Setpoint Tracking and Super-Linear Variance Dynamics.}{41}{table.5.3}%
 \contentsline {paragraph}{Multi-Genre Natural Language Inference (MNLI).}{42}{table.5.3}%
 \contentsline {paragraph}{Question Natural Language Inference (QNLI).}{42}{figure.5.2}%
 \contentsline {paragraph}{Quora Question Pairs (QQP).}{45}{figure.5.4}%
 \contentsline {paragraph}{Stanford Sentiment Treebank (SST-2).}{45}{figure.5.6}%
-\contentsline {section}{\numberline {5.4}Benchmark Suite 2: Statistical Heterogeneity (Non-IID, $\alpha = 0.5$)}{52}{section.5.4}%
+\contentsline {section}{\numberline {5.4}Benchmark Suite 2: Statistical Heterogeneity}{52}{section.5.4}%
 \contentsline {paragraph}{Multi-Genre Inference (MNLI): Asymmetric Factor Allocation \bbl@greek@ampersand Post-Peak Collapse.}{52}{table.5.4}%
 \contentsline {paragraph}{Question Answering (QNLI): Scalability \bbl@greek@ampersand Suite-Leading Peak Accuracy.}{53}{figure.5.9}%
 \contentsline {paragraph}{Dynamic Round Synchronization and Realized Epoch Dynamics.}{53}{figure.5.10}%

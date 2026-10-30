@@ -73,7 +73,7 @@ A macroscopic inspection of Tables~\ref{tab:scorecard_iid} and \ref{tab:scorecar
 % ==============================================================================
 % SECTION 5.3: BENCHMARK SUITE 1: HOMOGENEOUS ENVIRONMENTS
 % ==============================================================================
-\section{Benchmark Suite 1: Homogeneous Environments (IID, \texorpdfstring{$\alpha = 1000.0$}{alpha = 1000.0})}
+\section{Benchmark Suite 1: Homogeneous Environments}
 \label{sec:eval_iid}
 
 In homogeneous federated learning environments, the Dirichlet concentration parameter is configured to $\alpha = 1000.0$ to simulate an exact IID distribution. Under this condition, each client's local empirical training distribution closely mirrors the global population. Consequently, local stochastic gradients computed across client cohorts point along near-consensus trajectories toward the shared global optimum. This setting establishes an empirical baseline to evaluate whether dynamic variance monitoring can safely expand local computation budgets without inducing parameter divergence.
@@ -530,7 +530,7 @@ On $C=50$ (Figure~\ref{fig:telemetry_sst2_c50_iid}), FDA-RoLoRA ($k=1.0$) reache
 % ==============================================================================
 % SECTION 5.4: BENCHMARK SUITE 2: STATISTICAL HETEROGENEITY
 % ==============================================================================
-\section{Benchmark Suite 2: Statistical Heterogeneity (Non-IID, \texorpdfstring{$\alpha = 0.5$}{alpha = 0.5})}
+\section{Benchmark Suite 2: Statistical Heterogeneity}
 \label{sec:eval_non_iid}
 
 While homogeneous settings demonstrate baseline efficiency, practical federated networks are defined by severe statistical data heterogeneity. To rigorously evaluate the closed-loop resilience of our framework under real-world stress, we investigate severe non-IID conditions modeled via Dirichlet label distribution skew with concentration parameter $\alpha = 0.5$. Adopting $\alpha = 0.5$ directly follows the non-IID benchmarking protocol of RoLoRA~\cite{chen2025robust} and established federated learning literature~\cite{hsu2019measuring, zhu2021federated}, representing an acute label distribution skew where individual clients hold heavily biased class proportions.

@@ -366,21 +366,18 @@
     \end{block}
 \end{frame}
 
-\begin{frame}{Methodology : Server Adaptive Optimization \& Protocol Flow}
+\begin{frame}{Methodology : Coordinate-Wise FedAvg \& Protocol Flow}
     \vspace{-0.4em}
     \begin{columns}
         \begin{column}{0.48\textwidth}
-            \begin{block}{Server FedAdamW Optimizer}
+            \begin{block}{Coordinate-Wise FedAvg Aggregation}
                 \begin{itemize}
-                    \item Aggregated pseudo-gradient:
-                    $$\nabla_{\text{pseudo}}^{(r)} = -\frac{1}{|S_r|}\sum_{i \in S_r} \Delta_i^{(e^*)}$$
-                    \item First \& second moment updates:
-                    \begin{align*}
-                        m^{(r)} &= \beta_1 m^{(r-1)} + (1-\beta_1)\nabla_{\text{pseudo}}^{(r)} \\
-                        v^{(r)} &= \beta_2 v^{(r-1)} + (1-\beta_2)(\nabla_{\text{pseudo}}^{(r)})^2
-                    \end{align*}
-                    \item Decoupled weight decay:
-                    {\small $$W_{\text{act}}^{(r+1)} = W_{\text{act}}^{(r)} - \eta_s \left(\frac{\hat{m}^{(r)}}{\sqrt{\hat{v}^{(r)}}+\epsilon} + \lambda W_{\text{act}}^{(r)}\right)$$}
+                    \footnotesize
+                    \item Client drift: $\Delta_i^{(e^*)} = W_{i, e^*}^{(r)} - W_{\text{act}}^{(r)}$
+                    \item Cohort average: $\bar{\Delta}^{(r)} = \frac{1}{|S_r|}\sum_{i \in S_r} \Delta_i^{(e^*)}$
+                    \item Linear FedAvg update ($\eta_s = 1.0$):
+                    $$W_{\text{act}}^{(r+1)} = W_{\text{act}}^{(r)} + \bar{\Delta}^{(r)}$$
+                    \item \textbf{Linear Aggregation}: Standard FedAvg avoids momentum artifacts, isolating gains strictly to dynamic variance tracking.
                 \end{itemize}
             \end{block}
         \end{column}
@@ -390,12 +387,12 @@
                     \footnotesize
                     \item \textbf{Toggle}: Server selects active track $A$ or $B$.
                     \item \textbf{Broadcast}: Sends $W_{\text{act}}^{(r)}$ and $\theta_{\text{current}}^{(r)}$ to $S_r$.
-                    \item \textbf{Train}: Clients run local SGD steps.
+                    \item \textbf{Train}: Clients run local SGD steps ($\eta_c = 0.1$).
                     \item \textbf{Check}: Evaluate subspace variance at $e \ge e_{\min}$.
                     \item \textbf{Halt}: Return $\Delta_i^{(e^*)}$ when $\text{Var} > \theta$ or $e = e_{\max}$.
-                    \item \textbf{Aggregate}: Server forms pseudo-gradient.
+                    \item \textbf{Aggregate}: Server averages client drifts ($\bar{\Delta}^{(r)}$).
                     \item \textbf{Evolve}: Update active threshold $\theta_{\mathcal{M}^{(r)}}^{(\text{next})}$.
-                    \item \textbf{Step}: Server AdamW updates active weights.
+                    \item \textbf{Step}: Server applies FedAvg to active coordinate.
                 \end{enumerate}
             \end{block}
         \end{column}
@@ -417,7 +414,7 @@
                     \item Global $A, B$ matrices.
                     \item Tracks $(\theta_A, \theta_B)$ state.
                     \item Coordinates RoLoRA toggle.
-                    \item FedAdamW server optimizer.
+                    \item Coordinate-wise FedAvg.
                 \end{itemize}
             \end{block}
         \end{column}
