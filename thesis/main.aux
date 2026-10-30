@@ -241,6 +241,7 @@
 \newlabel{sec:impl_training_pipeline}{{4.5}{34}{Training Pipeline}{section.4.5}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {4.6}Deployment Environment}{35}{section.4.6}\protected@file@percent }
 \newlabel{sec:impl_deployment}{{4.6}{35}{Deployment Environment}{section.4.6}{}}
+\citation{chen2025robust}
 \@writefile{toc}{\contentsline {chapter}{\numberline {5}Evaluation}{37}{chapter.5}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
@@ -249,11 +250,10 @@
 \@writefile{toc}{\contentsline {section}{\numberline {5.1}Experimental Setup and Benchmark Protocol}{37}{section.5.1}\protected@file@percent }
 \newlabel{sec:eval_setup}{{5.1}{37}{Experimental Setup and Benchmark Protocol}{section.5.1}{}}
 \newlabel{sec:eval_infrastructure}{{1}{37}{Experimental Setup and Benchmark Protocol}{Item.10}{}}
+\newlabel{sec:eval_model_param}{{2}{37}{Experimental Setup and Benchmark Protocol}{Item.11}{}}
 \citation{chen2025robust}
 \citation{chen2025robust}
 \citation{chen2025robust}
-\citation{chen2025robust}
-\newlabel{sec:eval_model_param}{{2}{38}{Experimental Setup and Benchmark Protocol}{Item.11}{}}
 \newlabel{eq:payload_formulation}{{5.1}{38}{Experimental Setup and Benchmark Protocol}{equation.5.1}{}}
 \newlabel{sec:eval_capacity}{{3}{38}{Experimental Setup and Benchmark Protocol}{Item.12}{}}
 \newlabel{sec:eval_corpus}{{4}{38}{Experimental Setup and Benchmark Protocol}{Item.13}{}}
@@ -261,85 +261,85 @@
 \newlabel{sec:eval_regimes}{{5}{39}{Experimental Setup and Benchmark Protocol}{Item.14}{}}
 \newlabel{sec:eval_hyperparameters}{{6}{39}{Experimental Setup and Benchmark Protocol}{Item.15}{}}
 \newlabel{sec:eval_early_stopping}{{6}{39}{Experimental Setup and Benchmark Protocol}{Item.15}{}}
-\newlabel{sec:eval_metrics}{{7}{40}{Experimental Setup and Benchmark Protocol}{Item.16}{}}
+\newlabel{sec:eval_metrics}{{7}{39}{Experimental Setup and Benchmark Protocol}{Item.16}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {5.2}Executive Performance Scorecard}{40}{section.5.2}\protected@file@percent }
 \newlabel{sec:eval_scorecard}{{5.2}{40}{Executive Performance Scorecard}{section.5.2}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {5.1}{\ignorespaces Standard IID Evaluation ($\alpha =1000$): Comparison of RoLoRA and proposed FDA-RoLoRA across GLUE benchmarks. Bold values denote the top accuracy per setting; underlined values denote competitive baselines. All values reflect exact multi-seed means and sample standard deviations from raw run metrics with 3-layer corrected SST-2 payload accounting.}}{41}{table.5.1}\protected@file@percent }
-\newlabel{tab:scorecard_iid}{{5.1}{41}{Standard IID Evaluation ($\alpha =1000$): Comparison of RoLoRA and proposed FDA-RoLoRA across GLUE benchmarks. Bold values denote the top accuracy per setting; underlined values denote competitive baselines. All values reflect exact multi-seed means and sample standard deviations from raw run metrics with 3-layer corrected SST-2 payload accounting}{table.5.1}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {5.2}{\ignorespaces Non-IID Evaluation ($\alpha =0.5$): Benchmark performance under severe Dirichlet label skew across GLUE tasks. Bold values indicate top accuracy per setting; underlined values indicate competitive baselines. Excludes the corrupted 4-round MNLI artifact, reflecting true completed multi-seed trajectories.}}{42}{table.5.2}\protected@file@percent }
-\newlabel{tab:scorecard_non_iid}{{5.2}{42}{Non-IID Evaluation ($\alpha =0.5$): Benchmark performance under severe Dirichlet label skew across GLUE tasks. Bold values indicate top accuracy per setting; underlined values indicate competitive baselines. Excludes the corrupted 4-round MNLI artifact, reflecting true completed multi-seed trajectories}{table.5.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.1}{\ignorespaces Standard IID Evaluation ($\alpha =1000$): Comparison of RoLoRA and proposed FDA-RoLoRA across GLUE benchmarks. Bold values denote the top accuracy per setting; underlined values denote competitive baselines. All values reflect exact multi-seed means and sample standard deviations from raw run metrics with 3-layer corrected SST-2 payload accounting.}}{40}{table.5.1}\protected@file@percent }
+\newlabel{tab:scorecard_iid}{{5.1}{40}{Standard IID Evaluation ($\alpha =1000$): Comparison of RoLoRA and proposed FDA-RoLoRA across GLUE benchmarks. Bold values denote the top accuracy per setting; underlined values denote competitive baselines. All values reflect exact multi-seed means and sample standard deviations from raw run metrics with 3-layer corrected SST-2 payload accounting}{table.5.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.2}{\ignorespaces Non-IID Evaluation ($\alpha =0.5$): Benchmark performance under severe Dirichlet label skew across GLUE tasks. Bold values indicate top accuracy per setting; underlined values indicate competitive baselines. Excludes the corrupted 4-round MNLI artifact, reflecting true completed multi-seed trajectories.}}{41}{table.5.2}\protected@file@percent }
+\newlabel{tab:scorecard_non_iid}{{5.2}{41}{Non-IID Evaluation ($\alpha =0.5$): Benchmark performance under severe Dirichlet label skew across GLUE tasks. Bold values indicate top accuracy per setting; underlined values indicate competitive baselines. Excludes the corrupted 4-round MNLI artifact, reflecting true completed multi-seed trajectories}{table.5.2}{}}
 \citation{theologitis2025fda}
-\@writefile{toc}{\contentsline {section}{\numberline {5.3}Benchmark Suite 1: Homogeneous Environments (IID, $\alpha = 1000.0$)}{43}{section.5.3}\protected@file@percent }
-\newlabel{sec:eval_iid}{{5.3}{43}{Benchmark Suite 1: Homogeneous Environments (IID, \texorpdfstring {$\alpha = 1000.0$}{alpha = 1000.0})}{section.5.3}{}}
-\@writefile{toc}{\contentsline {paragraph}{Target Setpoint Tracking and Super-Linear Variance Dynamics.}{43}{table.5.3}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {5.3}{\ignorespaces Detailed Telemetry Across All IID Configurations ($\alpha =1000$): Comprehensive multi-seed final/peak accuracy, executed communication rounds, exact communication cost (accounting for 3-layer SST-2 structure), realized local epochs, and inter-client drift variance.}}{44}{table.5.3}\protected@file@percent }
-\newlabel{tab:iid_detailed_benchmarks}{{5.3}{44}{Detailed Telemetry Across All IID Configurations ($\alpha =1000$): Comprehensive multi-seed final/peak accuracy, executed communication rounds, exact communication cost (accounting for 3-layer SST-2 structure), realized local epochs, and inter-client drift variance}{table.5.3}{}}
-\@writefile{toc}{\contentsline {paragraph}{Multi-Genre Natural Language Inference (MNLI).}{45}{table.5.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Question Natural Language Inference (QNLI).}{45}{figure.5.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Quora Question Pairs (QQP).}{45}{figure.5.4}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces Multi-panel optimization telemetry on MNLI ($C=20, R_{\max }=50, \eta _c=0.1, \alpha =1000.0$) comparing FDA-RoLoRA against static RoLoRA baselines under homogeneous consensus.}}{46}{figure.5.1}\protected@file@percent }
-\newlabel{fig:telemetry_mnli_c20_iid}{{5.1}{46}{Multi-panel optimization telemetry on MNLI ($C=20, R_{\max }=50, \eta _c=0.1, \alpha =1000.0$) comparing FDA-RoLoRA against static RoLoRA baselines under homogeneous consensus}{figure.5.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces Multi-panel optimization telemetry on MNLI ($C=50, R_{\max }=30, \eta _c=0.1, \alpha =1000.0$) under expanded cohort scale $C=50$.}}{47}{figure.5.2}\protected@file@percent }
-\newlabel{fig:telemetry_mnli_c50_iid}{{5.2}{47}{Multi-panel optimization telemetry on MNLI ($C=50, R_{\max }=30, \eta _c=0.1, \alpha =1000.0$) under expanded cohort scale $C=50$}{figure.5.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.3}Benchmark Suite 1: Homogeneous Environments (IID, $\alpha = 1000.0$)}{42}{section.5.3}\protected@file@percent }
+\newlabel{sec:eval_iid}{{5.3}{42}{Benchmark Suite 1: Homogeneous Environments (IID, \texorpdfstring {$\alpha = 1000.0$}{alpha = 1000.0})}{section.5.3}{}}
+\@writefile{toc}{\contentsline {paragraph}{Target Setpoint Tracking and Super-Linear Variance Dynamics.}{42}{table.5.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5.3}{\ignorespaces Detailed Telemetry Across All IID Configurations ($\alpha =1000$): Comprehensive multi-seed final/peak accuracy, executed communication rounds, exact communication cost (accounting for 3-layer SST-2 structure), realized local epochs, and inter-client drift variance.}}{43}{table.5.3}\protected@file@percent }
+\newlabel{tab:iid_detailed_benchmarks}{{5.3}{43}{Detailed Telemetry Across All IID Configurations ($\alpha =1000$): Comprehensive multi-seed final/peak accuracy, executed communication rounds, exact communication cost (accounting for 3-layer SST-2 structure), realized local epochs, and inter-client drift variance}{table.5.3}{}}
+\@writefile{toc}{\contentsline {paragraph}{Multi-Genre Natural Language Inference (MNLI).}{44}{table.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Question Natural Language Inference (QNLI).}{44}{figure.5.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces Multi-panel optimization telemetry on MNLI ($C=20, R_{\max }=50, \eta _c=0.1, \alpha =1000.0$) comparing FDA-RoLoRA against static RoLoRA baselines under homogeneous consensus.}}{45}{figure.5.1}\protected@file@percent }
+\newlabel{fig:telemetry_mnli_c20_iid}{{5.1}{45}{Multi-panel optimization telemetry on MNLI ($C=20, R_{\max }=50, \eta _c=0.1, \alpha =1000.0$) comparing FDA-RoLoRA against static RoLoRA baselines under homogeneous consensus}{figure.5.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces Multi-panel optimization telemetry on MNLI ($C=50, R_{\max }=30, \eta _c=0.1, \alpha =1000.0$) under expanded cohort scale $C=50$.}}{46}{figure.5.2}\protected@file@percent }
+\newlabel{fig:telemetry_mnli_c50_iid}{{5.2}{46}{Multi-panel optimization telemetry on MNLI ($C=50, R_{\max }=30, \eta _c=0.1, \alpha =1000.0$) under expanded cohort scale $C=50$}{figure.5.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{Quora Question Pairs (QQP).}{47}{figure.5.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Stanford Sentiment Treebank (SST-2).}{47}{figure.5.6}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {5.3}{\ignorespaces Multi-panel optimization telemetry on QNLI ($C=20, R_{\max }=50, \eta _c=0.1, \alpha =1000.0$) comparing FDA-RoLoRA against static RoLoRA baselines under homogeneous consensus.}}{48}{figure.5.3}\protected@file@percent }
 \newlabel{fig:telemetry_qnli_c20_iid}{{5.3}{48}{Multi-panel optimization telemetry on QNLI ($C=20, R_{\max }=50, \eta _c=0.1, \alpha =1000.0$) comparing FDA-RoLoRA against static RoLoRA baselines under homogeneous consensus}{figure.5.3}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {5.4}{\ignorespaces Multi-panel optimization telemetry on QNLI ($C=50, R_{\max }=30, \eta _c=0.1, \alpha =1000.0$) under expanded cohort scale $C=50$.}}{49}{figure.5.4}\protected@file@percent }
 \newlabel{fig:telemetry_qnli_c50_iid}{{5.4}{49}{Multi-panel optimization telemetry on QNLI ($C=50, R_{\max }=30, \eta _c=0.1, \alpha =1000.0$) under expanded cohort scale $C=50$}{figure.5.4}{}}
-\@writefile{toc}{\contentsline {paragraph}{Stanford Sentiment Treebank (SST-2).}{50}{figure.5.6}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.5}{\ignorespaces Multi-panel optimization telemetry on QQP ($C=20, R_{\max }=50, \eta _c=0.1, \alpha =1000.0$) comparing FDA-RoLoRA against static RoLoRA baselines under homogeneous consensus.}}{51}{figure.5.5}\protected@file@percent }
-\newlabel{fig:telemetry_qqp_c20_iid}{{5.5}{51}{Multi-panel optimization telemetry on QQP ($C=20, R_{\max }=50, \eta _c=0.1, \alpha =1000.0$) comparing FDA-RoLoRA against static RoLoRA baselines under homogeneous consensus}{figure.5.5}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.6}{\ignorespaces Multi-panel optimization telemetry on QQP ($C=50, R_{\max }=30, \eta _c=0.1, \alpha =1000.0$) under expanded cohort scale $C=50$.}}{52}{figure.5.6}\protected@file@percent }
-\newlabel{fig:telemetry_qqp_c50_iid}{{5.6}{52}{Multi-panel optimization telemetry on QQP ($C=50, R_{\max }=30, \eta _c=0.1, \alpha =1000.0$) under expanded cohort scale $C=50$}{figure.5.6}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.7}{\ignorespaces Multi-panel optimization telemetry on SST-2 ($C=20, R_{\max }=50, \eta _c=0.1, \alpha =1000.0$) comparing FDA-RoLoRA against static RoLoRA baselines under homogeneous consensus.}}{53}{figure.5.7}\protected@file@percent }
-\newlabel{fig:telemetry_sst2_c20_iid}{{5.7}{53}{Multi-panel optimization telemetry on SST-2 ($C=20, R_{\max }=50, \eta _c=0.1, \alpha =1000.0$) comparing FDA-RoLoRA against static RoLoRA baselines under homogeneous consensus}{figure.5.7}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.8}{\ignorespaces Multi-panel optimization telemetry on SST-2 ($C=50, R_{\max }=30, \eta _c=0.1, \alpha =1000.0$) under expanded cohort scale $C=50$.}}{54}{figure.5.8}\protected@file@percent }
-\newlabel{fig:telemetry_sst2_c50_iid}{{5.8}{54}{Multi-panel optimization telemetry on SST-2 ($C=50, R_{\max }=30, \eta _c=0.1, \alpha =1000.0$) under expanded cohort scale $C=50$}{figure.5.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.5}{\ignorespaces Multi-panel optimization telemetry on QQP ($C=20, R_{\max }=50, \eta _c=0.1, \alpha =1000.0$) comparing FDA-RoLoRA against static RoLoRA baselines under homogeneous consensus.}}{50}{figure.5.5}\protected@file@percent }
+\newlabel{fig:telemetry_qqp_c20_iid}{{5.5}{50}{Multi-panel optimization telemetry on QQP ($C=20, R_{\max }=50, \eta _c=0.1, \alpha =1000.0$) comparing FDA-RoLoRA against static RoLoRA baselines under homogeneous consensus}{figure.5.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.6}{\ignorespaces Multi-panel optimization telemetry on QQP ($C=50, R_{\max }=30, \eta _c=0.1, \alpha =1000.0$) under expanded cohort scale $C=50$.}}{51}{figure.5.6}\protected@file@percent }
+\newlabel{fig:telemetry_qqp_c50_iid}{{5.6}{51}{Multi-panel optimization telemetry on QQP ($C=50, R_{\max }=30, \eta _c=0.1, \alpha =1000.0$) under expanded cohort scale $C=50$}{figure.5.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.7}{\ignorespaces Multi-panel optimization telemetry on SST-2 ($C=20, R_{\max }=50, \eta _c=0.1, \alpha =1000.0$) comparing FDA-RoLoRA against static RoLoRA baselines under homogeneous consensus.}}{52}{figure.5.7}\protected@file@percent }
+\newlabel{fig:telemetry_sst2_c20_iid}{{5.7}{52}{Multi-panel optimization telemetry on SST-2 ($C=20, R_{\max }=50, \eta _c=0.1, \alpha =1000.0$) comparing FDA-RoLoRA against static RoLoRA baselines under homogeneous consensus}{figure.5.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.8}{\ignorespaces Multi-panel optimization telemetry on SST-2 ($C=50, R_{\max }=30, \eta _c=0.1, \alpha =1000.0$) under expanded cohort scale $C=50$.}}{53}{figure.5.8}\protected@file@percent }
+\newlabel{fig:telemetry_sst2_c50_iid}{{5.8}{53}{Multi-panel optimization telemetry on SST-2 ($C=50, R_{\max }=30, \eta _c=0.1, \alpha =1000.0$) under expanded cohort scale $C=50$}{figure.5.8}{}}
 \citation{chen2025robust}
 \citation{hsu2019measuring,zhu2021federated}
-\@writefile{toc}{\contentsline {section}{\numberline {5.4}Benchmark Suite 2: Statistical Heterogeneity (Non-IID, $\alpha = 0.5$)}{55}{section.5.4}\protected@file@percent }
-\newlabel{sec:eval_non_iid}{{5.4}{55}{Benchmark Suite 2: Statistical Heterogeneity (Non-IID, \texorpdfstring {$\alpha = 0.5$}{alpha = 0.5})}{section.5.4}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {5.4}{\ignorespaces Detailed Telemetry Across All Non-IID Configurations ($\alpha =0.5$): Performance under Dirichlet distribution skew. The corrupted 4-round MNLI $C=20$ $k=1.0$ run has been removed, demonstrating true multi-seed stability ($72.87 \pm 0.94\%$ final accuracy). Factor-decomposed local epochs $\bar  {e}_A$ and $\bar  {e}_B$ show symmetric tracking across alternating tracks.}}{55}{table.5.4}\protected@file@percent }
-\newlabel{tab:non_iid_detailed_benchmarks}{{5.4}{55}{Detailed Telemetry Across All Non-IID Configurations ($\alpha =0.5$): Performance under Dirichlet distribution skew. The corrupted 4-round MNLI $C=20$ $k=1.0$ run has been removed, demonstrating true multi-seed stability ($72.87 \pm 0.94\%$ final accuracy). Factor-decomposed local epochs $\bar {e}_A$ and $\bar {e}_B$ show symmetric tracking across alternating tracks}{table.5.4}{}}
-\@writefile{toc}{\contentsline {paragraph}{Multi-Genre Inference (MNLI): Asymmetric Factor Allocation \bbl@greek@ampersand   Post-Peak Collapse.}{55}{table.5.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Question Answering (QNLI): Scalability \bbl@greek@ampersand   Suite-Leading Peak Accuracy.}{56}{figure.5.9}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{The "Safety Brake" Mechanism \bbl@greek@ampersand   Realized Epoch Dynamics.}{56}{figure.5.10}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Sentiment \bbl@greek@ampersand   Paraphrase: Cross-Task Drift and Anti-Collapse Protection.}{56}{figure.5.11}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.9}{\ignorespaces Multi-panel optimization telemetry on MNLI under Dirichlet label skew ($\alpha =0.5, C=20, R_{\max }=50, \eta _c=0.1$) comparing FDA-RoLoRA against static baselines.}}{57}{figure.5.9}\protected@file@percent }
-\newlabel{fig:telemetry_mnli_non_iid}{{5.9}{57}{Multi-panel optimization telemetry on MNLI under Dirichlet label skew ($\alpha =0.5, C=20, R_{\max }=50, \eta _c=0.1$) comparing FDA-RoLoRA against static baselines}{figure.5.9}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.10}{\ignorespaces Multi-panel optimization telemetry on QNLI under Dirichlet label skew ($\alpha =0.5, C=20, R_{\max }=50, \eta _c=0.1$) comparing FDA-RoLoRA against static baselines.}}{58}{figure.5.10}\protected@file@percent }
-\newlabel{fig:telemetry_qnli_non_iid}{{5.10}{58}{Multi-panel optimization telemetry on QNLI under Dirichlet label skew ($\alpha =0.5, C=20, R_{\max }=50, \eta _c=0.1$) comparing FDA-RoLoRA against static baselines}{figure.5.10}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.11}{\ignorespaces Empirical local epoch allocation dynamics under severe statistical heterogeneity (Dirichlet label skew $\alpha =0.5$), illustrating the closed-loop setpoint tracking dynamics of FDA-RoLoRA on MNLI and QNLI under Dirichlet label skew ($\alpha =0.5$).}}{59}{figure.5.11}\protected@file@percent }
-\newlabel{fig:non_iid_epoch_dynamics}{{5.11}{59}{Empirical local epoch allocation dynamics under severe statistical heterogeneity (Dirichlet label skew $\alpha =0.5$), illustrating the closed-loop setpoint tracking dynamics of FDA-RoLoRA on MNLI and QNLI under Dirichlet label skew ($\alpha =0.5$)}{figure.5.11}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.12}{\ignorespaces Convergence and client drift variance trajectories on MNLI and QNLI under severe Dirichlet statistical heterogeneity ($\alpha = 0.5$). Top panels present validation accuracy trajectories; bottom panels present client coordinate drift variance ($\sigma _t^2$).}}{59}{figure.5.12}\protected@file@percent }
-\newlabel{fig:non_iid_benchmark_telemetry}{{5.12}{59}{Convergence and client drift variance trajectories on MNLI and QNLI under severe Dirichlet statistical heterogeneity ($\alpha = 0.5$). Top panels present validation accuracy trajectories; bottom panels present client coordinate drift variance ($\sigma _t^2$)}{figure.5.12}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.4}Benchmark Suite 2: Statistical Heterogeneity (Non-IID, $\alpha = 0.5$)}{54}{section.5.4}\protected@file@percent }
+\newlabel{sec:eval_non_iid}{{5.4}{54}{Benchmark Suite 2: Statistical Heterogeneity (Non-IID, \texorpdfstring {$\alpha = 0.5$}{alpha = 0.5})}{section.5.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.4}{\ignorespaces Detailed Telemetry Across All Non-IID Configurations ($\alpha =0.5$): Performance under Dirichlet distribution skew. The corrupted 4-round MNLI $C=20$ $k=1.0$ run has been removed, demonstrating true multi-seed stability ($72.87 \pm 0.94\%$ final accuracy). Factor-decomposed local epochs $\bar  {e}_A$ and $\bar  {e}_B$ show symmetric tracking across alternating tracks.}}{54}{table.5.4}\protected@file@percent }
+\newlabel{tab:non_iid_detailed_benchmarks}{{5.4}{54}{Detailed Telemetry Across All Non-IID Configurations ($\alpha =0.5$): Performance under Dirichlet distribution skew. The corrupted 4-round MNLI $C=20$ $k=1.0$ run has been removed, demonstrating true multi-seed stability ($72.87 \pm 0.94\%$ final accuracy). Factor-decomposed local epochs $\bar {e}_A$ and $\bar {e}_B$ show symmetric tracking across alternating tracks}{table.5.4}{}}
+\@writefile{toc}{\contentsline {paragraph}{Multi-Genre Inference (MNLI): Asymmetric Factor Allocation \bbl@greek@ampersand   Post-Peak Collapse.}{54}{table.5.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Question Answering (QNLI): Scalability \bbl@greek@ampersand   Suite-Leading Peak Accuracy.}{55}{figure.5.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{The "Safety Brake" Mechanism \bbl@greek@ampersand   Realized Epoch Dynamics.}{55}{figure.5.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Sentiment \bbl@greek@ampersand   Paraphrase: Cross-Task Drift and Anti-Collapse Protection.}{55}{figure.5.11}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.9}{\ignorespaces Multi-panel optimization telemetry on MNLI under Dirichlet label skew ($\alpha =0.5, C=20, R_{\max }=50, \eta _c=0.1$) comparing FDA-RoLoRA against static baselines.}}{56}{figure.5.9}\protected@file@percent }
+\newlabel{fig:telemetry_mnli_non_iid}{{5.9}{56}{Multi-panel optimization telemetry on MNLI under Dirichlet label skew ($\alpha =0.5, C=20, R_{\max }=50, \eta _c=0.1$) comparing FDA-RoLoRA against static baselines}{figure.5.9}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.10}{\ignorespaces Multi-panel optimization telemetry on QNLI under Dirichlet label skew ($\alpha =0.5, C=20, R_{\max }=50, \eta _c=0.1$) comparing FDA-RoLoRA against static baselines.}}{57}{figure.5.10}\protected@file@percent }
+\newlabel{fig:telemetry_qnli_non_iid}{{5.10}{57}{Multi-panel optimization telemetry on QNLI under Dirichlet label skew ($\alpha =0.5, C=20, R_{\max }=50, \eta _c=0.1$) comparing FDA-RoLoRA against static baselines}{figure.5.10}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.11}{\ignorespaces Empirical local epoch allocation dynamics under severe statistical heterogeneity (Dirichlet label skew $\alpha =0.5$), illustrating the closed-loop setpoint tracking dynamics of FDA-RoLoRA on MNLI and QNLI under Dirichlet label skew ($\alpha =0.5$).}}{58}{figure.5.11}\protected@file@percent }
+\newlabel{fig:non_iid_epoch_dynamics}{{5.11}{58}{Empirical local epoch allocation dynamics under severe statistical heterogeneity (Dirichlet label skew $\alpha =0.5$), illustrating the closed-loop setpoint tracking dynamics of FDA-RoLoRA on MNLI and QNLI under Dirichlet label skew ($\alpha =0.5$)}{figure.5.11}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.12}{\ignorespaces Convergence and client drift variance trajectories on MNLI and QNLI under severe Dirichlet statistical heterogeneity ($\alpha = 0.5$). Top panels present validation accuracy trajectories; bottom panels present client coordinate drift variance ($\sigma _t^2$).}}{58}{figure.5.12}\protected@file@percent }
+\newlabel{fig:non_iid_benchmark_telemetry}{{5.12}{58}{Convergence and client drift variance trajectories on MNLI and QNLI under severe Dirichlet statistical heterogeneity ($\alpha = 0.5$). Top panels present validation accuracy trajectories; bottom panels present client coordinate drift variance ($\sigma _t^2$)}{figure.5.12}{}}
 \citation{theologitis2023algorithms}
-\@writefile{toc}{\contentsline {section}{\numberline {5.5}Cross-Regime Synthesis: Rounds vs. Communication Payload and Deployment Guidelines}{60}{section.5.5}\protected@file@percent }
-\newlabel{sec:eval_synthesis}{{5.5}{60}{Cross-Regime Synthesis: Rounds vs. Communication Payload and Deployment Guidelines}{section.5.5}{}}
-\@writefile{toc}{\contentsline {paragraph}{Rounds vs. Communication Payload to Milestone Targets.}{60}{section.5.5}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {5.5}{\ignorespaces Convergence Milestone Efficiency: Communication rounds and cumulative payload required to surpass predefined target accuracy milestones. Milestones are selected a priori above majority-class baselines. Individual seed trajectories are tracked to prevent averaging artifacts.}}{60}{table.5.5}\protected@file@percent }
-\newlabel{tab:milestone_synthesis}{{5.5}{60}{Convergence Milestone Efficiency: Communication rounds and cumulative payload required to surpass predefined target accuracy milestones. Milestones are selected a priori above majority-class baselines. Individual seed trajectories are tracked to prevent averaging artifacts}{table.5.5}{}}
-\@writefile{toc}{\contentsline {paragraph}{Regime-Dependent Setpoint Tracking and Controller Mechanics.}{60}{table.5.6}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {5.6}{\ignorespaces Matched-Budget Communication Parity: Validation accuracy evaluated strictly at identical communication payload budgets (Common Budget MB) and identical round horizons across RoLoRA and FDA-RoLoRA.}}{61}{table.5.6}\protected@file@percent }
-\newlabel{tab:matched_budget_parity}{{5.6}{61}{Matched-Budget Communication Parity: Validation accuracy evaluated strictly at identical communication payload budgets (Common Budget MB) and identical round horizons across RoLoRA and FDA-RoLoRA}{table.5.6}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {5.7}{\ignorespaces Empirical Closed-Loop Controller Setpoint Tracking: Comparison of nominal targets $k \cdot e_{\max }$ against realized steady-state local epochs $\bar  {e}_{\text  {ss}}$ and tracking ratio $\mathcal  {S} = \bar  {e}_{\text  {ss}} / (k \cdot e_{\max })$. In IID regimes, super-linear client variance growth causes steady-state undershoot ($\mathcal  {S} \approx 0.64\text  {--}0.79$); in Non-IID regimes, near-linear variance allows near-optimal setpoint tracking ($\mathcal  {S} \approx 0.91\text  {--}1.11$). Realized epochs for matrices $A$ and $B$ confirm track symmetry.}}{61}{table.5.7}\protected@file@percent }
-\newlabel{tab:setpoint_tracking_dynamics}{{5.7}{61}{Empirical Closed-Loop Controller Setpoint Tracking: Comparison of nominal targets $k \cdot e_{\max }$ against realized steady-state local epochs $\bar {e}_{\text {ss}}$ and tracking ratio $\mathcal {S} = \bar {e}_{\text {ss}} / (k \cdot e_{\max })$. In IID regimes, super-linear client variance growth causes steady-state undershoot ($\mathcal {S} \approx 0.64\text {--}0.79$); in Non-IID regimes, near-linear variance allows near-optimal setpoint tracking ($\mathcal {S} \approx 0.91\text {--}1.11$). Realized epochs for matrices $A$ and $B$ confirm track symmetry}{table.5.7}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.13}{\ignorespaces Empirical Setpoint Tracking Dynamics in FDA-RoLoRA: In IID regimes, super-linear coordinate variance growth causes steady-state undershoot ($\mathcal  {S} \approx 0.64\text  {--}0.79$); in Non-IID regimes, near-linear drift allows the controller to accurately track the nominal setpoint ($\mathcal  {S} \approx 0.91\text  {--}1.11$).}}{62}{figure.5.13}\protected@file@percent }
-\newlabel{fig:dual_frontier}{{5.13}{62}{Empirical Setpoint Tracking Dynamics in FDA-RoLoRA: In IID regimes, super-linear coordinate variance growth causes steady-state undershoot ($\mathcal {S} \approx 0.64\text {--}0.79$); in Non-IID regimes, near-linear drift allows the controller to accurately track the nominal setpoint ($\mathcal {S} \approx 0.91\text {--}1.11$)}{figure.5.13}{}}
-\@writefile{toc}{\contentsline {paragraph}{Low-Rank Factor Symmetry and Decoupled Tracking.}{62}{Item.21}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Practical Deployment Guidelines for Federated PEFT.}{62}{Item.21}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {6}Conclusion and Future Work}{65}{chapter.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.5}Cross-Regime Synthesis: Rounds vs. Communication Payload and Deployment Guidelines}{59}{section.5.5}\protected@file@percent }
+\newlabel{sec:eval_synthesis}{{5.5}{59}{Cross-Regime Synthesis: Rounds vs. Communication Payload and Deployment Guidelines}{section.5.5}{}}
+\@writefile{toc}{\contentsline {paragraph}{Rounds vs. Communication Payload to Milestone Targets.}{59}{section.5.5}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5.5}{\ignorespaces Convergence Milestone Efficiency: Communication rounds and cumulative payload required to surpass predefined target accuracy milestones. Milestones are selected a priori above majority-class baselines. Individual seed trajectories are tracked to prevent averaging artifacts.}}{59}{table.5.5}\protected@file@percent }
+\newlabel{tab:milestone_synthesis}{{5.5}{59}{Convergence Milestone Efficiency: Communication rounds and cumulative payload required to surpass predefined target accuracy milestones. Milestones are selected a priori above majority-class baselines. Individual seed trajectories are tracked to prevent averaging artifacts}{table.5.5}{}}
+\@writefile{toc}{\contentsline {paragraph}{Regime-Dependent Setpoint Tracking and Controller Mechanics.}{59}{table.5.6}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5.6}{\ignorespaces Matched-Budget Communication Parity: Validation accuracy evaluated strictly at identical communication payload budgets (Common Budget MB) and identical round horizons across RoLoRA and FDA-RoLoRA.}}{60}{table.5.6}\protected@file@percent }
+\newlabel{tab:matched_budget_parity}{{5.6}{60}{Matched-Budget Communication Parity: Validation accuracy evaluated strictly at identical communication payload budgets (Common Budget MB) and identical round horizons across RoLoRA and FDA-RoLoRA}{table.5.6}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.7}{\ignorespaces Empirical Closed-Loop Controller Setpoint Tracking: Comparison of nominal targets $k \cdot e_{\max }$ against realized steady-state local epochs $\bar  {e}_{\text  {ss}}$ and tracking ratio $\mathcal  {S} = \bar  {e}_{\text  {ss}} / (k \cdot e_{\max })$. In IID regimes, super-linear client variance growth causes steady-state undershoot ($\mathcal  {S} \approx 0.64\text  {--}0.79$); in Non-IID regimes, near-linear variance allows near-optimal setpoint tracking ($\mathcal  {S} \approx 0.91\text  {--}1.11$). Realized epochs for matrices $A$ and $B$ confirm track symmetry.}}{60}{table.5.7}\protected@file@percent }
+\newlabel{tab:setpoint_tracking_dynamics}{{5.7}{60}{Empirical Closed-Loop Controller Setpoint Tracking: Comparison of nominal targets $k \cdot e_{\max }$ against realized steady-state local epochs $\bar {e}_{\text {ss}}$ and tracking ratio $\mathcal {S} = \bar {e}_{\text {ss}} / (k \cdot e_{\max })$. In IID regimes, super-linear client variance growth causes steady-state undershoot ($\mathcal {S} \approx 0.64\text {--}0.79$); in Non-IID regimes, near-linear variance allows near-optimal setpoint tracking ($\mathcal {S} \approx 0.91\text {--}1.11$). Realized epochs for matrices $A$ and $B$ confirm track symmetry}{table.5.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.13}{\ignorespaces Empirical Setpoint Tracking Dynamics in FDA-RoLoRA: In IID regimes, super-linear coordinate variance growth causes steady-state undershoot ($\mathcal  {S} \approx 0.64\text  {--}0.79$); in Non-IID regimes, near-linear drift allows the controller to accurately track the nominal setpoint ($\mathcal  {S} \approx 0.91\text  {--}1.11$).}}{61}{figure.5.13}\protected@file@percent }
+\newlabel{fig:dual_frontier}{{5.13}{61}{Empirical Setpoint Tracking Dynamics in FDA-RoLoRA: In IID regimes, super-linear coordinate variance growth causes steady-state undershoot ($\mathcal {S} \approx 0.64\text {--}0.79$); in Non-IID regimes, near-linear drift allows the controller to accurately track the nominal setpoint ($\mathcal {S} \approx 0.91\text {--}1.11$)}{figure.5.13}{}}
+\@writefile{toc}{\contentsline {paragraph}{Low-Rank Factor Symmetry and Decoupled Tracking.}{61}{Item.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Practical Deployment Guidelines for Federated PEFT.}{61}{Item.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {6}Conclusion and Future Work}{63}{chapter.6}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{loa}{\addvspace {10\p@ }}
-\newlabel{chap:conclusion}{{6}{65}{Conclusion and Future Work}{chapter.6}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {6.1}Synthesis of Results and Methodological Takeaways}{65}{section.6.1}\protected@file@percent }
-\newlabel{sec:synthesis_results}{{6.1}{65}{Synthesis of Results and Methodological Takeaways}{section.6.1}{}}
+\newlabel{chap:conclusion}{{6}{63}{Conclusion and Future Work}{chapter.6}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.1}Synthesis of Results and Methodological Takeaways}{63}{section.6.1}\protected@file@percent }
+\newlabel{sec:synthesis_results}{{6.1}{63}{Synthesis of Results and Methodological Takeaways}{section.6.1}{}}
 \citation{babakniya2023slora}
 \citation{sun2024improving}
-\@writefile{toc}{\contentsline {section}{\numberline {6.2}Limitations}{66}{section.6.2}\protected@file@percent }
-\newlabel{sec:limitations}{{6.2}{66}{Limitations}{section.6.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {6.3}Future Work}{66}{section.6.3}\protected@file@percent }
-\newlabel{sec:future_work}{{6.3}{66}{Future Work}{section.6.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.2}Limitations}{64}{section.6.2}\protected@file@percent }
+\newlabel{sec:limitations}{{6.2}{64}{Limitations}{section.6.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.3}Future Work}{64}{section.6.3}\protected@file@percent }
+\newlabel{sec:future_work}{{6.3}{64}{Future Work}{section.6.3}{}}
 \citation{dettmers2023qlora}
 \citation{kuang2023federatedscope}
 \citation{*}
@@ -356,7 +356,7 @@
 \bibcite{dettmers2023qlora}{9}
 \bibcite{devlin2019bert}{10}
 \bibcite{frangias2023federated}{11}
-\@writefile{toc}{\contentsline {chapter}{Bibliography}{69}{section*.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Bibliography}{67}{section*.12}\protected@file@percent }
 \bibcite{goodfellow2016deep}{12}
 \bibcite{houlsby2019parameter}{13}
 \bibcite{hsu2019measuring}{14}
@@ -396,4 +396,4 @@
 \bibcite{zhang2023adalora}{48}
 \bibcite{zhao2024loratheexplorer}{49}
 \bibcite{zhu2021federated}{50}
-\gdef \@abspage@last{91}
+\gdef \@abspage@last{89}
