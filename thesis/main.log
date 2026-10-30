@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.10.26)  31 OCT 2026 00:43
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.10.26)  31 OCT 2026 01:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2406,19 +2406,18 @@ Chapter 6.
 (C:\Users\GKaralis\Documents\GitHub\thesis-stuff\thesis\main.bbl [61
 
 ] [62]
-[63]
-Underfull \hbox (badness 1472) in paragraph at lines 255--261
+Underfull \hbox (badness 1472) in paragraph at lines 190--196
 \T1/lmr/m/n/12 Communication-Efficient Fed-er-ated Fine-Tuning of Lan-guage Mod
 -els[][].  \T1/lmr/m/it/12 arXiv
  []
 
 
-Underfull \hbox (badness 2970) in paragraph at lines 255--261
+Underfull \hbox (badness 2970) in paragraph at lines 190--196
 \T1/lmr/m/it/12 preprint arXiv:2505.04535\T1/lmr/m/n/12 , 2025.  Code avail-abl
 e at [][]$\T1/lmtt/m/n/12 https : / / github . com /
  []
 
-[64]) [65] (C:\Users\GKaralis\Documents\GitHub\thesis-stuff\thesis\main.aux)
+[63]) [64] (C:\Users\GKaralis\Documents\GitHub\thesis-stuff\thesis\main.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
@@ -2427,10 +2426,10 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 9E55E2DAD03D9E968DD86700FA2355B3;14575.
  ) 
 Here is how much of TeX's memory you used:
- 30411 strings out of 467871
- 590558 string characters out of 5416923
- 1040547 words of memory out of 5000000
- 58355 multiletter control sequences out of 15000+600000
+ 30384 strings out of 467871
+ 589996 string characters out of 5416923
+ 1040017 words of memory out of 5000000
+ 58342 multiletter control sequences out of 15000+600000
  774079 words of font info for 129 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,21n,94p,2669b,891s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -2476,9 +2475,9 @@ l/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C:/Users/GKaralis/AppData/L
 ocal/Programs/MiKTeX/fonts/type1/public/lm/lmtt12.pfb><C:/Users/GKaralis/AppDat
 a/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
 Output written on C:\Users\GKaralis\Documents\GitHub\thesis-stuff\thesis\main.p
-df (83 pages, 10206771 bytes).
+df (82 pages, 10197062 bytes).
 PDF statistics:
- 1641 PDF objects out of 1728 (max. 8388607)
- 342 named destinations out of 1000 (max. 500000)
+ 1607 PDF objects out of 1728 (max. 8388607)
+ 328 named destinations out of 1000 (max. 500000)
  23919 words of extra memory for PDF output out of 24883 (max. 10000000)
 
