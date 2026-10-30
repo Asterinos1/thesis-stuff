@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.10.26)  30 OCT 2026 20:28
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.10.26)  30 OCT 2026 22:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**./main.tex
-(main.tex
+**./thesis/main.tex
+(thesis/main.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
 (C:\Users\GKaralis\AppData\Local\Programs\MiKTeX\tex/latex/base\report.cls
@@ -1317,7 +1317,7 @@ File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 pdftex.def
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count350
-) (main.aux
+) (C:\Users\GKaralis\Documents\GitHub\thesis-stuff\thesis\main.aux
 Package babel Info: 'greek' activates 'greek' shorthands.
 (babel)             Reported on input line 10.
 LaTeX Font Info:    Trying to load font information for LGR+artemisia on input 
@@ -1420,7 +1420,8 @@ File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 Package hyperref Info: Link coloring ON on input line 57.
-(main.out) (main.out)
+(C:\Users\GKaralis\Documents\GitHub\thesis-stuff\thesis\main.out)
+(C:\Users\GKaralis\Documents\GitHub\thesis-stuff\thesis\main.out)
 \@outlinefile=\write4
 \openout4 = `main.out'.
 
@@ -1463,10 +1464,11 @@ Package microtype Info: Character `029' is missing
  [1
 
 {C:/Users/GKaralis/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/G
-Karalis/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc} <./tuc_logo
-.png>] [2
+Karalis/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc} <C:/Users/G
+Karalis/Documents/GitHub/thesis-stuff/thesis/tuc_logo.png>] [2
 
-] (chapters/abstract.tex
+]
+(C:\Users\GKaralis\Documents\GitHub\thesis-stuff\thesis\chapters/abstract.tex
 Overfull \hbox (1.10902pt too wide) in paragraph at lines 4--5
 \T1/lmr/m/n/12 Federated Learn-ing has es-tab-lished it-self as a foun-da-tiona
 l paradigm for privacy-preserving
@@ -1507,12 +1509,14 @@ LaTeX Font Info:    Font shape `LGR/artemisia/m/it' will be
 {C:/Users/GKaralis/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/gfsartemisia/a
 rtemisiael.enc}] [4
 
-] (chapters/acknowledgements.tex) [5
+]
+(C:\Users\GKaralis\Documents\GitHub\thesis-stuff\thesis\chapters/acknowledgemen
+ts.tex) [5
 
 ] [6
 
 ]
-(main.toc
+(C:\Users\GKaralis\Documents\GitHub\thesis-stuff\thesis\main.toc
 LaTeX Font Info:    Font shape `LGR/lmr/bx/n' in size <12> not available
 (Font)              Font shape `LGR/artemisia/bx/n' tried instead on input line
  4.
@@ -1572,7 +1576,7 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 
  [8{C:/Users/GKaralis/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathi
 t.enc}{C:/Users/GKaralis/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm
-.enc}] (main.lof
+.enc}] (C:\Users\GKaralis\Documents\GitHub\thesis-stuff\thesis\main.lof
 Overfull \hbox (9.41801pt too wide) in paragraph at lines 6--6
  [][] [][][]\T1/lmr/m/n/12 Parameter Server Ar-chi-tec-ture for Asyn-chronous D
 is-tributed Learn-ing. Work- 
@@ -1595,30 +1599,47 @@ Underfull \vbox (badness 3417) has occurred while \output is active []
 \openout6 = `main.lof'.
 
 
-[10] (main.lot)
+[10{C:/Users/GKaralis/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-maths
+y.enc}] (C:\Users\GKaralis\Documents\GitHub\thesis-stuff\thesis\main.lot
+Overfull \hbox (1.46814pt too wide) in paragraph at lines 11--11
+ [][] [][][]\T1/lmr/m/n/12 Non-IID Eval-u-a-tion ($\OML/lmm/m/it/12  \OT1/lmr/
+m/n/12 = 0\OML/lmm/m/it/12 :\OT1/lmr/m/n/12 5$\T1/lmr/m/n/12 ): Bench-mark per-
+for-mance un-der se-vere Dirich- 
+ []
+
+
+Overfull \hbox (18.81633pt too wide) in paragraph at lines 15--15
+ [][] [][][]\T1/lmr/m/n/12 Matched-Budget Com-mu-ni-ca-tion Par-ity: Val-i-da-t
+ion ac-cu-racy eval-u-ated strictly 
+ []
+
+)
 \tf@lot=\write7
 \openout7 = `main.lot'.
 
  [11
 
 
-{C:/Users/GKaralis/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.e
-nc}] [12
+] [12
 
-] (main.loa)
+] (C:\Users\GKaralis\Documents\GitHub\thesis-stuff\thesis\main.loa)
 \tf@loa=\write8
 \openout8 = `main.loa'.
 
- [13
+
+[13
 
 ] [14
 
-] (chapters/abbreviations.tex)
-[15
+]
+(C:\Users\GKaralis\Documents\GitHub\thesis-stuff\thesis\chapters/abbreviations.
+tex) [15
 
 ] [16
 
-] (chapters/introduction.tex
+]
+(C:\Users\GKaralis\Documents\GitHub\thesis-stuff\thesis\chapters/introduction.t
+ex
 Chapter 1.
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 1
 3.
@@ -1652,11 +1673,15 @@ Overfull \hbox (13.90178pt too wide) in paragraph at lines 79--80
  in-con-sis-tency, ex-ist-ing RoLoRA
  []
 
-[4]) (chapters/background.tex [5] [6
+[4])
+(C:\Users\GKaralis\Documents\GitHub\thesis-stuff\thesis\chapters/background.tex
+[5] [6
 
 ]
 Chapter 2.
-[7] [8] [9] (figures/parameter_server.tex
+[7] [8] [9]
+(C:\Users\GKaralis\Documents\GitHub\thesis-stuff\thesis\figures/parameter_serve
+r.tex
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <10> on input line 15.
 LaTeX Font Info:    External font `lmex10' loaded for size
@@ -1664,13 +1689,14 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <5> on input line 15.
 ) [10]
-<figures/federated averaging.png, id=752, 813.79031pt x 674.52pt>
+<figures/federated averaging.png, id=772, 813.79031pt x 674.52pt>
 File: figures/federated averaging.png Graphic file (type png)
 <use figures/federated averaging.png>
 Package pdftex.def Info: figures/federated averaging.png  used on input line 95
 .
 (pdftex.def)             Requested size: 273.14923pt x 226.40045pt.
- [11 <./figures/federated averaging.png>] [12]
+ [11 <C:/Users/GKaralis/Documents/GitHub/thesis-stuff/thesis/figures/federated 
+averaging.png>] [12]
 Overfull \hbox (6.4248pt too wide) in paragraph at lines 152--153
 []\T1/lmr/m/n/12 To over-come this pro-hibitive up-link re-quire-ment, paramete
 r-efficient fine-tuning (PEFT)
@@ -1683,12 +1709,13 @@ Overfull \hbox (14.36194pt too wide) in paragraph at lines 162--163
  []
 
 [14]
-<figures/lora_figure.png, id=810, 925.95938pt x 746.03719pt>
+<figures/lora_figure.png, id=830, 925.95938pt x 746.03719pt>
 File: figures/lora_figure.png Graphic file (type png)
 <use figures/lora_figure.png>
 Package pdftex.def Info: figures/lora_figure.png  used on input line 185.
 (pdftex.def)             Requested size: 182.09486pt x 146.71178pt.
- [15 <./figures/lora_figure.png>]
+ [15 <C:/Users/GKaralis/Documents/GitHub/thesis-stuff/thesis/figures/lora_figur
+e.png>]
 Overfull \hbox (14.34483pt too wide) in paragraph at lines 200--201
 \T1/lmr/m/n/12 Having es-tab-lished stan-dard LoRA and the core FL frame-work, 
 com-bin-ing the two paradigms,
@@ -1698,14 +1725,16 @@ com-bin-ing the two paradigms,
 Underfull \vbox (badness 2310) has occurred while \output is active []
 
  [16]
-<figures/rolora_framework.png, id=835, 1145.4795pt x 219.82124pt>
+<figures/rolora_framework.png, id=855, 1145.4795pt x 219.82124pt>
 File: figures/rolora_framework.png Graphic file (type png)
 <use figures/rolora_framework.png>
 Package pdftex.def Info: figures/rolora_framework.png  used on input line 221.
 (pdftex.def)             Requested size: 341.43307pt x 65.52089pt.
 
-[17 <./figures/rolora_framework.png>] [18]) (chapters/methodology.tex [19]
-[20
+[17 <C:/Users/GKaralis/Documents/GitHub/thesis-stuff/thesis/figures/rolora_fram
+ework.png>] [18])
+(C:\Users\GKaralis\Documents\GitHub\thesis-stuff\thesis\chapters/methodology.te
+x [19] [20
 
 ]
 Chapter 3.
@@ -1737,11 +1766,15 @@ Overfull \hbox (10.57826pt too wide) in paragraph at lines 239--240
  op-ti-mize along near-consensus
  []
 
-[28] [29]) (chapters/implementation.tex [30]
+[28] [29])
+(C:\Users\GKaralis\Documents\GitHub\thesis-stuff\thesis\chapters/implementation
+.tex [30]
 Chapter 4.
 [31
 
-] [32] [33] [34]) (chapters/evaluation.tex [35] [36
+] [32] [33] [34])
+(C:\Users\GKaralis\Documents\GitHub\thesis-stuff\thesis\chapters/evaluation.tex
+[35] [36
 
 ]
 Chapter 5.
@@ -1764,602 +1797,654 @@ Overfull \hbox (5.84694pt too wide) in paragraph at lines 59--60
  []
 
 
-Overfull \hbox (4.47159pt too wide) in paragraph at lines 193--194
-\T1/lmr/m/n/12 single-sentence sen-ti-ment clas-si-fi-ca-tion un-der 50-client 
-la-bel skew (SST-2 $\OML/lmm/m/it/12 C \OT1/lmr/m/n/12 = 50\OML/lmm/m/it/12 ; 
- \OT1/lmr/m/n/12 =
- []
-
+(C:\Users\GKaralis\Documents\GitHub\thesis-stuff\thesis\tables/table_5_1_scorec
+ard_iid.tex)
+(C:\Users\GKaralis\Documents\GitHub\thesis-stuff\thesis\tables/table_5_2_scorec
+ard_noniid.tex) [40] [41] [42]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <17.28> on input line 201.
-[40] [41] [42] [43]
-<figures/telemetry/01_MNLI_C20_R50_LR0.1_1_accuracy.png, id=1134, 542.025pt x 3
+(Font)              <17.28> on input line 89.
+
+(C:\Users\GKaralis\Documents\GitHub\thesis-stuff\thesis\tables/table_5_3_detail
+ed_iid.tex) [43] [44]
+<figures/telemetry/01_MNLI_C20_R50_LR0.1_1_accuracy.png, id=1158, 542.025pt x 3
 46.896pt>
 File: figures/telemetry/01_MNLI_C20_R50_LR0.1_1_accuracy.png Graphic file (type
  png)
 <use figures/telemetry/01_MNLI_C20_R50_LR0.1_1_accuracy.png>
 Package pdftex.def Info: figures/telemetry/01_MNLI_C20_R50_LR0.1_1_accuracy.png
-  used on input line 340.
+  used on input line 159.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/01_MNLI_C20_R50_LR0.1_4_accuracy_vs_cost.png, id=1135, 542.0
+<figures/telemetry/01_MNLI_C20_R50_LR0.1_4_accuracy_vs_cost.png, id=1159, 542.0
 25pt x 346.896pt>
 File: figures/telemetry/01_MNLI_C20_R50_LR0.1_4_accuracy_vs_cost.png Graphic fi
 le (type png)
 <use figures/telemetry/01_MNLI_C20_R50_LR0.1_4_accuracy_vs_cost.png>
 Package pdftex.def Info: figures/telemetry/01_MNLI_C20_R50_LR0.1_4_accuracy_vs_
-cost.png  used on input line 340.
+cost.png  used on input line 159.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/01_MNLI_C20_R50_LR0.1_2_allocated_epochs.png, id=1136, 542.0
+<figures/telemetry/01_MNLI_C20_R50_LR0.1_2_allocated_epochs.png, id=1160, 542.0
 25pt x 346.896pt>
 File: figures/telemetry/01_MNLI_C20_R50_LR0.1_2_allocated_epochs.png Graphic fi
 le (type png)
 <use figures/telemetry/01_MNLI_C20_R50_LR0.1_2_allocated_epochs.png>
 Package pdftex.def Info: figures/telemetry/01_MNLI_C20_R50_LR0.1_2_allocated_ep
-ochs.png  used on input line 340.
+ochs.png  used on input line 159.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/01_MNLI_C20_R50_LR0.1_5_fda_threshold.png, id=1137, 542.025p
+<figures/telemetry/01_MNLI_C20_R50_LR0.1_5_fda_threshold.png, id=1161, 542.025p
 t x 346.896pt>
 File: figures/telemetry/01_MNLI_C20_R50_LR0.1_5_fda_threshold.png Graphic file 
 (type png)
 <use figures/telemetry/01_MNLI_C20_R50_LR0.1_5_fda_threshold.png>
 Package pdftex.def Info: figures/telemetry/01_MNLI_C20_R50_LR0.1_5_fda_threshol
-d.png  used on input line 340.
+d.png  used on input line 159.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/01_MNLI_C20_R50_LR0.1_3_client_variance.png, id=1138, 542.02
+<figures/telemetry/01_MNLI_C20_R50_LR0.1_3_client_variance.png, id=1162, 542.02
 5pt x 346.896pt>
 File: figures/telemetry/01_MNLI_C20_R50_LR0.1_3_client_variance.png Graphic fil
 e (type png)
 <use figures/telemetry/01_MNLI_C20_R50_LR0.1_3_client_variance.png>
 Package pdftex.def Info: figures/telemetry/01_MNLI_C20_R50_LR0.1_3_client_varia
-nce.png  used on input line 340.
+nce.png  used on input line 159.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/01_MNLI_C20_R50_LR0.1_6_variance_vs_epoch.png, id=1139, 542.
+<figures/telemetry/01_MNLI_C20_R50_LR0.1_6_variance_vs_epoch.png, id=1163, 542.
 025pt x 346.896pt>
 File: figures/telemetry/01_MNLI_C20_R50_LR0.1_6_variance_vs_epoch.png Graphic f
 ile (type png)
 <use figures/telemetry/01_MNLI_C20_R50_LR0.1_6_variance_vs_epoch.png>
 Package pdftex.def Info: figures/telemetry/01_MNLI_C20_R50_LR0.1_6_variance_vs_
-epoch.png  used on input line 340.
+epoch.png  used on input line 159.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/03_MNLI_C50_R30_LR0.1_1_accuracy.png, id=1140, 542.025pt x 3
+<figures/telemetry/03_MNLI_C50_R30_LR0.1_1_accuracy.png, id=1164, 542.025pt x 3
 46.896pt>
 File: figures/telemetry/03_MNLI_C50_R30_LR0.1_1_accuracy.png Graphic file (type
  png)
 <use figures/telemetry/03_MNLI_C50_R30_LR0.1_1_accuracy.png>
 Package pdftex.def Info: figures/telemetry/03_MNLI_C50_R30_LR0.1_1_accuracy.png
-  used on input line 392.
+  used on input line 211.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/03_MNLI_C50_R30_LR0.1_4_accuracy_vs_cost.png, id=1141, 542.0
+<figures/telemetry/03_MNLI_C50_R30_LR0.1_4_accuracy_vs_cost.png, id=1165, 542.0
 25pt x 346.896pt>
 File: figures/telemetry/03_MNLI_C50_R30_LR0.1_4_accuracy_vs_cost.png Graphic fi
 le (type png)
 <use figures/telemetry/03_MNLI_C50_R30_LR0.1_4_accuracy_vs_cost.png>
 Package pdftex.def Info: figures/telemetry/03_MNLI_C50_R30_LR0.1_4_accuracy_vs_
-cost.png  used on input line 392.
+cost.png  used on input line 211.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/03_MNLI_C50_R30_LR0.1_2_allocated_epochs.png, id=1142, 542.0
+<figures/telemetry/03_MNLI_C50_R30_LR0.1_2_allocated_epochs.png, id=1166, 542.0
 25pt x 346.896pt>
 File: figures/telemetry/03_MNLI_C50_R30_LR0.1_2_allocated_epochs.png Graphic fi
 le (type png)
 <use figures/telemetry/03_MNLI_C50_R30_LR0.1_2_allocated_epochs.png>
 Package pdftex.def Info: figures/telemetry/03_MNLI_C50_R30_LR0.1_2_allocated_ep
-ochs.png  used on input line 392.
+ochs.png  used on input line 211.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/03_MNLI_C50_R30_LR0.1_5_fda_threshold.png, id=1143, 542.025p
+<figures/telemetry/03_MNLI_C50_R30_LR0.1_5_fda_threshold.png, id=1167, 542.025p
 t x 346.896pt>
 File: figures/telemetry/03_MNLI_C50_R30_LR0.1_5_fda_threshold.png Graphic file 
 (type png)
 <use figures/telemetry/03_MNLI_C50_R30_LR0.1_5_fda_threshold.png>
 Package pdftex.def Info: figures/telemetry/03_MNLI_C50_R30_LR0.1_5_fda_threshol
-d.png  used on input line 392.
+d.png  used on input line 211.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/03_MNLI_C50_R30_LR0.1_3_client_variance.png, id=1144, 542.02
+<figures/telemetry/03_MNLI_C50_R30_LR0.1_3_client_variance.png, id=1168, 542.02
 5pt x 346.896pt>
 File: figures/telemetry/03_MNLI_C50_R30_LR0.1_3_client_variance.png Graphic fil
 e (type png)
 <use figures/telemetry/03_MNLI_C50_R30_LR0.1_3_client_variance.png>
 Package pdftex.def Info: figures/telemetry/03_MNLI_C50_R30_LR0.1_3_client_varia
-nce.png  used on input line 392.
+nce.png  used on input line 211.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/03_MNLI_C50_R30_LR0.1_6_variance_vs_epoch.png, id=1145, 542.
+<figures/telemetry/03_MNLI_C50_R30_LR0.1_6_variance_vs_epoch.png, id=1169, 542.
 025pt x 346.896pt>
 File: figures/telemetry/03_MNLI_C50_R30_LR0.1_6_variance_vs_epoch.png Graphic f
 ile (type png)
 <use figures/telemetry/03_MNLI_C50_R30_LR0.1_6_variance_vs_epoch.png>
 Package pdftex.def Info: figures/telemetry/03_MNLI_C50_R30_LR0.1_6_variance_vs_
-epoch.png  used on input line 392.
+epoch.png  used on input line 211.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
- [44] [45 <./figures/telemetry/01_MNLI_C20_R50_LR0.1_1_accuracy.png> <./figures
-/telemetry/01_MNLI_C20_R50_LR0.1_4_accuracy_vs_cost.png> <./figures/telemetry/0
-1_MNLI_C20_R50_LR0.1_2_allocated_epochs.png> <./figures/telemetry/01_MNLI_C20_R
-50_LR0.1_5_fda_threshold.png> <./figures/telemetry/01_MNLI_C20_R50_LR0.1_3_clie
-nt_variance.png> <./figures/telemetry/01_MNLI_C20_R50_LR0.1_6_variance_vs_epoch
-.png>] [46 <./figures/telemetry/03_MNLI_C50_R30_LR0.1_1_accuracy.png> <./figure
-s/telemetry/03_MNLI_C50_R30_LR0.1_4_accuracy_vs_cost.png> <./figures/telemetry/
-03_MNLI_C50_R30_LR0.1_2_allocated_epochs.png> <./figures/telemetry/03_MNLI_C50_
-R30_LR0.1_5_fda_threshold.png> <./figures/telemetry/03_MNLI_C50_R30_LR0.1_3_cli
-ent_variance.png> <./figures/telemetry/03_MNLI_C50_R30_LR0.1_6_variance_vs_epoc
-h.png>]
-<figures/telemetry/05_QNLI_C20_R50_LR0.1_1_accuracy.png, id=1175, 542.025pt x 3
+<figures/telemetry/05_QNLI_C20_R50_LR0.1_1_accuracy.png, id=1174, 542.025pt x 3
 46.896pt>
 File: figures/telemetry/05_QNLI_C20_R50_LR0.1_1_accuracy.png Graphic file (type
  png)
 <use figures/telemetry/05_QNLI_C20_R50_LR0.1_1_accuracy.png>
 Package pdftex.def Info: figures/telemetry/05_QNLI_C20_R50_LR0.1_1_accuracy.png
-  used on input line 449.
+  used on input line 268.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/05_QNLI_C20_R50_LR0.1_4_accuracy_vs_cost.png, id=1176, 542.0
+<figures/telemetry/05_QNLI_C20_R50_LR0.1_4_accuracy_vs_cost.png, id=1175, 542.0
 25pt x 346.896pt>
 File: figures/telemetry/05_QNLI_C20_R50_LR0.1_4_accuracy_vs_cost.png Graphic fi
 le (type png)
 <use figures/telemetry/05_QNLI_C20_R50_LR0.1_4_accuracy_vs_cost.png>
 Package pdftex.def Info: figures/telemetry/05_QNLI_C20_R50_LR0.1_4_accuracy_vs_
-cost.png  used on input line 449.
+cost.png  used on input line 268.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/05_QNLI_C20_R50_LR0.1_2_allocated_epochs.png, id=1177, 542.0
+<figures/telemetry/05_QNLI_C20_R50_LR0.1_2_allocated_epochs.png, id=1176, 542.0
 25pt x 346.896pt>
 File: figures/telemetry/05_QNLI_C20_R50_LR0.1_2_allocated_epochs.png Graphic fi
 le (type png)
 <use figures/telemetry/05_QNLI_C20_R50_LR0.1_2_allocated_epochs.png>
 Package pdftex.def Info: figures/telemetry/05_QNLI_C20_R50_LR0.1_2_allocated_ep
-ochs.png  used on input line 449.
+ochs.png  used on input line 268.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/05_QNLI_C20_R50_LR0.1_5_fda_threshold.png, id=1178, 542.025p
+<figures/telemetry/05_QNLI_C20_R50_LR0.1_5_fda_threshold.png, id=1177, 542.025p
 t x 346.896pt>
 File: figures/telemetry/05_QNLI_C20_R50_LR0.1_5_fda_threshold.png Graphic file 
 (type png)
 <use figures/telemetry/05_QNLI_C20_R50_LR0.1_5_fda_threshold.png>
 Package pdftex.def Info: figures/telemetry/05_QNLI_C20_R50_LR0.1_5_fda_threshol
-d.png  used on input line 449.
+d.png  used on input line 268.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/05_QNLI_C20_R50_LR0.1_3_client_variance.png, id=1179, 542.02
+<figures/telemetry/05_QNLI_C20_R50_LR0.1_3_client_variance.png, id=1178, 542.02
 5pt x 346.896pt>
 File: figures/telemetry/05_QNLI_C20_R50_LR0.1_3_client_variance.png Graphic fil
 e (type png)
 <use figures/telemetry/05_QNLI_C20_R50_LR0.1_3_client_variance.png>
 Package pdftex.def Info: figures/telemetry/05_QNLI_C20_R50_LR0.1_3_client_varia
-nce.png  used on input line 449.
+nce.png  used on input line 268.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/05_QNLI_C20_R50_LR0.1_6_variance_vs_epoch.png, id=1180, 542.
+<figures/telemetry/05_QNLI_C20_R50_LR0.1_6_variance_vs_epoch.png, id=1179, 542.
 025pt x 346.896pt>
 File: figures/telemetry/05_QNLI_C20_R50_LR0.1_6_variance_vs_epoch.png Graphic f
 ile (type png)
 <use figures/telemetry/05_QNLI_C20_R50_LR0.1_6_variance_vs_epoch.png>
 Package pdftex.def Info: figures/telemetry/05_QNLI_C20_R50_LR0.1_6_variance_vs_
-epoch.png  used on input line 449.
+epoch.png  used on input line 268.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/07_QNLI_C50_R30_LR0.1_1_accuracy.png, id=1181, 542.025pt x 3
+<figures/telemetry/07_QNLI_C50_R30_LR0.1_1_accuracy.png, id=1180, 542.025pt x 3
 46.896pt>
 File: figures/telemetry/07_QNLI_C50_R30_LR0.1_1_accuracy.png Graphic file (type
  png)
 <use figures/telemetry/07_QNLI_C50_R30_LR0.1_1_accuracy.png>
 Package pdftex.def Info: figures/telemetry/07_QNLI_C50_R30_LR0.1_1_accuracy.png
-  used on input line 501.
+  used on input line 320.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/07_QNLI_C50_R30_LR0.1_4_accuracy_vs_cost.png, id=1182, 542.0
+<figures/telemetry/07_QNLI_C50_R30_LR0.1_4_accuracy_vs_cost.png, id=1181, 542.0
 25pt x 346.896pt>
 File: figures/telemetry/07_QNLI_C50_R30_LR0.1_4_accuracy_vs_cost.png Graphic fi
 le (type png)
 <use figures/telemetry/07_QNLI_C50_R30_LR0.1_4_accuracy_vs_cost.png>
 Package pdftex.def Info: figures/telemetry/07_QNLI_C50_R30_LR0.1_4_accuracy_vs_
-cost.png  used on input line 501.
+cost.png  used on input line 320.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/07_QNLI_C50_R30_LR0.1_2_allocated_epochs.png, id=1183, 542.0
+<figures/telemetry/07_QNLI_C50_R30_LR0.1_2_allocated_epochs.png, id=1182, 542.0
 25pt x 346.896pt>
 File: figures/telemetry/07_QNLI_C50_R30_LR0.1_2_allocated_epochs.png Graphic fi
 le (type png)
 <use figures/telemetry/07_QNLI_C50_R30_LR0.1_2_allocated_epochs.png>
 Package pdftex.def Info: figures/telemetry/07_QNLI_C50_R30_LR0.1_2_allocated_ep
-ochs.png  used on input line 501.
+ochs.png  used on input line 320.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/07_QNLI_C50_R30_LR0.1_5_fda_threshold.png, id=1184, 542.025p
+<figures/telemetry/07_QNLI_C50_R30_LR0.1_5_fda_threshold.png, id=1183, 542.025p
 t x 346.896pt>
 File: figures/telemetry/07_QNLI_C50_R30_LR0.1_5_fda_threshold.png Graphic file 
 (type png)
 <use figures/telemetry/07_QNLI_C50_R30_LR0.1_5_fda_threshold.png>
 Package pdftex.def Info: figures/telemetry/07_QNLI_C50_R30_LR0.1_5_fda_threshol
-d.png  used on input line 501.
+d.png  used on input line 320.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/07_QNLI_C50_R30_LR0.1_3_client_variance.png, id=1185, 542.02
+<figures/telemetry/07_QNLI_C50_R30_LR0.1_3_client_variance.png, id=1184, 542.02
 5pt x 346.896pt>
 File: figures/telemetry/07_QNLI_C50_R30_LR0.1_3_client_variance.png Graphic fil
 e (type png)
 <use figures/telemetry/07_QNLI_C50_R30_LR0.1_3_client_variance.png>
 Package pdftex.def Info: figures/telemetry/07_QNLI_C50_R30_LR0.1_3_client_varia
-nce.png  used on input line 501.
+nce.png  used on input line 320.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/07_QNLI_C50_R30_LR0.1_6_variance_vs_epoch.png, id=1186, 542.
+<figures/telemetry/07_QNLI_C50_R30_LR0.1_6_variance_vs_epoch.png, id=1185, 542.
 025pt x 346.896pt>
 File: figures/telemetry/07_QNLI_C50_R30_LR0.1_6_variance_vs_epoch.png Graphic f
 ile (type png)
 <use figures/telemetry/07_QNLI_C50_R30_LR0.1_6_variance_vs_epoch.png>
 Package pdftex.def Info: figures/telemetry/07_QNLI_C50_R30_LR0.1_6_variance_vs_
-epoch.png  used on input line 501.
+epoch.png  used on input line 320.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
 
-Overfull \hbox (5.28386pt too wide) in paragraph at lines 507--508
+Overfull \hbox (5.28386pt too wide) in paragraph at lines 326--327
 []\T1/lmr/m/n/12 On $\OML/lmm/m/it/12 C \OT1/lmr/m/n/12 = 50$ \T1/lmr/m/n/12 (F
 ig-ure [][]5.6[][]), fixed RoLoRA base-lines ex-haust the full $\OT1/lmr/m/n/12
  30\OML/lmm/m/it/12 :\OT1/lmr/m/n/12 0$ \T1/lmr/m/n/12 rounds ($\OT1/lmr/m/n/12
  351\OML/lmm/m/it/12 :\OT1/lmr/m/n/12 6 []$\T1/lmr/m/n/12 )
  []
 
-<figures/telemetry/09_QQP_C20_R50_LR0.1_1_accuracy.png, id=1191, 542.025pt x 34
+<figures/telemetry/09_QQP_C20_R50_LR0.1_1_accuracy.png, id=1190, 542.025pt x 34
 6.896pt>
 File: figures/telemetry/09_QQP_C20_R50_LR0.1_1_accuracy.png Graphic file (type 
 png)
 <use figures/telemetry/09_QQP_C20_R50_LR0.1_1_accuracy.png>
 Package pdftex.def Info: figures/telemetry/09_QQP_C20_R50_LR0.1_1_accuracy.png 
- used on input line 558.
+ used on input line 377.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/09_QQP_C20_R50_LR0.1_4_accuracy_vs_cost.png, id=1192, 542.02
+<figures/telemetry/09_QQP_C20_R50_LR0.1_4_accuracy_vs_cost.png, id=1191, 542.02
 5pt x 346.896pt>
 File: figures/telemetry/09_QQP_C20_R50_LR0.1_4_accuracy_vs_cost.png Graphic fil
 e (type png)
 <use figures/telemetry/09_QQP_C20_R50_LR0.1_4_accuracy_vs_cost.png>
 Package pdftex.def Info: figures/telemetry/09_QQP_C20_R50_LR0.1_4_accuracy_vs_c
-ost.png  used on input line 558.
+ost.png  used on input line 377.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/09_QQP_C20_R50_LR0.1_2_allocated_epochs.png, id=1193, 542.02
+<figures/telemetry/09_QQP_C20_R50_LR0.1_2_allocated_epochs.png, id=1192, 542.02
 5pt x 346.896pt>
 File: figures/telemetry/09_QQP_C20_R50_LR0.1_2_allocated_epochs.png Graphic fil
 e (type png)
 <use figures/telemetry/09_QQP_C20_R50_LR0.1_2_allocated_epochs.png>
 Package pdftex.def Info: figures/telemetry/09_QQP_C20_R50_LR0.1_2_allocated_epo
-chs.png  used on input line 558.
+chs.png  used on input line 377.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/09_QQP_C20_R50_LR0.1_5_fda_threshold.png, id=1194, 542.025pt
+<figures/telemetry/09_QQP_C20_R50_LR0.1_5_fda_threshold.png, id=1193, 542.025pt
  x 346.896pt>
 File: figures/telemetry/09_QQP_C20_R50_LR0.1_5_fda_threshold.png Graphic file (
 type png)
 <use figures/telemetry/09_QQP_C20_R50_LR0.1_5_fda_threshold.png>
 Package pdftex.def Info: figures/telemetry/09_QQP_C20_R50_LR0.1_5_fda_threshold
-.png  used on input line 558.
+.png  used on input line 377.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/09_QQP_C20_R50_LR0.1_3_client_variance.png, id=1195, 542.025
+<figures/telemetry/09_QQP_C20_R50_LR0.1_3_client_variance.png, id=1194, 542.025
 pt x 346.896pt>
 File: figures/telemetry/09_QQP_C20_R50_LR0.1_3_client_variance.png Graphic file
  (type png)
 <use figures/telemetry/09_QQP_C20_R50_LR0.1_3_client_variance.png>
 Package pdftex.def Info: figures/telemetry/09_QQP_C20_R50_LR0.1_3_client_varian
-ce.png  used on input line 558.
+ce.png  used on input line 377.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/09_QQP_C20_R50_LR0.1_6_variance_vs_epoch.png, id=1196, 542.0
+<figures/telemetry/09_QQP_C20_R50_LR0.1_6_variance_vs_epoch.png, id=1195, 542.0
 25pt x 346.896pt>
 File: figures/telemetry/09_QQP_C20_R50_LR0.1_6_variance_vs_epoch.png Graphic fi
 le (type png)
 <use figures/telemetry/09_QQP_C20_R50_LR0.1_6_variance_vs_epoch.png>
 Package pdftex.def Info: figures/telemetry/09_QQP_C20_R50_LR0.1_6_variance_vs_e
-poch.png  used on input line 558.
+poch.png  used on input line 377.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/10_QQP_C50_R30_LR0.1_1_accuracy.png, id=1197, 542.025pt x 34
+[45] [46 <C:/Users/GKaralis/Documents/GitHub/thesis-stuff/thesis/figures/teleme
+try/01_MNLI_C20_R50_LR0.1_1_accuracy.png> <C:/Users/GKaralis/Documents/GitHub/t
+hesis-stuff/thesis/figures/telemetry/01_MNLI_C20_R50_LR0.1_4_accuracy_vs_cost.p
+ng> <C:/Users/GKaralis/Documents/GitHub/thesis-stuff/thesis/figures/telemetry/0
+1_MNLI_C20_R50_LR0.1_2_allocated_epochs.png> <C:/Users/GKaralis/Documents/GitHu
+b/thesis-stuff/thesis/figures/telemetry/01_MNLI_C20_R50_LR0.1_5_fda_threshold.p
+ng> <C:/Users/GKaralis/Documents/GitHub/thesis-stuff/thesis/figures/telemetry/0
+1_MNLI_C20_R50_LR0.1_3_client_variance.png> <C:/Users/GKaralis/Documents/GitHub
+/thesis-stuff/thesis/figures/telemetry/01_MNLI_C20_R50_LR0.1_6_variance_vs_epoc
+h.png>] [47 <C:/Users/GKaralis/Documents/GitHub/thesis-stuff/thesis/figures/tel
+emetry/03_MNLI_C50_R30_LR0.1_1_accuracy.png> <C:/Users/GKaralis/Documents/GitHu
+b/thesis-stuff/thesis/figures/telemetry/03_MNLI_C50_R30_LR0.1_4_accuracy_vs_cos
+t.png> <C:/Users/GKaralis/Documents/GitHub/thesis-stuff/thesis/figures/telemetr
+y/03_MNLI_C50_R30_LR0.1_2_allocated_epochs.png> <C:/Users/GKaralis/Documents/Gi
+tHub/thesis-stuff/thesis/figures/telemetry/03_MNLI_C50_R30_LR0.1_5_fda_threshol
+d.png> <C:/Users/GKaralis/Documents/GitHub/thesis-stuff/thesis/figures/telemetr
+y/03_MNLI_C50_R30_LR0.1_3_client_variance.png> <C:/Users/GKaralis/Documents/Git
+Hub/thesis-stuff/thesis/figures/telemetry/03_MNLI_C50_R30_LR0.1_6_variance_vs_e
+poch.png>] [48 <C:/Users/GKaralis/Documents/GitHub/thesis-stuff/thesis/figures/
+telemetry/05_QNLI_C20_R50_LR0.1_1_accuracy.png> <C:/Users/GKaralis/Documents/Gi
+tHub/thesis-stuff/thesis/figures/telemetry/05_QNLI_C20_R50_LR0.1_4_accuracy_vs_
+cost.png> <C:/Users/GKaralis/Documents/GitHub/thesis-stuff/thesis/figures/telem
+etry/05_QNLI_C20_R50_LR0.1_2_allocated_epochs.png> <C:/Users/GKaralis/Documents
+/GitHub/thesis-stuff/thesis/figures/telemetry/05_QNLI_C20_R50_LR0.1_5_fda_thres
+hold.png> <C:/Users/GKaralis/Documents/GitHub/thesis-stuff/thesis/figures/telem
+etry/05_QNLI_C20_R50_LR0.1_3_client_variance.png> <C:/Users/GKaralis/Documents/
+GitHub/thesis-stuff/thesis/figures/telemetry/05_QNLI_C20_R50_LR0.1_6_variance_v
+s_epoch.png>] [49 <C:/Users/GKaralis/Documents/GitHub/thesis-stuff/thesis/figur
+es/telemetry/07_QNLI_C50_R30_LR0.1_1_accuracy.png> <C:/Users/GKaralis/Documents
+/GitHub/thesis-stuff/thesis/figures/telemetry/07_QNLI_C50_R30_LR0.1_4_accuracy_
+vs_cost.png> <C:/Users/GKaralis/Documents/GitHub/thesis-stuff/thesis/figures/te
+lemetry/07_QNLI_C50_R30_LR0.1_2_allocated_epochs.png> <C:/Users/GKaralis/Docume
+nts/GitHub/thesis-stuff/thesis/figures/telemetry/07_QNLI_C50_R30_LR0.1_5_fda_th
+reshold.png> <C:/Users/GKaralis/Documents/GitHub/thesis-stuff/thesis/figures/te
+lemetry/07_QNLI_C50_R30_LR0.1_3_client_variance.png> <C:/Users/GKaralis/Documen
+ts/GitHub/thesis-stuff/thesis/figures/telemetry/07_QNLI_C50_R30_LR0.1_6_varianc
+e_vs_epoch.png>]
+<figures/telemetry/10_QQP_C50_R30_LR0.1_1_accuracy.png, id=1242, 542.025pt x 34
 6.896pt>
 File: figures/telemetry/10_QQP_C50_R30_LR0.1_1_accuracy.png Graphic file (type 
 png)
 <use figures/telemetry/10_QQP_C50_R30_LR0.1_1_accuracy.png>
 Package pdftex.def Info: figures/telemetry/10_QQP_C50_R30_LR0.1_1_accuracy.png 
- used on input line 610.
+ used on input line 429.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/10_QQP_C50_R30_LR0.1_4_accuracy_vs_cost.png, id=1198, 542.02
+<figures/telemetry/10_QQP_C50_R30_LR0.1_4_accuracy_vs_cost.png, id=1243, 542.02
 5pt x 346.896pt>
 File: figures/telemetry/10_QQP_C50_R30_LR0.1_4_accuracy_vs_cost.png Graphic fil
 e (type png)
 <use figures/telemetry/10_QQP_C50_R30_LR0.1_4_accuracy_vs_cost.png>
 Package pdftex.def Info: figures/telemetry/10_QQP_C50_R30_LR0.1_4_accuracy_vs_c
-ost.png  used on input line 610.
+ost.png  used on input line 429.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/10_QQP_C50_R30_LR0.1_2_allocated_epochs.png, id=1199, 542.02
+<figures/telemetry/10_QQP_C50_R30_LR0.1_2_allocated_epochs.png, id=1244, 542.02
 5pt x 346.896pt>
 File: figures/telemetry/10_QQP_C50_R30_LR0.1_2_allocated_epochs.png Graphic fil
 e (type png)
 <use figures/telemetry/10_QQP_C50_R30_LR0.1_2_allocated_epochs.png>
 Package pdftex.def Info: figures/telemetry/10_QQP_C50_R30_LR0.1_2_allocated_epo
-chs.png  used on input line 610.
+chs.png  used on input line 429.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/10_QQP_C50_R30_LR0.1_5_fda_threshold.png, id=1200, 542.025pt
+<figures/telemetry/10_QQP_C50_R30_LR0.1_5_fda_threshold.png, id=1245, 542.025pt
  x 346.896pt>
 File: figures/telemetry/10_QQP_C50_R30_LR0.1_5_fda_threshold.png Graphic file (
 type png)
 <use figures/telemetry/10_QQP_C50_R30_LR0.1_5_fda_threshold.png>
 Package pdftex.def Info: figures/telemetry/10_QQP_C50_R30_LR0.1_5_fda_threshold
-.png  used on input line 610.
+.png  used on input line 429.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/10_QQP_C50_R30_LR0.1_3_client_variance.png, id=1201, 542.025
+<figures/telemetry/10_QQP_C50_R30_LR0.1_3_client_variance.png, id=1246, 542.025
 pt x 346.896pt>
 File: figures/telemetry/10_QQP_C50_R30_LR0.1_3_client_variance.png Graphic file
  (type png)
 <use figures/telemetry/10_QQP_C50_R30_LR0.1_3_client_variance.png>
 Package pdftex.def Info: figures/telemetry/10_QQP_C50_R30_LR0.1_3_client_varian
-ce.png  used on input line 610.
+ce.png  used on input line 429.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/10_QQP_C50_R30_LR0.1_6_variance_vs_epoch.png, id=1202, 542.0
+<figures/telemetry/10_QQP_C50_R30_LR0.1_6_variance_vs_epoch.png, id=1247, 542.0
 25pt x 346.896pt>
 File: figures/telemetry/10_QQP_C50_R30_LR0.1_6_variance_vs_epoch.png Graphic fi
 le (type png)
 <use figures/telemetry/10_QQP_C50_R30_LR0.1_6_variance_vs_epoch.png>
 Package pdftex.def Info: figures/telemetry/10_QQP_C50_R30_LR0.1_6_variance_vs_e
-poch.png  used on input line 610.
+poch.png  used on input line 429.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/11_SST2_C20_R50_LR0.1_1_accuracy.png, id=1207, 542.025pt x 3
+<figures/telemetry/11_SST2_C20_R50_LR0.1_1_accuracy.png, id=1252, 542.025pt x 3
 46.896pt>
 File: figures/telemetry/11_SST2_C20_R50_LR0.1_1_accuracy.png Graphic file (type
  png)
 <use figures/telemetry/11_SST2_C20_R50_LR0.1_1_accuracy.png>
 Package pdftex.def Info: figures/telemetry/11_SST2_C20_R50_LR0.1_1_accuracy.png
-  used on input line 667.
+  used on input line 486.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/11_SST2_C20_R50_LR0.1_4_accuracy_vs_cost.png, id=1208, 542.0
+<figures/telemetry/11_SST2_C20_R50_LR0.1_4_accuracy_vs_cost.png, id=1253, 542.0
 25pt x 346.896pt>
 File: figures/telemetry/11_SST2_C20_R50_LR0.1_4_accuracy_vs_cost.png Graphic fi
 le (type png)
 <use figures/telemetry/11_SST2_C20_R50_LR0.1_4_accuracy_vs_cost.png>
 Package pdftex.def Info: figures/telemetry/11_SST2_C20_R50_LR0.1_4_accuracy_vs_
-cost.png  used on input line 667.
+cost.png  used on input line 486.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/11_SST2_C20_R50_LR0.1_2_allocated_epochs.png, id=1209, 542.0
+<figures/telemetry/11_SST2_C20_R50_LR0.1_2_allocated_epochs.png, id=1254, 542.0
 25pt x 346.896pt>
 File: figures/telemetry/11_SST2_C20_R50_LR0.1_2_allocated_epochs.png Graphic fi
 le (type png)
 <use figures/telemetry/11_SST2_C20_R50_LR0.1_2_allocated_epochs.png>
 Package pdftex.def Info: figures/telemetry/11_SST2_C20_R50_LR0.1_2_allocated_ep
-ochs.png  used on input line 667.
+ochs.png  used on input line 486.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/11_SST2_C20_R50_LR0.1_5_fda_threshold.png, id=1210, 542.025p
+<figures/telemetry/11_SST2_C20_R50_LR0.1_5_fda_threshold.png, id=1255, 542.025p
 t x 346.896pt>
 File: figures/telemetry/11_SST2_C20_R50_LR0.1_5_fda_threshold.png Graphic file 
 (type png)
 <use figures/telemetry/11_SST2_C20_R50_LR0.1_5_fda_threshold.png>
 Package pdftex.def Info: figures/telemetry/11_SST2_C20_R50_LR0.1_5_fda_threshol
-d.png  used on input line 667.
+d.png  used on input line 486.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/11_SST2_C20_R50_LR0.1_3_client_variance.png, id=1211, 542.02
+<figures/telemetry/11_SST2_C20_R50_LR0.1_3_client_variance.png, id=1256, 542.02
 5pt x 346.896pt>
 File: figures/telemetry/11_SST2_C20_R50_LR0.1_3_client_variance.png Graphic fil
 e (type png)
 <use figures/telemetry/11_SST2_C20_R50_LR0.1_3_client_variance.png>
 Package pdftex.def Info: figures/telemetry/11_SST2_C20_R50_LR0.1_3_client_varia
-nce.png  used on input line 667.
+nce.png  used on input line 486.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/11_SST2_C20_R50_LR0.1_6_variance_vs_epoch.png, id=1212, 542.
+<figures/telemetry/11_SST2_C20_R50_LR0.1_6_variance_vs_epoch.png, id=1257, 542.
 025pt x 346.896pt>
 File: figures/telemetry/11_SST2_C20_R50_LR0.1_6_variance_vs_epoch.png Graphic f
 ile (type png)
 <use figures/telemetry/11_SST2_C20_R50_LR0.1_6_variance_vs_epoch.png>
 Package pdftex.def Info: figures/telemetry/11_SST2_C20_R50_LR0.1_6_variance_vs_
-epoch.png  used on input line 667.
+epoch.png  used on input line 486.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/12_SST2_C50_R30_LR0.1_1_accuracy.png, id=1213, 542.025pt x 3
+<figures/telemetry/12_SST2_C50_R30_LR0.1_1_accuracy.png, id=1258, 542.025pt x 3
 46.896pt>
 File: figures/telemetry/12_SST2_C50_R30_LR0.1_1_accuracy.png Graphic file (type
  png)
 <use figures/telemetry/12_SST2_C50_R30_LR0.1_1_accuracy.png>
 Package pdftex.def Info: figures/telemetry/12_SST2_C50_R30_LR0.1_1_accuracy.png
-  used on input line 719.
+  used on input line 538.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/12_SST2_C50_R30_LR0.1_4_accuracy_vs_cost.png, id=1214, 542.0
+<figures/telemetry/12_SST2_C50_R30_LR0.1_4_accuracy_vs_cost.png, id=1259, 542.0
 25pt x 346.896pt>
 File: figures/telemetry/12_SST2_C50_R30_LR0.1_4_accuracy_vs_cost.png Graphic fi
 le (type png)
 <use figures/telemetry/12_SST2_C50_R30_LR0.1_4_accuracy_vs_cost.png>
 Package pdftex.def Info: figures/telemetry/12_SST2_C50_R30_LR0.1_4_accuracy_vs_
-cost.png  used on input line 719.
+cost.png  used on input line 538.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/12_SST2_C50_R30_LR0.1_2_allocated_epochs.png, id=1215, 542.0
+<figures/telemetry/12_SST2_C50_R30_LR0.1_2_allocated_epochs.png, id=1260, 542.0
 25pt x 346.896pt>
 File: figures/telemetry/12_SST2_C50_R30_LR0.1_2_allocated_epochs.png Graphic fi
 le (type png)
 <use figures/telemetry/12_SST2_C50_R30_LR0.1_2_allocated_epochs.png>
 Package pdftex.def Info: figures/telemetry/12_SST2_C50_R30_LR0.1_2_allocated_ep
-ochs.png  used on input line 719.
+ochs.png  used on input line 538.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/12_SST2_C50_R30_LR0.1_5_fda_threshold.png, id=1216, 542.025p
+<figures/telemetry/12_SST2_C50_R30_LR0.1_5_fda_threshold.png, id=1261, 542.025p
 t x 346.896pt>
 File: figures/telemetry/12_SST2_C50_R30_LR0.1_5_fda_threshold.png Graphic file 
 (type png)
 <use figures/telemetry/12_SST2_C50_R30_LR0.1_5_fda_threshold.png>
 Package pdftex.def Info: figures/telemetry/12_SST2_C50_R30_LR0.1_5_fda_threshol
-d.png  used on input line 719.
+d.png  used on input line 538.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/12_SST2_C50_R30_LR0.1_3_client_variance.png, id=1217, 542.02
+<figures/telemetry/12_SST2_C50_R30_LR0.1_3_client_variance.png, id=1262, 542.02
 5pt x 346.896pt>
 File: figures/telemetry/12_SST2_C50_R30_LR0.1_3_client_variance.png Graphic fil
 e (type png)
 <use figures/telemetry/12_SST2_C50_R30_LR0.1_3_client_variance.png>
 Package pdftex.def Info: figures/telemetry/12_SST2_C50_R30_LR0.1_3_client_varia
-nce.png  used on input line 719.
+nce.png  used on input line 538.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-<figures/telemetry/12_SST2_C50_R30_LR0.1_6_variance_vs_epoch.png, id=1218, 542.
+<figures/telemetry/12_SST2_C50_R30_LR0.1_6_variance_vs_epoch.png, id=1263, 542.
 025pt x 346.896pt>
 File: figures/telemetry/12_SST2_C50_R30_LR0.1_6_variance_vs_epoch.png Graphic f
 ile (type png)
 <use figures/telemetry/12_SST2_C50_R30_LR0.1_6_variance_vs_epoch.png>
 Package pdftex.def Info: figures/telemetry/12_SST2_C50_R30_LR0.1_6_variance_vs_
-epoch.png  used on input line 719.
+epoch.png  used on input line 538.
 (pdftex.def)             Requested size: 217.83998pt x 139.41759pt.
-[47] [48 <./figures/telemetry/05_QNLI_C20_R50_LR0.1_1_accuracy.png> <./figures/
-telemetry/05_QNLI_C20_R50_LR0.1_4_accuracy_vs_cost.png> <./figures/telemetry/05
-_QNLI_C20_R50_LR0.1_2_allocated_epochs.png> <./figures/telemetry/05_QNLI_C20_R5
-0_LR0.1_5_fda_threshold.png> <./figures/telemetry/05_QNLI_C20_R50_LR0.1_3_clien
-t_variance.png> <./figures/telemetry/05_QNLI_C20_R50_LR0.1_6_variance_vs_epoch.
-png>] [49 <./figures/telemetry/07_QNLI_C50_R30_LR0.1_1_accuracy.png> <./figures
-/telemetry/07_QNLI_C50_R30_LR0.1_4_accuracy_vs_cost.png> <./figures/telemetry/0
-7_QNLI_C50_R30_LR0.1_2_allocated_epochs.png> <./figures/telemetry/07_QNLI_C50_R
-30_LR0.1_5_fda_threshold.png> <./figures/telemetry/07_QNLI_C50_R30_LR0.1_3_clie
-nt_variance.png> <./figures/telemetry/07_QNLI_C50_R30_LR0.1_6_variance_vs_epoch
-.png>] [50 <./figures/telemetry/09_QQP_C20_R50_LR0.1_1_accuracy.png> <./figures
-/telemetry/09_QQP_C20_R50_LR0.1_4_accuracy_vs_cost.png> <./figures/telemetry/09
-_QQP_C20_R50_LR0.1_2_allocated_epochs.png> <./figures/telemetry/09_QQP_C20_R50_
-LR0.1_5_fda_threshold.png> <./figures/telemetry/09_QQP_C20_R50_LR0.1_3_client_v
-ariance.png> <./figures/telemetry/09_QQP_C20_R50_LR0.1_6_variance_vs_epoch.png>
-] [51 <./figures/telemetry/10_QQP_C50_R30_LR0.1_1_accuracy.png> <./figures/tele
-metry/10_QQP_C50_R30_LR0.1_4_accuracy_vs_cost.png> <./figures/telemetry/10_QQP_
-C50_R30_LR0.1_2_allocated_epochs.png> <./figures/telemetry/10_QQP_C50_R30_LR0.1
-_5_fda_threshold.png> <./figures/telemetry/10_QQP_C50_R30_LR0.1_3_client_varian
-ce.png> <./figures/telemetry/10_QQP_C50_R30_LR0.1_6_variance_vs_epoch.png>]
-[52 <./figures/telemetry/11_SST2_C20_R50_LR0.1_1_accuracy.png> <./figures/telem
-etry/11_SST2_C20_R50_LR0.1_4_accuracy_vs_cost.png> <./figures/telemetry/11_SST2
-_C20_R50_LR0.1_2_allocated_epochs.png> <./figures/telemetry/11_SST2_C20_R50_LR0
-.1_5_fda_threshold.png> <./figures/telemetry/11_SST2_C20_R50_LR0.1_3_client_var
-iance.png> <./figures/telemetry/11_SST2_C20_R50_LR0.1_6_variance_vs_epoch.png>]
-[53 <./figures/telemetry/12_SST2_C50_R30_LR0.1_1_accuracy.png> <./figures/telem
-etry/12_SST2_C50_R30_LR0.1_4_accuracy_vs_cost.png> <./figures/telemetry/12_SST2
-_C50_R30_LR0.1_2_allocated_epochs.png> <./figures/telemetry/12_SST2_C50_R30_LR0
-.1_5_fda_threshold.png> <./figures/telemetry/12_SST2_C50_R30_LR0.1_3_client_var
-iance.png> <./figures/telemetry/12_SST2_C50_R30_LR0.1_6_variance_vs_epoch.png>]
-<figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_1_accuracy.png, id=1289, 346.896p
+ [50] [51 <C:/Users/GKaralis/Documents/GitHub/thesis-stuff/thesis/figures/telem
+etry/09_QQP_C20_R50_LR0.1_1_accuracy.png> <C:/Users/GKaralis/Documents/GitHub/t
+hesis-stuff/thesis/figures/telemetry/09_QQP_C20_R50_LR0.1_4_accuracy_vs_cost.pn
+g> <C:/Users/GKaralis/Documents/GitHub/thesis-stuff/thesis/figures/telemetry/09
+_QQP_C20_R50_LR0.1_2_allocated_epochs.png> <C:/Users/GKaralis/Documents/GitHub/
+thesis-stuff/thesis/figures/telemetry/09_QQP_C20_R50_LR0.1_5_fda_threshold.png>
+ <C:/Users/GKaralis/Documents/GitHub/thesis-stuff/thesis/figures/telemetry/09_Q
+QP_C20_R50_LR0.1_3_client_variance.png> <C:/Users/GKaralis/Documents/GitHub/the
+sis-stuff/thesis/figures/telemetry/09_QQP_C20_R50_LR0.1_6_variance_vs_epoch.png
+>] [52 <C:/Users/GKaralis/Documents/GitHub/thesis-stuff/thesis/figures/telemetr
+y/10_QQP_C50_R30_LR0.1_1_accuracy.png> <C:/Users/GKaralis/Documents/GitHub/thes
+is-stuff/thesis/figures/telemetry/10_QQP_C50_R30_LR0.1_4_accuracy_vs_cost.png> 
+<C:/Users/GKaralis/Documents/GitHub/thesis-stuff/thesis/figures/telemetry/10_QQ
+P_C50_R30_LR0.1_2_allocated_epochs.png> <C:/Users/GKaralis/Documents/GitHub/the
+sis-stuff/thesis/figures/telemetry/10_QQP_C50_R30_LR0.1_5_fda_threshold.png> <C
+:/Users/GKaralis/Documents/GitHub/thesis-stuff/thesis/figures/telemetry/10_QQP_
+C50_R30_LR0.1_3_client_variance.png> <C:/Users/GKaralis/Documents/GitHub/thesis
+-stuff/thesis/figures/telemetry/10_QQP_C50_R30_LR0.1_6_variance_vs_epoch.png>] 
+[53 <C:/Users/GKaralis/Documents/GitHub/thesis-stuff/thesis/figures/telemetry/1
+1_SST2_C20_R50_LR0.1_1_accuracy.png> <C:/Users/GKaralis/Documents/GitHub/thesis
+-stuff/thesis/figures/telemetry/11_SST2_C20_R50_LR0.1_4_accuracy_vs_cost.png> <
+C:/Users/GKaralis/Documents/GitHub/thesis-stuff/thesis/figures/telemetry/11_SST
+2_C20_R50_LR0.1_2_allocated_epochs.png> <C:/Users/GKaralis/Documents/GitHub/the
+sis-stuff/thesis/figures/telemetry/11_SST2_C20_R50_LR0.1_5_fda_threshold.png> <
+C:/Users/GKaralis/Documents/GitHub/thesis-stuff/thesis/figures/telemetry/11_SST
+2_C20_R50_LR0.1_3_client_variance.png> <C:/Users/GKaralis/Documents/GitHub/thes
+is-stuff/thesis/figures/telemetry/11_SST2_C20_R50_LR0.1_6_variance_vs_epoch.png
+>] [54 <C:/Users/GKaralis/Documents/GitHub/thesis-stuff/thesis/figures/telemetr
+y/12_SST2_C50_R30_LR0.1_1_accuracy.png> <C:/Users/GKaralis/Documents/GitHub/the
+sis-stuff/thesis/figures/telemetry/12_SST2_C50_R30_LR0.1_4_accuracy_vs_cost.png
+> <C:/Users/GKaralis/Documents/GitHub/thesis-stuff/thesis/figures/telemetry/12_
+SST2_C50_R30_LR0.1_2_allocated_epochs.png> <C:/Users/GKaralis/Documents/GitHub/
+thesis-stuff/thesis/figures/telemetry/12_SST2_C50_R30_LR0.1_5_fda_threshold.png
+> <C:/Users/GKaralis/Documents/GitHub/thesis-stuff/thesis/figures/telemetry/12_
+SST2_C50_R30_LR0.1_3_client_variance.png> <C:/Users/GKaralis/Documents/GitHub/t
+hesis-stuff/thesis/figures/telemetry/12_SST2_C50_R30_LR0.1_6_variance_vs_epoch.
+png>]
+(C:\Users\GKaralis\Documents\GitHub\thesis-stuff\thesis\tables/table_5_4_detail
+ed_noniid.tex) [55
+
+]
+<figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_1_accuracy.png, id=1318, 346.896p
 t x 184.5294pt>
 File: figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_1_accuracy.png Graphic file 
 (type png)
 <use figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_1_accuracy.png>
 Package pdftex.def Info: figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_1_accurac
-y.png  used on input line 848.
+y.png  used on input line 607.
 (pdftex.def)             Requested size: 234.03882pt x 124.49565pt.
-<figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_4_accuracy_vs_cost.png, id=1290, 
+<figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_4_accuracy_vs_cost.png, id=1319, 
 346.896pt x 184.5294pt>
 File: figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_4_accuracy_vs_cost.png Graph
 ic file (type png)
 <use figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_4_accuracy_vs_cost.png>
 Package pdftex.def Info: figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_4_accurac
-y_vs_cost.png  used on input line 848.
+y_vs_cost.png  used on input line 607.
 (pdftex.def)             Requested size: 234.03882pt x 124.49565pt.
-<figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_2_allocated_epochs.png, id=1291, 
+<figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_2_allocated_epochs.png, id=1320, 
 346.896pt x 184.5294pt>
 File: figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_2_allocated_epochs.png Graph
 ic file (type png)
 <use figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_2_allocated_epochs.png>
 Package pdftex.def Info: figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_2_allocat
-ed_epochs.png  used on input line 848.
+ed_epochs.png  used on input line 607.
 (pdftex.def)             Requested size: 234.03882pt x 124.49565pt.
-<figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_5_fda_threshold.png, id=1292, 346
+<figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_5_fda_threshold.png, id=1321, 346
 .896pt x 184.5294pt>
 File: figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_5_fda_threshold.png Graphic 
 file (type png)
 <use figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_5_fda_threshold.png>
 Package pdftex.def Info: figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_5_fda_thr
-eshold.png  used on input line 848.
+eshold.png  used on input line 607.
 (pdftex.def)             Requested size: 234.03882pt x 124.49565pt.
-<figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_3_client_variance.png, id=1293, 3
+<figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_3_client_variance.png, id=1322, 3
 46.896pt x 184.5294pt>
 File: figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_3_client_variance.png Graphi
 c file (type png)
 <use figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_3_client_variance.png>
 Package pdftex.def Info: figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_3_client_
-variance.png  used on input line 848.
+variance.png  used on input line 607.
 (pdftex.def)             Requested size: 234.03882pt x 124.49565pt.
-<figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_6_variance_vs_epoch.png, id=1294,
+<figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_6_variance_vs_epoch.png, id=1323,
  346.896pt x 184.5294pt>
 File: figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_6_variance_vs_epoch.png Grap
 hic file (type png)
 <use figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_6_variance_vs_epoch.png>
 Package pdftex.def Info: figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_6_varianc
-e_vs_epoch.png  used on input line 848.
+e_vs_epoch.png  used on input line 607.
 (pdftex.def)             Requested size: 234.03882pt x 124.49565pt.
-[54
-
-] [55 <./figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_1_accuracy.png (PNG copy)
-> <./figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_4_accuracy_vs_cost.png (PNG c
-opy)> <./figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_2_allocated_epochs.png (P
-NG copy)> <./figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_5_fda_threshold.png (
-PNG copy)> <./figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_3_client_variance.pn
-g (PNG copy)> <./figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_6_variance_vs_epo
-ch.png (PNG copy)>]
-<figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_1_accuracy.png, id=1305, 346.896p
+<figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_1_accuracy.png, id=1325, 346.896p
 t x 184.5294pt>
 File: figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_1_accuracy.png Graphic file 
 (type png)
 <use figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_1_accuracy.png>
 Package pdftex.def Info: figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_1_accurac
-y.png  used on input line 903.
+y.png  used on input line 662.
 (pdftex.def)             Requested size: 234.03882pt x 124.49565pt.
-<figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_4_accuracy_vs_cost.png, id=1306, 
+<figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_4_accuracy_vs_cost.png, id=1326, 
 346.896pt x 184.5294pt>
 File: figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_4_accuracy_vs_cost.png Graph
 ic file (type png)
 <use figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_4_accuracy_vs_cost.png>
 Package pdftex.def Info: figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_4_accurac
-y_vs_cost.png  used on input line 903.
+y_vs_cost.png  used on input line 662.
 (pdftex.def)             Requested size: 234.03882pt x 124.49565pt.
-<figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_2_allocated_epochs.png, id=1307, 
+<figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_2_allocated_epochs.png, id=1327, 
 346.896pt x 184.5294pt>
 File: figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_2_allocated_epochs.png Graph
 ic file (type png)
 <use figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_2_allocated_epochs.png>
 Package pdftex.def Info: figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_2_allocat
-ed_epochs.png  used on input line 903.
+ed_epochs.png  used on input line 662.
 (pdftex.def)             Requested size: 234.03882pt x 124.49565pt.
-<figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_5_fda_threshold.png, id=1308, 346
+<figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_5_fda_threshold.png, id=1328, 346
 .896pt x 184.5294pt>
 File: figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_5_fda_threshold.png Graphic 
 file (type png)
 <use figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_5_fda_threshold.png>
 Package pdftex.def Info: figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_5_fda_thr
-eshold.png  used on input line 903.
+eshold.png  used on input line 662.
 (pdftex.def)             Requested size: 234.03882pt x 124.49565pt.
-<figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_3_client_variance.png, id=1309, 3
+<figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_3_client_variance.png, id=1329, 3
 46.896pt x 184.5294pt>
 File: figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_3_client_variance.png Graphi
 c file (type png)
 <use figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_3_client_variance.png>
 Package pdftex.def Info: figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_3_client_
-variance.png  used on input line 903.
+variance.png  used on input line 662.
 (pdftex.def)             Requested size: 234.03882pt x 124.49565pt.
-<figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_6_variance_vs_epoch.png, id=1310,
+<figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_6_variance_vs_epoch.png, id=1330,
  346.896pt x 184.5294pt>
 File: figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_6_variance_vs_epoch.png Grap
 hic file (type png)
 <use figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_6_variance_vs_epoch.png>
 Package pdftex.def Info: figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_6_varianc
-e_vs_epoch.png  used on input line 903.
+e_vs_epoch.png  used on input line 662.
 (pdftex.def)             Requested size: 234.03882pt x 124.49565pt.
-<figures/non_iid_epoch_dynamics.png, id=1312, 4215.75pt x 1505.625pt>
+<figures/non_iid_epoch_dynamics.png, id=1332, 4215.75pt x 1505.625pt>
 File: figures/non_iid_epoch_dynamics.png Graphic file (type png)
 <use figures/non_iid_epoch_dynamics.png>
 Package pdftex.def Info: figures/non_iid_epoch_dynamics.png  used on input line
- 911.
+ 670.
 (pdftex.def)             Requested size: 432.48051pt x 154.45392pt.
-<figures/non_iid_benchmark_telemetry.png, id=1315, 4215.75pt x 3011.25pt>
+<figures/non_iid_benchmark_telemetry.png, id=1335, 4215.75pt x 3011.25pt>
 File: figures/non_iid_benchmark_telemetry.png Graphic file (type png)
 <use figures/non_iid_benchmark_telemetry.png>
 Package pdftex.def Info: figures/non_iid_benchmark_telemetry.png  used on input
- line 923.
+ line 682.
 (pdftex.def)             Requested size: 432.48051pt x 308.90784pt.
- [56] [57 <./figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_1_accuracy.png (PNG c
-opy)> <./figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_4_accuracy_vs_cost.png (P
-NG copy)> <./figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_2_allocated_epochs.pn
-g (PNG copy)> <./figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_5_fda_threshold.p
-ng (PNG copy)> <./figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_3_client_varianc
-e.png (PNG copy)> <./figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_6_variance_vs
-_epoch.png (PNG copy)>] [58 <./figures/non_iid_epoch_dynamics.png (PNG copy)> <
-./figures/non_iid_benchmark_telemetry.png (PNG copy)>]
-[59
+ [56] [57 <C:/Users/GKaralis/Documents/GitHub/thesis-stuff/thesis/figures/telem
+etry/17_MNLI_C20_R50_LR0.1_A0.5_1_accuracy.png (PNG copy)> <C:/Users/GKaralis/D
+ocuments/GitHub/thesis-stuff/thesis/figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.
+5_4_accuracy_vs_cost.png (PNG copy)> <C:/Users/GKaralis/Documents/GitHub/thesis
+-stuff/thesis/figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_2_allocated_epochs.p
+ng (PNG copy)> <C:/Users/GKaralis/Documents/GitHub/thesis-stuff/thesis/figures/
+telemetry/17_MNLI_C20_R50_LR0.1_A0.5_5_fda_threshold.png (PNG copy)> <C:/Users/
+GKaralis/Documents/GitHub/thesis-stuff/thesis/figures/telemetry/17_MNLI_C20_R50
+_LR0.1_A0.5_3_client_variance.png (PNG copy)> <C:/Users/GKaralis/Documents/GitH
+ub/thesis-stuff/thesis/figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_6_variance_
+vs_epoch.png (PNG copy)>] [58 <C:/Users/GKaralis/Documents/GitHub/thesis-stuff/
+thesis/figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_1_accuracy.png (PNG copy)> 
+<C:/Users/GKaralis/Documents/GitHub/thesis-stuff/thesis/figures/telemetry/18_QN
+LI_C20_R50_LR0.1_A0.5_4_accuracy_vs_cost.png (PNG copy)> <C:/Users/GKaralis/Doc
+uments/GitHub/thesis-stuff/thesis/figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_
+2_allocated_epochs.png (PNG copy)> <C:/Users/GKaralis/Documents/GitHub/thesis-s
+tuff/thesis/figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_5_fda_threshold.png (P
+NG copy)> <C:/Users/GKaralis/Documents/GitHub/thesis-stuff/thesis/figures/telem
+etry/18_QNLI_C20_R50_LR0.1_A0.5_3_client_variance.png (PNG copy)> <C:/Users/GKa
+ralis/Documents/GitHub/thesis-stuff/thesis/figures/telemetry/18_QNLI_C20_R50_LR
+0.1_A0.5_6_variance_vs_epoch.png (PNG copy)>] [59 <C:/Users/GKaralis/Documents/
+GitHub/thesis-stuff/thesis/figures/non_iid_epoch_dynamics.png (PNG copy)> <C:/U
+sers/GKaralis/Documents/GitHub/thesis-stuff/thesis/figures/non_iid_benchmark_te
+lemetry.png (PNG copy)>]
+(C:\Users\GKaralis\Documents\GitHub\thesis-stuff\thesis\tables/table_5_5_milest
+ones.tex)
+(C:\Users\GKaralis\Documents\GitHub\thesis-stuff\thesis\tables/table_5_matched_
+budget.tex)
+(C:\Users\GKaralis\Documents\GitHub\thesis-stuff\thesis\tables/table_5_setpoint
+_tracking.tex) [60
 
-] [60]) (chapters/conclusion.tex [61] [62
+] [61] [62])
+(C:\Users\GKaralis\Documents\GitHub\thesis-stuff\thesis\chapters/conclusion.tex
+[63] [64
 
 ]
 Chapter 6.
-[63] [64]
+[65] [66]
 Overfull \hbox (6.79218pt too wide) in paragraph at lines 44--45
 \T1/lmr/m/n/12 plor-ing asym-met-ric learn-ing rate sched-ules tai-lored in-de-
 pen-dently for down-projection
  []
 
-) [65] [66
+) [67] [68
 
-] (main.bbl [67
+] (C:\Users\GKaralis\Documents\GitHub\thesis-stuff\thesis\main.bbl
+[69
 
-] [68]
-Underfull \hbox (badness 1472) in paragraph at lines 248--254
+] [70] [71]
+Underfull \hbox (badness 1472) in paragraph at lines 255--261
 \T1/lmr/m/n/12 Communication-Efficient Fed-er-ated Fine-Tuning of Lan-guage Mod
 -els[][].  \T1/lmr/m/it/12 arXiv
  []
 
 
-Underfull \hbox (badness 2970) in paragraph at lines 248--254
+Underfull \hbox (badness 2970) in paragraph at lines 255--261
 \T1/lmr/m/it/12 preprint arXiv:2505.04535\T1/lmr/m/n/12 , 2025.  Code avail-abl
 e at [][]$\T1/lmtt/m/n/12 https : / / github . com /
  []
 
-[69] [70]) [71] (main.aux)
+[72]) [73] (C:\Users\GKaralis\Documents\GitHub\thesis-stuff\thesis\main.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
@@ -2368,13 +2453,13 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 2A5A4D80ADD90E722D6445F2BF62426C;15064.
  ) 
 Here is how much of TeX's memory you used:
- 30414 strings out of 467871
- 588400 string characters out of 5416923
- 1046312 words of memory out of 5000000
- 58359 multiletter control sequences out of 15000+600000
- 778342 words of font info for 130 fonts, out of 8000000 for 9000
+ 30472 strings out of 467871
+ 592151 string characters out of 5416923
+ 1078120 words of memory out of 5000000
+ 58388 multiletter control sequences out of 15000+600000
+ 777060 words of font info for 130 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,21n,94p,2662b,891s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,21n,94p,2669b,891s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
 pdfTeX warning (dest): name{Hfootnote.3} has been referenced but does not exist
 , replaced by a fixed one
@@ -2409,17 +2494,17 @@ eX/fonts/type1/public/lm/lmr17.pfb><C:/Users/GKaralis/AppData/Local/Programs/Mi
 KTeX/fonts/type1/public/lm/lmr6.pfb><C:/Users/GKaralis/AppData/Local/Programs/M
 iKTeX/fonts/type1/public/lm/lmr7.pfb><C:/Users/GKaralis/AppData/Local/Programs/
 MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/GKaralis/AppData/Local/Programs
-/MiKTeX/fonts/type1/public/lm/lmri10.pfb><C:/Users/GKaralis/AppData/Local/Progr
-ams/MiKTeX/fonts/type1/public/lm/lmri12.pfb><C:/Users/GKaralis/AppData/Local/Pr
-ograms/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/GKaralis/AppData/Local
-/Programs/MiKTeX/fonts/type1/public/lm/lmsy6.pfb><C:/Users/GKaralis/AppData/Loc
-al/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb><C:/Users/GKaralis/AppData/L
-ocal/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C:/Users/GKaralis/AppDat
-a/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt12.pfb><C:/Users/GKaralis/App
-Data/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (89 pages, 10255295 bytes).
+/MiKTeX/fonts/type1/public/lm/lmri12.pfb><C:/Users/GKaralis/AppData/Local/Progr
+ams/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/GKaralis/AppData/Local/Pr
+ograms/MiKTeX/fonts/type1/public/lm/lmsy6.pfb><C:/Users/GKaralis/AppData/Local/
+Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb><C:/Users/GKaralis/AppData/Loca
+l/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C:/Users/GKaralis/AppData/L
+ocal/Programs/MiKTeX/fonts/type1/public/lm/lmtt12.pfb><C:/Users/GKaralis/AppDat
+a/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on C:\Users\GKaralis\Documents\GitHub\thesis-stuff\thesis\main.p
+df (91 pages, 10254455 bytes).
 PDF statistics:
- 1712 PDF objects out of 1728 (max. 8388607)
- 355 named destinations out of 1000 (max. 500000)
+ 1737 PDF objects out of 2073 (max. 8388607)
+ 360 named destinations out of 1000 (max. 500000)
  24439 words of extra memory for PDF output out of 24883 (max. 10000000)
 

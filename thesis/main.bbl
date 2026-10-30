@@ -239,6 +239,13 @@ Youbang Sun, Zitao Li, Yaliang Li, and Bolin Ding.
 \newblock In {\em The Twelfth International Conference on Learning
   Representations}, 2025.
 
+\bibitem{theologitis2025edbt}
+Konstantinos Theologitis, Aristides Gionis, and George Tsatsaronis.
+\newblock Federated dynamic averaging: Adaptive communication horizons in
+  federated learning.
+\newblock In {\em Proceedings of the 28th International Conference on Extending
+  Database Technology (EDBT)}, 2025.
+
 \bibitem{theologitis2023algorithms}
 Michail Theologitis.
 \newblock Algorithms for online federated machine learning.

@@ -5,44 +5,47 @@ Reallocating 'name_of_file' (item size: 1) to 6 items.
 The style file: plain.bst
 Reallocating 'name_of_file' (item size: 1) to 11 items.
 Database file #1: references.bib
-You've used 49 entries,
+Warning--I'm ignoring theologitis2025fda's extra "journal" field
+--line 41 of file references.bib
+You've used 50 entries,
             2118 wiz_defined-function locations,
-            718 strings with 16531 characters,
-and the built_in function-call counts, 20257 in all, are:
-= -- 1776
-> -- 1478
+            723 strings with 16822 characters,
+and the built_in function-call counts, 20560 in all, are:
+= -- 1801
+> -- 1496
 < -- 12
-+ -- 586
-- -- 534
-* -- 1494
-:= -- 3445
-add.period$ -- 149
-call.type$ -- 49
-change.case$ -- 410
++ -- 593
+- -- 540
+* -- 1512
+:= -- 3496
+add.period$ -- 152
+call.type$ -- 50
+change.case$ -- 416
 chr.to.int$ -- 0
-cite$ -- 49
-duplicate$ -- 712
-empty$ -- 1337
-format.name$ -- 534
-if$ -- 4114
+cite$ -- 50
+duplicate$ -- 726
+empty$ -- 1365
+format.name$ -- 540
+if$ -- 4178
 int.to.chr$ -- 0
-int.to.str$ -- 49
-missing$ -- 47
-newline$ -- 249
-num.names$ -- 98
-pop$ -- 514
+int.to.str$ -- 50
+missing$ -- 48
+newline$ -- 254
+num.names$ -- 100
+pop$ -- 524
 preamble$ -- 1
-purify$ -- 359
+purify$ -- 364
 quote$ -- 0
-skip$ -- 492
+skip$ -- 499
 stack$ -- 0
-substring$ -- 685
-swap$ -- 180
+substring$ -- 690
+swap$ -- 182
 text.length$ -- 12
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 194
+type$ -- 198
 warning$ -- 0
-while$ -- 134
-width$ -- 51
-write$ -- 513
+while$ -- 136
+width$ -- 52
+write$ -- 523
+(There was 1 warning)
