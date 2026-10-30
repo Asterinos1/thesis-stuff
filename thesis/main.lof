@@ -12,8 +12,8 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {5.1}{\ignorespaces Multi-panel optimization telemetry on MNLI ($C=20, R_{\max }=50, \eta _c=0.1, \alpha =1000.0$) comparing FDA-RoLoRA against static RoLoRA baselines under homogeneous consensus.}}{44}{figure.5.1}%
 \contentsline {figure}{\numberline {5.2}{\ignorespaces Multi-panel optimization telemetry on MNLI ($C=50, R_{\max }=30, \eta _c=0.1, \alpha =1000.0$) under expanded cohort scale $C=50$.}}{45}{figure.5.2}%
-\contentsline {figure}{\numberline {5.3}{\ignorespaces Multi-panel optimization telemetry on QNLI ($C=20, R_{\max }=50, \eta _c=0.1, \alpha =1000.0$) comparing FDA-RoLoRA against static RoLoRA baselines under homogeneous consensus.}}{47}{figure.5.3}%
-\contentsline {figure}{\numberline {5.4}{\ignorespaces Multi-panel optimization telemetry on QNLI ($C=50, R_{\max }=30, \eta _c=0.1, \alpha =1000.0$) under expanded cohort scale $C=50$.}}{48}{figure.5.4}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Multi-panel optimization telemetry on QNLI ($C=20, R_{\max }=50, \eta _c=0.1, \alpha =1000.0$) comparing FDA-RoLoRA against static RoLoRA baselines under homogeneous consensus.}}{46}{figure.5.3}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Multi-panel optimization telemetry on QNLI ($C=50, R_{\max }=30, \eta _c=0.1, \alpha =1000.0$) under expanded cohort scale $C=50$.}}{47}{figure.5.4}%
 \contentsline {figure}{\numberline {5.5}{\ignorespaces Multi-panel optimization telemetry on QQP ($C=20, R_{\max }=50, \eta _c=0.1, \alpha =1000.0$) comparing FDA-RoLoRA against static RoLoRA baselines under homogeneous consensus.}}{49}{figure.5.5}%
 \contentsline {figure}{\numberline {5.6}{\ignorespaces Multi-panel optimization telemetry on QQP ($C=50, R_{\max }=30, \eta _c=0.1, \alpha =1000.0$) under expanded cohort scale $C=50$.}}{50}{figure.5.6}%
 \contentsline {figure}{\numberline {5.7}{\ignorespaces Multi-panel optimization telemetry on SST-2 ($C=20, R_{\max }=50, \eta _c=0.1, \alpha =1000.0$) comparing FDA-RoLoRA against static RoLoRA baselines under homogeneous consensus.}}{51}{figure.5.7}%
