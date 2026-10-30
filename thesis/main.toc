@@ -6,8 +6,7 @@
 \contentsline {chapter}{Acknowledgements}{\EnsureStandardFontEncoding {v}}{chapter*.3}%
 \contentsline {chapter}{List of Figures}{\EnsureStandardFontEncoding {ix}}{section*.5}%
 \contentsline {chapter}{List of Tables}{\EnsureStandardFontEncoding {xi}}{section*.7}%
-\contentsline {chapter}{List of Algorithms}{\EnsureStandardFontEncoding {xiii}}{section*.9}%
-\contentsline {chapter}{List of Abbreviations}{\EnsureStandardFontEncoding {xv}}{chapter*.11}%
+\contentsline {chapter}{List of Abbreviations}{\EnsureStandardFontEncoding {xiii}}{chapter*.9}%
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Federated Learning and Optimization}{1}{section.1.1}%
 \contentsline {section}{\numberline {1.2}Foundation Models and Parameter-Efficient Fine-Tuning}{2}{section.1.2}%
@@ -76,4 +75,4 @@
 \contentsline {section}{\numberline {6.1}Synthesis of Results and Methodological Takeaways}{57}{section.6.1}%
 \contentsline {section}{\numberline {6.2}Limitations}{57}{section.6.2}%
 \contentsline {section}{\numberline {6.3}Future Work}{58}{section.6.3}%
-\contentsline {chapter}{Bibliography}{61}{section*.12}%
+\contentsline {chapter}{Bibliography}{61}{section*.10}%
