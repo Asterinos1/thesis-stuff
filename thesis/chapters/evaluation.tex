@@ -649,7 +649,7 @@ Binary question-answering under skew demonstrates the scalability of closed-loop
     }
 \end{figure}
 
-\paragraph{The "Safety Brake" Mechanism \& Realized Epoch Dynamics.}
+\paragraph{Dynamic Round Synchronization and Realized Epoch Dynamics.}
 Figure~\ref{fig:non_iid_epoch_dynamics} visualizes round-by-round realized local epoch allocations on MNLI and QNLI under statistical heterogeneity. When Dirichlet skew causes local client updates to diverge sharply in coordinate space, inter-client drift variance surges by approximately $4.0\times$ (e.g., from $0.448$ to $1.794$ on QNLI). While static baselines execute a constant number of local passes regardless of parameter divergence, FDA-RoLoRA's closed-loop controller constrains local passes within $[e_{\min}, e_{\max}]$ in response to coordinate variance breaches, enforcing earlier server synchronization to mitigate client drift.
 
 \begin{figure}[htbp]
@@ -672,80 +672,3 @@ Across all four benchmarks, the client coordinate drift variance curves in Figur
 \end{figure}
 
 \clearpage
-
-% ==============================================================================
-% SECTION 5.5: CROSS-REGIME SYNTHESIS AND GUIDELINES
-% ==============================================================================
-\section{Cross-Regime Synthesis: Rounds vs. Communication Payload and Deployment Guidelines}
-\label{sec:eval_synthesis}
-
-To establish a holistic comparative evaluation, this section examines optimization efficiency through the lens of milestone-gated communication costs, formalizes the regime-dependent behavior of FDA-RoLoRA, analyzes the geometry of low-rank subspaces, and outlines practical deployment guidelines.
-
-\paragraph{Rounds vs. Communication Payload to Milestone Targets.}
-Following the evaluative methodology introduced by Theologitis~\cite{theologitis2023algorithms}, Table~\ref{tab:milestone_synthesis} evaluates algorithmic efficiency by measuring the exact number of communication rounds ($R$) and cumulative Float32 payload ($\text{Total MB}$) required to cross predefined intermediate and peak validation accuracy milestones.
-
-\input{tables/table_5_5_milestones.tex}
-
-\input{tables/table_5_matched_budget.tex}
-
-The numerical results in Table~\ref{tab:milestone_synthesis} reveal decisive efficiency advantages under statistical heterogeneity:
-\begin{itemize}
-    \item \textbf{Accelerated Non-IID Milestone Attainment on SST-2}: Under Dirichlet skew ($\alpha=0.5$), RoLoRA ($E=10$) required $23$ rounds ($107.8\,\text{MB}$) to cross the $80\%$ accuracy threshold. FDA-RoLoRA crossed this threshold in $\mathbf{8}$ rounds ($37.5\,\text{MB}$), achieving a \textbf{$2.87\times$ speedup} and a \textbf{$65.2\%$ communication payload saving}.
-    \item \textbf{Higher Ceiling Milestone Mastery on QNLI}: While RoLoRA ($E=10$) failed to reach the $84\%$ accuracy mark under label skew, FDA-RoLoRA attained $84\%$ validation accuracy at round $25$ ($117.2\,\text{MB}$).
-\end{itemize}
-
-\paragraph{Regime-Dependent Setpoint Tracking and Controller Mechanics.}
-Synthesizing empirical findings across homogeneous consensus ($\alpha=1000.0$) and heterogeneous label skew ($\alpha=0.5$) reveals the precise mechanics of closed-loop setpoint tracking in federated low-rank architectures, illustrated in Figure~\ref{fig:dual_frontier} and quantified in Table~\ref{tab:setpoint_tracking_dynamics}.
-
-\input{tables/table_5_setpoint_tracking.tex}
-
-\begin{figure}[htbp]
-\centering
-\resizebox{0.88\linewidth}{!}{%
-\begin{tikzpicture}[>=stealth]
-    % Axes
-    \draw[->, thick] (0,0) -- (12,0) node[right] {\textbf{Data Heterogeneity} ($\leftarrow$ Consensus IID $\quad | \quad$ Non-IID Skew $\rightarrow$)};
-    \draw[->, thick] (0,0) -- (0,6) node[above] {\textbf{Realized Local Epochs} ($\bar{e}$)};
-    
-    % Reference boundary lines
-    \draw[dashed, gray] (0,5.0) -- (11.5,5.0) node[right, black] {$e_{\max} = 20$};
-    \draw[dashed, gray] (0,0.5) -- (11.5,0.5) node[right, black] {$e_{\min} = 1$};
-    \draw[dotted, gray!80!black, thick] (0,4.2) -- (11.5,4.2) node[right, black] {Nominal Setpoint $e^* = k \cdot e_{\max}$ ($k=1.0$)};
-    \draw[dotted, blue!60!black, thick] (0,2.5) -- (11.5,2.5) node[right, blue!60!black] {RoLoRA Fixed ($E=10$)};
-    
-    % Setpoint Tracking curve
-    \draw[ultra thick, tucred] (0.5,2.8) .. controls (4,3.2) and (7,3.8) .. (11,4.1);
-    \node[tucred, above] at (7.5, 3.9) {\textbf{FDA-RoLoRA Realized Horizon ($\bar{e}$) }};
-    
-    % Annotations
-    \draw[fill=blue!5, rounded corners] (0.5,0.8) rectangle (4.8,2.4);
-    \node[align=center, font=\footnotesize] at (2.65,1.6) {\textbf{IID Undershoot} ($\mathcal{S} \approx 0.64\text{--}0.79$)\\Super-linear variance ($V \propto e^p, p > 1.5$)\\Accelerating inter-batch drift\\trips threshold earlier than target};
-    
-    \draw[fill=green!5, rounded corners] (7.2,1.2) rectangle (11.5,2.8);
-    \node[align=center, font=\footnotesize] at (9.35,2.0) {\textbf{Non-IID Setpoint Tracking}\\($\mathcal{S} \approx 0.91\text{--}1.11$)\\Near-linear drift scaling ($p \approx 1.0$)\\Controller successfully tracks\\nominal target setpoint};
-\end{tikzpicture}%
-}
-\caption{Empirical Setpoint Tracking Dynamics in FDA-RoLoRA: In IID regimes, super-linear coordinate variance growth causes steady-state undershoot ($\mathcal{S} \approx 0.64\text{--}0.79$); in Non-IID regimes, near-linear drift allows the controller to accurately track the nominal setpoint ($\mathcal{S} \approx 0.91\text{--}1.11$).}
-\label{fig:dual_frontier}
-\end{figure}
-
-\begin{enumerate}
-    \item \textbf{IID Setpoint Undershoot}: In homogeneous consensus ($\alpha=1000.0$), clients initialize training with identical model weights and sample minibatches from identical underlying distributions. During early epochs, inter-client gradient divergence is minimal. However, as local Stochastic Gradient Descent progresses through multiple epochs without synchronization, random batch sampling causes client trajectories to diverge super-linearly in low-rank coordinate space ($V(e) \propto e^p$ with empirical exponent $p \approx 1.8\text{--}2.2$). Because the proportional threshold update assumes linear variance growth, this super-linear acceleration breaches threshold $\theta$ earlier than anticipated, settling at a steady-state tracking ratio of $\mathcal{S} = \bar{e}_{\text{ss}} / (k \cdot e_{\max}) \approx 0.64\text{--}0.79$ (realizing $\bar{e} \approx 6.5\text{--}13.4$ epochs for $k=1.0$).
-    \item \textbf{Non-IID Setpoint Achievement}: Under severe Dirichlet label skew ($\alpha=0.5$), clients possess fundamentally distinct class distributions, creating a persistent, non-zero baseline drift from the first epoch. Because this systematic distribution shift dominates over stochastic batch variance, incremental coordinate drift expands near-linearly ($p \approx 0.9\text{--}1.1$). Consequently, the proportional control law operates within its modeled assumptions, achieving robust setpoint tracking with $\mathcal{S} \approx 0.91\text{--}1.11$ (realizing $\bar{e} \approx 9.5\text{--}17.8$ epochs).
-\end{enumerate}
-
-\paragraph{Low-Rank Factor Symmetry and Decoupled Tracking.}
-A key architectural hypothesis in alternating federated optimization is whether down-projection factor $A$ and up-projection factor $B$ require asymmetric local epoch budgets. Empirical evaluation across all 35 experimental configurations refutes the conjecture that matrix $B$ systematically accommodates deeper training: across the full benchmark corpus, realized local epochs average $\bar{e}_A = 10.63 \pm 0.45$ for matrix $A$ and $\bar{e}_B = 10.82 \pm 0.41$ for matrix $B$. In 16 of the 35 benchmark cells, $\bar{e}_A$ exceeds $\bar{e}_B$, with differences falling well within experimental seed variance. Rather than inducing asymmetric epoch drift, the primary benefit of decoupled dual-track thresholds ($\theta_A, \theta_B$) is preventing cross-factor scale contamination between alternating cycles, ensuring that threshold history on track $A$ does not destabilize synchronization on track $B$.
-
-\paragraph{Practical Deployment Guidelines for Federated PEFT.}
-For practitioners deploying parameter-efficient federated fine-tuning across real-world distributed networks, our empirical investigations establish four practical design principles:
-\begin{enumerate}
-    \item \textbf{Guarantee Base Progress ($e_{\min} = 1$)}: Setting $e_{\min}=1$ ensures that every client executes meaningful gradient updates before variance checks can trigger, preventing premature round stagnation.
-    \item \textbf{Horizon Selection ($k$)}: For enterprise cross-silo networks where client distributions are relatively homogeneous, configure aggressive boundary scaling ($k=1.0$) to maximize computational progress and minimize communication rounds. For mobile or edge deployments with severe non-IID label distributions, configure conservative midpoint scaling ($k=0.5$) to bound drift variance.
-    \item \textbf{Decouple Adapter Thresholds}: Always maintain independent threshold variables ($\theta_A, \theta_B$) for projection factors $A$ and $B$ to accommodate their differing gradient geometries.
-    \item \textbf{Calibrate Early Stopping Under Skew}: In non-IID environments, configure wider validation smoothing windows ($W \ge 5$) and enforce an explicit minimum round floor ($R_{\min} \ge 0.6 \times R_{\max}$) to accommodate the non-monotonic validation oscillations inherent in alternating factor updates.
-\end{enumerate}
-
-\vspace{1em}
-\noindent
-\textit{In summary, the complete empirical catalogue presented across Sections~\ref{sec:eval_iid} and \ref{sec:eval_non_iid} confirms that integrating variance-driven dynamic averaging with alternating low-rank adaptation resolves the dual communication bottleneck, providing both robust anti-collapse stability under extreme label skew and substantial network communication savings under homogeneous consensus.}
