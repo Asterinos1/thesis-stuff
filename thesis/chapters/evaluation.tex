@@ -1,7 +1,7 @@
 \chapter{Evaluation}
 \label{chap:evaluation}
 
-This chapter presents the empirical evaluation framework, experimental methodology, and comprehensive benchmark results designed to assess the efficacy of the proposed \textbf{FDA-RoLoRA} framework alongside comparative baselines. Our empirical investigations target transformer-based foundation models under both homogeneous and statistically heterogeneous federated regimes, focusing specifically on the 125M-parameter \texttt{roberta-base} architecture across sequence classification tasks from the standard General Language Understanding Evaluation (GLUE) benchmark suite. Throughout this chapter, the proposed framework is evaluated under the unified designation \textbf{FDA-RoLoRA}, embodying the dual-track coordinate variance tracking mechanism established in Chapter~\ref{chap:methodology} (operating with decoupled factor thresholds, variance-proportional scaling, and no heuristic moving-average lags).
+This chapter presents the empirical evaluation framework, experimental methodology, and comprehensive benchmark results designed to assess the efficacy of the proposed \textbf{FDA-RoLoRA} framework alongside comparative baselines. Our empirical investigations target transformer-based foundation models under both homogeneous and statistically heterogeneous federated regimes, focusing specifically on the 125M-parameter \texttt{roberta-base} architecture across sequence classification tasks from the standard General Language Understanding Evaluation (GLUE) benchmark suite. Throughout this chapter, the proposed framework is evaluated under the unified designation \textbf{FDA-RoLoRA}, embodying the dual-track coordinate variance tracking mechanism established in Chapter~\ref{chap:methodology}.
 
 % ==============================================================================
 % SECTION 5.1: EXPERIMENTAL SETUP AND BENCHMARK PROTOCOL
@@ -16,7 +16,7 @@ This section describes our experimental setup and evaluation protocol across sev
     All experiments ran on the dedicated Polytechnix GPU server at the SoftNet Lab of the Technical University of Crete (Section~\ref{sec:impl_deployment}). Using this uniform hardware platform ensured fair comparisons across all runs without queue delays or shared-resource interference.
 
     \item \textbf{Foundation Model \& Low-Rank Parameterization}\label{sec:eval_model_param}: 
-    We evaluate the \texttt{roberta-base} model ($125\text{M}$ parameters, 12 layers, hidden size 768) with frozen backbone weights $W_0$. Following normalized depth mapping from RoLoRA's $\mathcal{P}_2$ budget \cite{chen2025robust}, LoRA adapters ($r = 4, \alpha = 8$) are added to the query ($W_q$) and value ($W_v$) projections of the top 5 blocks $\{7, \dots, 11\}$ for MNLI, QNLI, and QQP (10 active modules), and the top 3 blocks $\{9, 10, 11\}$ for SST-2 (6 active modules). In alternating optimization, each round updates and communicates strictly one factor matrix ($A$ or $B$). Under 10 active modules, bi-directional Float32 communication per client per round is:
+    Our evaluations employ the \texttt{roberta\allowbreak-base} model ($125\text{M}$ parameters, 12 layers, hidden size 768) with frozen backbone weights $W_0$. Following normalized depth mapping from RoLoRA's $\mathcal{P}_2$ budget \cite{chen2025robust}, LoRA adapters ($r = 4, \alpha = 8$) are added to the query ($W_q$) and value ($W_v$) projections of the top 5 blocks $\{7, \dots, 11\}$ for MNLI, QNLI, and QQP (10 active modules), and the top 3 blocks $\{9, 10, 11\}$ for SST-2 (6 active modules). In alternating optimization, each round updates and communicates strictly one factor matrix ($A$ or $B$). Under 10 active modules, bi-directional Float32 communication per client per round is:
     \begin{equation}
         \text{Payload}_{\text{client}} = 2 \times 10 \times (768 \times 4) \times 4\,\text{bytes} = 245{,}760\,\text{bytes} = 240\,\text{KB} \; (0.234375\,\text{MB}) \label{eq:payload_formulation}
     \end{equation}
@@ -33,7 +33,7 @@ This section describes our experimental setup and evaluation protocol across sev
         \item \textbf{QQP}: Binary question paraphrase detection ($363{,}846$ pairs).
         \item \textbf{SST-2}: Binary sentiment classification ($67{,}349$ sentences).
     \end{itemize}
-    Training sets exceeding $25{,}000$ examples are capped at $25{,}000$ samples ($\text{MAX\_SAMPLES} = 25{,}000$) to balance per-round compute, while validation sets are evaluated in full ($100\%$).
+    Training sets are capped at $25{,}000$ samples to balance per-round compute, while validation sets are evaluated in full.
 
     \item \textbf{Statistical Data Partitioning Regimes}\label{sec:eval_regimes}: 
     Client data is partitioned via Dirichlet distribution sampling under two regimes:

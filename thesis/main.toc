@@ -61,8 +61,8 @@
 \contentsline {chapter}{\numberline {5}Evaluation}{37}{chapter.5}%
 \contentsline {section}{\numberline {5.1}Experimental Setup and Benchmark Protocol}{37}{section.5.1}%
 \contentsline {section}{\numberline {5.2}Executive Performance Scorecard}{39}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Benchmark Suite 1: Homogeneous Environments (IID, $\alpha = 1000.0$)}{42}{section.5.3}%
-\contentsline {paragraph}{Target Setpoint Tracking and Super-Linear Variance Dynamics.}{42}{table.5.3}%
+\contentsline {section}{\numberline {5.3}Benchmark Suite 1: Homogeneous Environments (IID, $\alpha = 1000.0$)}{41}{section.5.3}%
+\contentsline {paragraph}{Target Setpoint Tracking and Super-Linear Variance Dynamics.}{41}{table.5.3}%
 \contentsline {paragraph}{Multi-Genre Natural Language Inference (MNLI).}{43}{table.5.3}%
 \contentsline {paragraph}{Question Natural Language Inference (QNLI).}{43}{figure.5.2}%
 \contentsline {paragraph}{Quora Question Pairs (QQP).}{46}{figure.5.4}%
