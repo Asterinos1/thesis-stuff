@@ -60,23 +60,23 @@
 \contentsline {section}{\numberline {4.6}Deployment Environment}{35}{section.4.6}%
 \contentsline {chapter}{\numberline {5}Evaluation}{37}{chapter.5}%
 \contentsline {section}{\numberline {5.1}Experimental Setup and Benchmark Protocol}{37}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Executive Performance Scorecard}{40}{section.5.2}%
+\contentsline {section}{\numberline {5.2}Executive Performance Scorecard}{39}{section.5.2}%
 \contentsline {section}{\numberline {5.3}Benchmark Suite 1: Homogeneous Environments (IID, $\alpha = 1000.0$)}{42}{section.5.3}%
 \contentsline {paragraph}{Target Setpoint Tracking and Super-Linear Variance Dynamics.}{42}{table.5.3}%
-\contentsline {paragraph}{Multi-Genre Natural Language Inference (MNLI).}{44}{table.5.3}%
-\contentsline {paragraph}{Question Natural Language Inference (QNLI).}{44}{figure.5.2}%
-\contentsline {paragraph}{Quora Question Pairs (QQP).}{47}{figure.5.4}%
-\contentsline {paragraph}{Stanford Sentiment Treebank (SST-2).}{47}{figure.5.6}%
-\contentsline {section}{\numberline {5.4}Benchmark Suite 2: Statistical Heterogeneity (Non-IID, $\alpha = 0.5$)}{54}{section.5.4}%
-\contentsline {paragraph}{Multi-Genre Inference (MNLI): Asymmetric Factor Allocation \bbl@greek@ampersand Post-Peak Collapse.}{54}{table.5.4}%
-\contentsline {paragraph}{Question Answering (QNLI): Scalability \bbl@greek@ampersand Suite-Leading Peak Accuracy.}{55}{figure.5.9}%
-\contentsline {paragraph}{The "Safety Brake" Mechanism \bbl@greek@ampersand Realized Epoch Dynamics.}{55}{figure.5.10}%
-\contentsline {paragraph}{Sentiment \bbl@greek@ampersand Paraphrase: Cross-Task Drift and Anti-Collapse Protection.}{55}{figure.5.11}%
-\contentsline {section}{\numberline {5.5}Cross-Regime Synthesis: Rounds vs. Communication Payload and Deployment Guidelines}{59}{section.5.5}%
-\contentsline {paragraph}{Rounds vs. Communication Payload to Milestone Targets.}{59}{section.5.5}%
-\contentsline {paragraph}{Regime-Dependent Setpoint Tracking and Controller Mechanics.}{59}{table.5.6}%
-\contentsline {paragraph}{Low-Rank Factor Symmetry and Decoupled Tracking.}{61}{Item.21}%
-\contentsline {paragraph}{Practical Deployment Guidelines for Federated PEFT.}{61}{Item.21}%
+\contentsline {paragraph}{Multi-Genre Natural Language Inference (MNLI).}{43}{table.5.3}%
+\contentsline {paragraph}{Question Natural Language Inference (QNLI).}{43}{figure.5.2}%
+\contentsline {paragraph}{Quora Question Pairs (QQP).}{46}{figure.5.4}%
+\contentsline {paragraph}{Stanford Sentiment Treebank (SST-2).}{46}{figure.5.6}%
+\contentsline {section}{\numberline {5.4}Benchmark Suite 2: Statistical Heterogeneity (Non-IID, $\alpha = 0.5$)}{53}{section.5.4}%
+\contentsline {paragraph}{Multi-Genre Inference (MNLI): Asymmetric Factor Allocation \bbl@greek@ampersand Post-Peak Collapse.}{53}{table.5.4}%
+\contentsline {paragraph}{Question Answering (QNLI): Scalability \bbl@greek@ampersand Suite-Leading Peak Accuracy.}{54}{figure.5.9}%
+\contentsline {paragraph}{The "Safety Brake" Mechanism \bbl@greek@ampersand Realized Epoch Dynamics.}{54}{figure.5.10}%
+\contentsline {paragraph}{Sentiment \bbl@greek@ampersand Paraphrase: Cross-Task Drift and Anti-Collapse Protection.}{54}{figure.5.11}%
+\contentsline {section}{\numberline {5.5}Cross-Regime Synthesis: Rounds vs. Communication Payload and Deployment Guidelines}{58}{section.5.5}%
+\contentsline {paragraph}{Rounds vs. Communication Payload to Milestone Targets.}{58}{section.5.5}%
+\contentsline {paragraph}{Regime-Dependent Setpoint Tracking and Controller Mechanics.}{58}{table.5.6}%
+\contentsline {paragraph}{Low-Rank Factor Symmetry and Decoupled Tracking.}{60}{Item.21}%
+\contentsline {paragraph}{Practical Deployment Guidelines for Federated PEFT.}{60}{Item.21}%
 \contentsline {chapter}{\numberline {6}Conclusion and Future Work}{63}{chapter.6}%
 \contentsline {section}{\numberline {6.1}Synthesis of Results and Methodological Takeaways}{63}{section.6.1}%
 \contentsline {section}{\numberline {6.2}Limitations}{64}{section.6.2}%
