@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.10.26)  29 OCT 2026 19:52
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.10.26)  31 OCT 2026 00:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1759,17 +1759,17 @@ c}{C:/Users/GKaralis/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit
 File: figures/lora_figure.png Graphic file (type png)
 <use figures/lora_figure.png>
 Package pdftex.def Info: figures/lora_figure.png  used on input line 187.
-(pdftex.def)             Requested size: 160.16412pt x 129.03305pt.
+(pdftex.def)             Requested size: 160.15202pt x 129.03305pt.
  [5
 
  <./figures/lora_figure.png>] [6
 
 ]
-<figures/rolora_framework.png, id=303, 1145.4795pt x 219.82124pt>
+<figures/rolora_framework.png, id=305, 1145.4795pt x 219.82124pt>
 File: figures/rolora_framework.png Graphic file (type png)
 <use figures/rolora_framework.png>
-Package pdftex.def Info: figures/rolora_framework.png  used on input line 234.
-(pdftex.def)             Requested size: 152.79585pt x 29.31903pt.
+Package pdftex.def Info: figures/rolora_framework.png  used on input line 226.
+(pdftex.def)             Requested size: 296.52423pt x 56.90396pt.
  [7
 
  <./figures/rolora_framework.png>] [8
@@ -1796,7 +1796,7 @@ Package pdftex.def Info: figures/rolora_framework.png  used on input line 234.
 
 ]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 4
-90.
+82.
  (C:\Users\GKaralis\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
@@ -1810,15 +1810,15 @@ File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 
 ]
 LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <10.95> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 595.
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 587.
 LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <8> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 595.
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 587.
 LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <6> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 595.
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 587.
 LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <5> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 595.
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 587.
 LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <9> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 595.
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 587.
  [22
 
 ]
@@ -1828,18 +1828,18 @@ File: figures/10_QQP_C50_R30_LR0.1_all6_telemetry_stacked.png Graphic file (typ
 e png)
 <use figures/10_QQP_C50_R30_LR0.1_all6_telemetry_stacked.png>
 Package pdftex.def Info: figures/10_QQP_C50_R30_LR0.1_all6_telemetry_stacked.pn
-g  used on input line 628.
+g  used on input line 620.
 (pdftex.def)             Requested size: 184.62682pt x 155.78117pt.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <14.4> on input line 628.
+(Font)              <14.4> on input line 620.
 LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <14.4> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 628.
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 620.
 LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <10> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 628.
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 620.
 LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <7> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 628.
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 620.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <14.4> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 628.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 620.
  [23
 
  <./figures/10_QQP_C50_R30_LR0.1_all6_telemetry_stacked.png>]
@@ -1849,7 +1849,7 @@ File: figures/18_QNLI_C20_R50_LR0.1_A0.5_all6_telemetry_stacked.png Graphic fil
 e (type png)
 <use figures/18_QNLI_C20_R50_LR0.1_A0.5_all6_telemetry_stacked.png>
 Package pdftex.def Info: figures/18_QNLI_C20_R50_LR0.1_A0.5_all6_telemetry_stac
-ked.png  used on input line 661.
+ked.png  used on input line 653.
 (pdftex.def)             Requested size: 181.73318pt x 153.34842pt.
  [24
 
@@ -1857,7 +1857,7 @@ ked.png  used on input line 661.
 
 ]
 LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <12> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 748.
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 740.
  [26
 
 ] [27
@@ -1895,10 +1895,10 @@ Package rerunfilecheck Info: File `presentation.out' has not changed.
 (rerunfilecheck)             Checksum: 4D90C9D03B59987FC7D953D906F9E0C9;950.
  ) 
 Here is how much of TeX's memory you used:
- 29573 strings out of 467871
- 599846 string characters out of 5416923
- 968472 words of memory out of 5000000
- 57752 multiletter control sequences out of 15000+600000
+ 29570 strings out of 467871
+ 599726 string characters out of 5416923
+ 968460 words of memory out of 5000000
+ 57749 multiletter control sequences out of 15000+600000
  748225 words of font info for 123 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  128i,19n,123p,497b,1096s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1930,7 +1930,7 @@ lis/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt8.pfb><C:/Users/GKa
 ralis/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt9.pfb><C:/Users/G
 Karalis/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm1
 0.pfb>
-Output written on presentation.pdf (33 pages, 2552103 bytes).
+Output written on presentation.pdf (33 pages, 2553266 bytes).
 PDF statistics:
  1676 PDF objects out of 1728 (max. 8388607)
  77 named destinations out of 1000 (max. 500000)
