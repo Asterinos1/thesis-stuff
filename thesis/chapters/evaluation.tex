@@ -26,22 +26,10 @@ This section describes our experimental setup and evaluation protocol across sev
     While Chen et al. \cite{chen2025robust} evaluated the 355M-parameter \texttt{roberta-large} model, our work uses the 125M-parameter \texttt{roberta-base} to support extensive multi-seed sweeps within our institutional compute budget ($2 \times$ NVIDIA A10 GPUs). Absolute validation scores are therefore lower than those for \texttt{roberta-large}. All comparisons are strictly head-to-head on the identical \texttt{roberta-base} backbone, isolating the algorithmic impact of dynamic variance tracking.
 
     \item \textbf{GLUE Benchmark Corpus Standardization}\label{sec:eval_corpus}: 
-    We evaluate downstream generalization across four GLUE benchmark tasks:
-    \begin{itemize}
-        \item \textbf{MNLI}: 3-class natural language inference ($392{,}702$ pairs).
-        \item \textbf{QNLI}: Binary question-answering inference ($104{,}743$ pairs).
-        \item \textbf{QQP}: Binary question paraphrase detection ($363{,}846$ pairs).
-        \item \textbf{SST-2}: Binary sentiment classification ($67{,}349$ sentences).
-    \end{itemize}
-    Training sets are capped at $25{,}000$ samples to balance per-round compute, while validation sets are evaluated in full.
+    We evaluate downstream generalization across four GLUE benchmarks: \textbf{MNLI} ($392{,}702$ sentence pairs), \textbf{QNLI} ($104{,}743$ QA pairs), \textbf{QQP} ($363{,}846$ paraphrase pairs), and \textbf{SST-2} ($67{,}349$ sentiment sentences). Training sets are capped at $25{,}000$ samples to balance per-round compute, while validation sets are evaluated in full.
 
     \item \textbf{Statistical Data Partitioning Regimes}\label{sec:eval_regimes}: 
-    Client data is partitioned via Dirichlet distribution sampling under two regimes:
-    \begin{itemize}
-        \item \textbf{Homogeneous (IID, $\alpha = 1000.0$)}: Clients hold uniform class distributions matching the global population.
-        \item \textbf{Heterogeneous (Non-IID, $\alpha = 0.5$)}: Enforces severe label skew, where clients hold biased class subsets.
-    \end{itemize}
-    We evaluate cohorts of $C \in \{20, 50\}$ clients under full participation ($K = C$) per round.
+    Client data is partitioned via Dirichlet distribution sampling across cohorts of $C \in \{20, 50\}$ under full participation ($K = C$). We evaluate two regimes: homogeneous consensus (IID, $\alpha = 1000.0$), where clients hold uniform class distributions, and heterogeneous label skew (Non-IID, $\alpha = 0.5$), where clients hold heavily biased class subsets.
 
     \item \textbf{Hyperparameter Matrix \& Controller Horizons}\label{sec:eval_hyperparameters}: 
     Local training uses SGD with client learning rate $\eta_c = 0.1$ and batch size $B = 32$ ($B = 64$ for SST-2, matching \cite{chen2025robust}), while the server applies SGD with learning rate $\eta_s = 1.0$. Static RoLoRA baselines are tested across fixed epochs $E \in \{5, 10, 15, 20\}$. FDA-RoLoRA adapts local epochs within $[e_{\min}, e_{\max}] = [1, 20]$ using scaling parameter $k \in \{0.5, 1.0\}$. An accuracy-gated early stopping protocol \label{sec:eval_early_stopping} terminates runs when validation accuracy plateaus ($W=3, P=3$ in IID; $W=5, P=5$ in non-IID).
@@ -61,6 +49,7 @@ This section describes our experimental setup and evaluation protocol across sev
 % ==============================================================================
 % SECTION 5.2: EXECUTIVE PERFORMANCE SCORECARD
 % ==============================================================================
+\clearpage
 \section{Executive Performance Scorecard}
 \label{sec:eval_scorecard}
 
@@ -69,6 +58,8 @@ To provide a clear, comprehensive synthesis across our entire benchmarking suite
 Bold font denotes the overall superior peak accuracy for each scenario, while underlined font highlights the best-performing baseline. To capture statistical stability across random seeds, empirical sample standard deviations are reported in parentheses alongside mean peak accuracy values.
 
 \input{tables/table_5_1_scorecard_iid.tex}
+
+\clearpage
 
 \input{tables/table_5_2_scorecard_noniid.tex}
 
