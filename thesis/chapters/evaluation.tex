@@ -47,31 +47,7 @@ This section describes our experimental setup and evaluation protocol across sev
 \end{enumerate}
 
 % ==============================================================================
-% SECTION 5.2: EXECUTIVE PERFORMANCE SCORECARD
-% ==============================================================================
-\clearpage
-\section{Executive Performance Scorecard}
-\label{sec:eval_scorecard}
-
-To provide a clear, comprehensive synthesis across our entire benchmarking suite, this section presents executive performance scorecards directly contrasting FDA-RoLoRA configurations against the strongest fixed-schedule RoLoRA baseline across all 16 evaluated scenarios. To ensure readability and permit uncompressed, detailed presentation, the results are divided into two dedicated scorecards: Table~\ref{tab:scorecard_iid} evaluates the homogeneous consensus suite ($\alpha = 1000.0$), while Table~\ref{tab:scorecard_non_iid} evaluates the heterogeneous label skew suite ($\alpha = 0.5$).
-
-Bold font denotes the overall superior peak accuracy for each scenario, while underlined font highlights the best-performing baseline. To capture statistical stability across random seeds, empirical sample standard deviations are reported in parentheses alongside mean peak accuracy values.
-
-\input{tables/table_5_1_scorecard_iid.tex}
-
-\clearpage
-
-\input{tables/table_5_2_scorecard_noniid.tex}
-
-A macroscopic inspection of Tables~\ref{tab:scorecard_iid} and \ref{tab:scorecard_non_iid} validates the core empirical behavior of the framework:
-\begin{enumerate}
-    \item \textbf{Robustness Against Saddle Points Under Skew}: The most pronounced empirical difference occurs on single-sentence sentiment classification under 50-client label skew (SST-2 $C=50, \alpha=0.5$). While fixed RoLoRA ($E=10$) failed to escape the majority-class saddle point within the 20-round horizon (hovering at $\sim 50\%$ accuracy for most rounds and attaining only $59.00 \pm 7.86\%$ peak accuracy), FDA-RoLoRA ($k=1.0$) successfully escaped the plateau to reach $\mathbf{85.95 \pm 3.96\%}$ peak accuracy (\textbf{+26.95\% absolute stability recovery}).
-    \item \textbf{Significant Gains in Scaled Consensus}: In large cohorts under consensus (MNLI $C=50, \alpha=1000.0$), static schedules plateau prematurely at $65.85 \pm 2.02\%$, whereas FDA-RoLoRA advances steadily to $\mathbf{69.85 \pm 2.38\%}$ ($+4.00\%$ gain).
-    \item \textbf{Communication Efficiency and Stability}: Across settings where convergence was reached early, FDA-RoLoRA matched or exceeded baseline accuracy in fewer communication rounds (e.g., QQP $C=20$ Non-IID reaching $77.88\%$ in $14.0$ rounds / $65.6\,\text{MB}$ vs.\ RoLoRA's $20$ rounds / $77.3\,\text{MB}$). Conversely, under extreme client skew and high participation (QNLI $C=50, \alpha=0.5, k=1.0$), aggressive local steps caused early divergence, tripping early stopping at round 13 ($49.51\%$ accuracy). This demonstrates the necessity of conservative midpoint setpoints ($k=0.5$) under severe client skew, which safely attained $\mathbf{75.69 \pm 1.17\%}$ with minimal inter-seed variance.
-\end{enumerate}
-
-% ==============================================================================
-% SECTION 5.3: BENCHMARK SUITE 1: HOMOGENEOUS ENVIRONMENTS
+% SECTION 5.2: BENCHMARK SUITE 1: HOMOGENEOUS ENVIRONMENTS
 % ==============================================================================
 \section{Benchmark Suite 1: Homogeneous Environments}
 \label{sec:eval_iid}
@@ -528,7 +504,7 @@ On $C=50$ (Figure~\ref{fig:telemetry_sst2_c50_iid}), FDA-RoLoRA ($k=1.0$) reache
 \clearpage
 
 % ==============================================================================
-% SECTION 5.4: BENCHMARK SUITE 2: STATISTICAL HETEROGENEITY
+% SECTION 5.3: BENCHMARK SUITE 2: STATISTICAL HETEROGENEITY
 % ==============================================================================
 \section{Benchmark Suite 2: Statistical Heterogeneity}
 \label{sec:eval_non_iid}

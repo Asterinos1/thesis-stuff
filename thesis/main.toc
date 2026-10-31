@@ -59,20 +59,19 @@
 \contentsline {section}{\numberline {4.6}Deployment Environment}{35}{section.4.6}%
 \contentsline {chapter}{\numberline {5}Evaluation}{37}{chapter.5}%
 \contentsline {section}{\numberline {5.1}Experimental Setup and Benchmark Protocol}{37}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Executive Performance Scorecard}{39}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Benchmark Suite 1: Homogeneous Environments}{41}{section.5.3}%
-\contentsline {paragraph}{Target Setpoint Tracking and Super-Linear Variance Dynamics.}{41}{table.5.3}%
-\contentsline {paragraph}{Multi-Genre Natural Language Inference (MNLI).}{42}{table.5.3}%
-\contentsline {paragraph}{Question Natural Language Inference (QNLI).}{42}{figure.5.2}%
+\contentsline {section}{\numberline {5.2}Benchmark Suite 1: Homogeneous Environments}{38}{section.5.2}%
+\contentsline {paragraph}{Target Setpoint Tracking and Super-Linear Variance Dynamics.}{39}{table.5.1}%
+\contentsline {paragraph}{Multi-Genre Natural Language Inference (MNLI).}{40}{table.5.1}%
+\contentsline {paragraph}{Question Natural Language Inference (QNLI).}{40}{figure.5.2}%
 \contentsline {paragraph}{Quora Question Pairs (QQP).}{45}{figure.5.4}%
 \contentsline {paragraph}{Stanford Sentiment Treebank (SST-2).}{45}{figure.5.6}%
-\contentsline {section}{\numberline {5.4}Benchmark Suite 2: Statistical Heterogeneity}{52}{section.5.4}%
-\contentsline {paragraph}{Multi-Genre Inference (MNLI): Asymmetric Factor Allocation \bbl@greek@ampersand Post-Peak Collapse.}{52}{table.5.4}%
-\contentsline {paragraph}{Question Answering (QNLI): Scalability \bbl@greek@ampersand Suite-Leading Peak Accuracy.}{53}{figure.5.9}%
-\contentsline {paragraph}{Dynamic Round Synchronization and Realized Epoch Dynamics.}{53}{figure.5.10}%
-\contentsline {paragraph}{Sentiment \bbl@greek@ampersand Paraphrase: Cross-Task Drift and Anti-Collapse Protection.}{53}{figure.5.11}%
-\contentsline {chapter}{\numberline {6}Conclusion and Future Work}{57}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Synthesis of Results and Methodological Takeaways}{57}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Limitations}{57}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Future Work}{58}{section.6.3}%
-\contentsline {chapter}{Bibliography}{61}{section*.10}%
+\contentsline {section}{\numberline {5.3}Benchmark Suite 2: Statistical Heterogeneity}{50}{section.5.3}%
+\contentsline {paragraph}{Multi-Genre Inference (MNLI): Asymmetric Factor Allocation \bbl@greek@ampersand Post-Peak Collapse.}{50}{table.5.2}%
+\contentsline {paragraph}{Question Answering (QNLI): Scalability \bbl@greek@ampersand Suite-Leading Peak Accuracy.}{52}{figure.5.9}%
+\contentsline {paragraph}{Dynamic Round Synchronization and Realized Epoch Dynamics.}{52}{figure.5.10}%
+\contentsline {paragraph}{Sentiment \bbl@greek@ampersand Paraphrase: Cross-Task Drift and Anti-Collapse Protection.}{52}{figure.5.11}%
+\contentsline {chapter}{\numberline {6}Conclusion and Future Work}{55}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Synthesis of Results and Methodological Takeaways}{55}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Limitations}{55}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Future Work}{56}{section.6.3}%
+\contentsline {chapter}{Bibliography}{59}{section*.10}%
