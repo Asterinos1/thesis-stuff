@@ -14,10 +14,12 @@ Noga Alon, Yossi Matias, and Mario Szegedy.
   Theory of Computing (STOC)}, pages 20--29, 1996.
 
 \bibitem{babakniya2023slora}
-Sara Babakniya, Souvik Ahmed, Yelong Shen, Bolin Ding, and Dawn Song.
-\newblock \href{https://arxiv.org/abs/2311.12310}{{SLoRA}: Federated
-  Parameter-Efficient Fine-Tuning with Sparse Low-Rank Adaptation}.
-\newblock {\em arXiv preprint arXiv:2311.12310}, 2023.
+Sara Babakniya, Ahmed~Roushdy Elkordy, Yahya~H. Ezzeldin, Qingfeng Liu,
+  Kee-Bong Song, Mostafa El-Khamy, and Salman Avestimehr.
+\newblock \href{https://arxiv.org/abs/2308.06522}{{SLoRA}: Federated Parameter
+  Efficient Fine-Tuning of Language Models}.
+\newblock {\em arXiv preprint arXiv:2308.06522}, 2023.
+\newblock NeurIPS 2023 Workshop on Federated Learning.
 
 \bibitem{bommasani2021opportunities}
 Rishi Bommasani, Drew~A Hudson, Ehsan Adeli, Russ Altman, Simran Arora, Sydney
@@ -48,11 +50,6 @@ Tim Dettmers, Artidoro Pagnoni, Ari Holtzman, and Luke Zettlemoyer.
 \newblock \href{https://arxiv.org/abs/2305.14314}{{QLoRA}: Efficient Finetuning
   of Quantized Large Language Models}.
 \newblock In {\em Advances in Neural Information Processing Systems}, 2023.
-
-\bibitem{frangias2023federated}
-Georgios Frangias.
-\newblock Federated learning at {TensorFlow} using the geometric approach.
-\newblock Diploma thesis, Technical University of Crete, 2023.
 
 \bibitem{houlsby2019parameter}
 Neil Houlsby, Andrei Giurgiu, Stanislaw Jastrzebski, Bruna Morrone, Quentin
@@ -184,12 +181,20 @@ Youbang Sun, Zitao Li, Yaliang Li, and Bolin Ding.
 \newblock \href{https://arxiv.org/abs/2403.04870}{Improving {LoRA} in
   Privacy-preserving Federated Learning}.
 \newblock In {\em The Twelfth International Conference on Learning
-  Representations}, 2025.
+  Representations}, 2024.
+
+\bibitem{theologitis2025communication}
+Michail Theologitis, Georgios Frangias, Georgios Anestis, Vasilis Samoladas,
+  and Antonios Deligiannakis.
+\newblock \href{https://arxiv.org/abs/2405.20988}{Communication-Efficient
+  Distributed Deep Learning via Federated Dynamic Averaging}.
+\newblock In {\em Proceedings of the 28th International Conference on Extending
+  Database Technology (EDBT)}, pages 658--670, 2025.
 
 \bibitem{theologitis2025fda}
 Michail Theologitis, Vasilis Samoladas, and Antonios Deligiannakis.
-\newblock \href{https://arxiv.org/abs/2505.04535}{{FDA-Opt}:
-  Communication-Efficient Federated Fine-Tuning of Language Models}.
+\newblock \href{https://doi.org/10.1145/3799682.3840785}{{FDA-Opt}: Federated
+  Fine-Tuning via Dynamic Update Schedules}.
 \newblock {\em arXiv preprint arXiv:2505.04535}, 2025.
 \newblock Code available at
   \url{https://github.com/michaeltheologitis/FDA-Opt}.
@@ -220,14 +225,16 @@ Ziyao Wang, Zheyu Shen, Yexiao He, Guoheng Sun, Hongyi Wang, Lingjuan Lyu, and
   Ang Li.
 \newblock \href{https://arxiv.org/abs/2407.21045}{{FLoRA}: Federated
   Fine-Tuning Large Language Models with Heterogeneous Low-Rank Adaptations}.
-\newblock In {\em NeurIPS}, 2025.
+\newblock In {\em Advances in Neural Information Processing Systems (NeurIPS)},
+  2024.
 
 \bibitem{yang2025federated}
 Yiyuan Yang, Guodong Long, Qinghua Lu, Liming Zhu, Jing Jiang, and Chengqi
   Zhang.
 \newblock \href{https://arxiv.org/abs/2505.13502}{Federated Low-Rank Adaptation
   for Foundation Models: A Survey}.
-\newblock {\em arXiv preprint arXiv:2505.13502}, 2025.
+\newblock In {\em Proceedings of the Thirty-Fourth International Joint
+  Conference on Artificial Intelligence (IJCAI), Survey Track}, 2025.
 
 \bibitem{yurochkin2019bayesian}
 Mikhail Yurochkin, Mayank Agarwal, Soumya Banerjee, Rebecca Chen, Dennis Sun,
@@ -252,7 +259,7 @@ Qingru Zhang, Minshuo Chen, Alexander Bukharin, Pengcheng He, Yu~Cheng, Weizhu
 \newblock In {\em International Conference on Learning Representations}, 2023.
 
 \bibitem{zhu2021federated}
-Zhuangdi Zhu, Junlin Hong, and Shiyu Ji.
+Hangyu Zhu, Jinjin Xu, Shiqing Liu, and Yaochu Jin.
 \newblock \href{https://arxiv.org/abs/2106.06843}{Federated Learning on
   Non-{IID} Data: A Survey}.
 \newblock {\em Neurocomputing}, 465:371--390, 2021.

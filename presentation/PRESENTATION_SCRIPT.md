@@ -291,15 +291,15 @@
 
 ### [Page 13 / Slide 13] Methodology : Independent Halting & Local Training Bounds
 - **Slide Title:** Methodology : Independent Halting \& Local Training Bounds
-- **Visual Display:** Left: Local epoch bounds with $e_{\min}=1$ standardized everywhere; halting condition $\text{Var}_{\text{subspace}} > \theta_{\text{current}} \lor e \ge e_{\max}$. Right: Threshold controller target scaling $\theta_{\text{target}} = (\frac{k \cdot e_{\max}}{e^*})\text{Var}_{\text{subspace}}$ with default $k=0.5$ ($e_{\max}/2$) vs aggressive $k=1.0$ ($e_{\max}$). Alert block contrasting Non-IID near-flawless performance against IID midpoint lag.
+- **Visual Display:** Left: Local epoch bounds $[e_{\min}, e_{\max}]$ with operational floor $e_{\min}$; halting condition $\text{Var}_{\text{subspace}} > \theta_{\text{current}} \lor e \ge e_{\max}$. Right: Threshold controller target scaling $\theta_{\text{target}} = (\frac{k \cdot e_{\max}}{e^*})\text{Var}_{\text{subspace}}$ with default $k=0.5$ ($e_{\max}/2$) vs aggressive $k=1.0$ ($e_{\max}$). Alert block contrasting Non-IID near-flawless performance against IID midpoint lag.
 - **Target Time:** 1:30 min | **Cumulative Time:** 16:15
 
 #### 🎙️ Spoken Script:
 > "Next, we define the local training bounds and threshold controller mechanics.
 > 
-> Client training is bounded in $[e_{\min}, e_{\max}]$ local epochs. Across all our experimental configurations, we standardize $e_{\min} = 1$ universally. While early exploratory sweeps tested $e_{\min}=3$, it produced negligible difference, so setting $e_{\min}=1$ guarantees valid stochastic progress while keeping the framework clean and uniform.
+> Client training is bounded within $[e_{\min}, e_{\max}]$ local epochs. Here, $e_{\min}$ serves as an operational lower bound to ensure clients execute an initial computation pass before variance evaluations begin, while $e_{\max}$ establishes the upper computation ceiling per round.
 > 
-> Local coordinate variance is evaluated at each epoch boundary $e \ge 1$. Training halts immediately when coordinate variance exceeds the active threshold $\theta_{\text{current}}$, or when reaching the hard ceiling $e_{\max}$.
+> Local coordinate variance is evaluated at each epoch boundary $e \ge e_{\min}$. Training halts immediately when coordinate variance exceeds the active threshold $\theta_{\text{current}}$, or when reaching the hard ceiling $e_{\max}$.
 > 
 > The server then updates the threshold via target scaling:
 > $\theta_{\text{target}}^{(r)} = \left(\frac{k \cdot e_{\max}}{e^*}\right) \text{Var}_{\text{subspace}}(\Delta^{(e^*)})$.

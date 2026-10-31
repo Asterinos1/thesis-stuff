@@ -32,7 +32,7 @@ This section describes our experimental setup and evaluation protocol across sev
     Client data is partitioned via Dirichlet distribution sampling across cohorts of $C \in \{20, 50\}$ under full participation ($K = C$). We evaluate two regimes: homogeneous consensus (IID, $\alpha = 1000.0$), where clients hold uniform class distributions, and heterogeneous label skew (Non-IID, $\alpha = 0.5$), where clients hold heavily biased class subsets.
 
     \item \textbf{Hyperparameter Matrix \& Controller Horizons}\label{sec:eval_hyperparameters}: 
-    Local training uses SGD with client learning rate $\eta_c = 0.1$ and batch size $B = 32$ ($B = 64$ for SST-2, matching \cite{chen2025robust}), while the server applies SGD with learning rate $\eta_s = 1.0$. Static RoLoRA baselines are tested across fixed epochs $E \in \{5, 10, 15, 20\}$. FDA-RoLoRA adapts local epochs within $[e_{\min}, e_{\max}] = [1, 20]$ using scaling parameter $k \in \{0.5, 1.0\}$. Maximum communication rounds ($R_{\max}$) are established per cohort scale to balance computational horizons: for $C = 20$ cohorts, the global round ceiling is configured to $R_{\max} = 50$ (scaled to $R_{\max} \in \{20, 25\}$ on smaller corpora such as QQP and SST-2 under non-IID conditions), whereas for expanded $C = 50$ cohorts, the round ceiling is set to $R_{\max} = 30$ ($R_{\max} \in \{20, 24\}$ for SST-2 and QQP). Within these maximum budgets, an accuracy-gated early stopping protocol \label{sec:eval_early_stopping} terminates runs when validation accuracy plateaus ($W=3, P=3$ in IID; $W=5, P=5$ in non-IID).
+    Local training uses SGD with client learning rate $\eta_c = 0.1$ and batch size $B = 32$ ($B = 64$ for SST-2, matching \cite{chen2025robust}), while the server applies SGD with learning rate $\eta_s = 1.0$. Static RoLoRA baselines are tested across fixed epochs $E \in \{5, 10, 15, 20\}$. FDA-RoLoRA adapts local epochs within $[e_{\min}, e_{\max}] = [1, 20]$ using scaling parameter $k \in \{0.5, 1.0\}$. Maximum communication rounds ($R_{\max}$) are established per cohort scale to balance computational horizons: for $C = 20$ cohorts, the global round ceiling is configured to $R_{\max} = 50$ (reduced to $R_{\max} \in \{20, 25\}$ for QQP and SST-2 under non-IID conditions, because pilot runs on these tasks converged within fewer rounds), whereas for expanded $C = 50$ cohorts, the round ceiling is set to $R_{\max} = 30$ ($R_{\max} \in \{20, 24\}$ for SST-2 and QQP, for the same reason). Within these maximum budgets, an accuracy-gated early stopping protocol \label{sec:eval_early_stopping} terminates runs when validation accuracy plateaus ($W=3, P=3$ in IID; $W=5, P=5$ in non-IID).
 
     \item \textbf{Evaluation Metrics \& Multi-Panel Telemetry Architecture}\label{sec:eval_metrics}: 
     To capture the complete multidimensional dynamics of federated optimization, experimental progress is evaluated across six core metrics, directly corresponding to the six panels (a--f) in our multi-panel telemetry figures:
@@ -42,7 +42,7 @@ This section describes our experimental setup and evaluation protocol across sev
         \item \textbf{Dynamic Local Epoch Allocation (Panel c)}: Tracks the round-by-round realized local epochs $\bar{e}$ executed across client cohorts, evaluating how closely the dynamic controller tracks the intended setpoint ($k \cdot e_{\max}$) and adjusts computational intensity across rounds.
         \item \textbf{Factor Synchronization Thresholds (Panel d)}: Traces the independent evolution of the dual-track variance thresholds ($\theta_A, \theta_B$) across communication rounds, illustrating the geometric scale disparity and decoupled calibration of matrices $A$ and $B$.
         \item \textbf{Subspace Coordinate Variance (Panel e)}: Measures cohort-wide inter-client drift variance $\sigma_t^2$ (Eq.~\ref{eq:subspace_var}) recorded at round termination, evaluating global parameter consensus versus statistical dispersion across rounds.
-        \item \textbf{Intra-Round Variance Drift (Panel f)}: Traces the fine-grained parameter variance $\text{Var}_{\text{subspace}}(e)$ evaluated at each intermediate local epoch $e \in [1, e^*]$ \emph{within} individual communication rounds. This diagnostic reveals how client parameter trajectories diverge internally from the round baseline as local training progresses step-by-step, demonstrating the exact epoch boundary where intra-round variance intercepts the dynamic threshold line $\theta_{\text{current}}$ to trigger synchronization.
+        \item \textbf{Variance vs.\ Cumulative Local Epochs (Panel f)}: Plots the subspace variance recorded at each synchronization against the cumulative number of local epochs executed, showing how drift variance scales with total local computation across the run.
     \end{itemize}
 \end{enumerate}
 % ==============================================================================
@@ -58,7 +58,7 @@ Table~\ref{tab:iid_detailed_benchmarks} reports detailed performance metrics acr
 \input{tables/table_5_3_detailed_iid.tex}
 
 \paragraph{Target Setpoint Tracking and Super-Linear Variance Dynamics.}
-A central behavioral finding emerging from the homogeneous benchmark suite concerns the tracking fidelity of the dynamic epoch target setpoint. In the foundational full-rank FDA-Opt framework~\cite{theologitis2025fda}, parameter drift variance across clients accumulated approximately linearly with respect to local training epochs ($\text{Var}(t) \propto t$). Because variance growth was linear, the proportional predictive threshold scaling law (Eq.~\ref{eq:generalized_update}) operated as an accurate first-order predictor, reliably steering the realized mean local epoch count $\bar{e}$ toward the intended target setpoints ($e^* = k \cdot e_{\max}$, i.e., $\bar{e} \approx 10$ for $k=0.5$ and $\bar{e} \approx 20$ for $k=1.0$ given $e_{\max}=20$).
+A central behavioral finding emerging from the homogeneous benchmark suite concerns the tracking fidelity of the dynamic epoch target setpoint. In the foundational full-rank FDA-Opt framework~\cite{theologitis2025fda}, parameter drift variance across clients accumulated approximately linearly (as assumed by its threshold rule, Eq.~\ref{eq:fda_threshold}) with respect to local training epochs ($\text{Var}(t) \propto t$). Because variance growth was linear, the proportional predictive threshold scaling law (Eq.~\ref{eq:generalized_update}) operated as an accurate first-order predictor, reliably steering the realized mean local epoch count $\bar{e}$ toward the intended target setpoints ($e^* = k \cdot e_{\max}$, i.e., $\bar{e} \approx 10$ for $k=0.5$ and $\bar{e} \approx 20$ for $k=1.0$ given $e_{\max}=20$).
 
 In FDA-RoLoRA, however, the empirical results in Table~\ref{tab:iid_detailed_benchmarks} reveal that the realized local computational horizon systematically falls short of the intended setpoint. Specifically, under canonical midpoint scaling ($k=0.5$, nominal target $e^* = 10$), the realized local training across all four benchmarks reaches only $\bar{e} \approx 5.82\text{--}7.76$ epochs. Even when configuring aggressive boundary scaling ($k=1.0$, nominal target $e^* = 20$), the controller does not saturate the computation ceiling, achieving only $\bar{e} \approx 9.14\text{--}13.42$ epochs despite near-perfect gradient consensus ($\alpha=1000.0$).
 
@@ -67,9 +67,9 @@ This systematic shortfall is directly rooted in the underlying geometry of low-r
 \paragraph{MNLI:}
 In 3-class sentence-pair inference under homogeneous consensus, client gradients align toward a coherent global optimum. Figures~\ref{fig:telemetry_mnli_c20_iid} and \ref{fig:telemetry_mnli_c50_iid} present the multi-panel optimization telemetry across all six diagnostic dimensions for cohort sizes $C=20$ and $C=50$, respectively. 
 
-On $C=20$ (Figure~\ref{fig:telemetry_mnli_c20_iid}), validation trajectories (Panel a) advance steadily toward $76\%$ accuracy, with FDA-RoLoRA ($k=1.0$) attaining a peak of $\mathbf{76.86\%}$ compared to $76.60\%$ for RoLoRA $E=10$. In the communication efficiency plane (Panel b), FDA-RoLoRA establishes a steeper Pareto slope, achieving target accuracy in fewer megabytes. In the local compute plane (Panel c), realized epochs hover around $\bar{e} = 13.42$ under $k=1.0$ (and $\bar{e} = 7.76$ under $k=0.5$), falling short of the nominal targets ($e^* \in \{10, 20\}$) because low-rank subspace variance accumulates super-linearly. In Panel (d), decoupled threshold tracks reveal that up-projection factor $B$ maintains a systematically higher threshold baseline ($\theta_B > \theta_A$), reflecting greater gradient magnitude in the output projection subspace. Subspace coordinate variance at synchronization (Panel e) remains tightly constrained ($\bar{\nu} \approx 6.55$), while intra-round variance curves (Panel f) exhibit shallow, convex trajectories across epochs $1\dots e^*$, confirming that homogeneous gradient alignment prevents intra-round parameter divergence.
+On $C=20$ (Figure~\ref{fig:telemetry_mnli_c20_iid}), validation trajectories (Panel a) advance steadily toward $76\%$ accuracy, with FDA-RoLoRA ($k=1.0$) attaining a peak of $\mathbf{76.86\%}$ compared to $76.60\%$ for RoLoRA $E=10$. In the communication plane (Panel b), FDA-RoLoRA ($k=1.0$) uses $150.0\,\text{MB}$ over $32.0$ rounds, compared with $131.2\,\text{MB}$ for RoLoRA $E=10$ and $103.1\,\text{MB}$ for RoLoRA $E=20$, at comparable peak accuracy ($76.86\%$ vs.\ $76.60\%$ and $76.28\%$). In the local compute plane (Panel c), realized epochs hover around $\bar{e} = 13.42$ under $k=1.0$ (and $\bar{e} = 7.76$ under $k=0.5$), falling short of the nominal targets ($e^* \in \{10, 20\}$) because low-rank subspace variance accumulates super-linearly. In Panel (d), decoupled threshold tracks reveal that up-projection factor $B$ maintains a systematically higher threshold baseline ($\theta_B > \theta_A$), reflecting greater gradient magnitude in the output projection subspace. Subspace coordinate variance at synchronization (Panel e) remains tightly constrained ($\bar{\nu} \approx 6.55$).
 
-When scaling the federation to $C=50$ clients (Figure~\ref{fig:telemetry_mnli_c50_iid}), the static RoLoRA baseline ($E=10$) suffers from severe consensus stagnation, plateauing at $65.85\%$ accuracy across all 30 rounds. In contrast, FDA-RoLoRA ($k=1.0$) dynamically maintains deep computational allocations ($\bar{e} = 12.15$), breaking through the plateau to attain $\mathbf{69.85\%}$ peak accuracy (a $\mathbf{+4.00\%}$ absolute gain). Cohort scaling suppresses round-level drift variance to $\bar{\nu} = 1.115$ (Panel e), while intra-round variance trajectories (Panel f) remain subdued, allowing clients to train safely past 12 epochs without gradient conflict.
+When scaling the federation to $C=50$ clients (Figure~\ref{fig:telemetry_mnli_c50_iid}), the static RoLoRA baseline ($E=10$) reaches $65.85\%$ accuracy across all 30 rounds. In contrast, FDA-RoLoRA ($k=1.0$) dynamically maintains deep computational allocations ($\bar{e} = 12.15$), breaking through the plateau to attain $\mathbf{69.85\%}$ peak accuracy (a $\mathbf{+4.00\%}$ absolute gain). FDA-RoLoRA leads at round 30 in both seeds ($67.48\%$ vs.\ $63.84\%$ and $72.23\%$ vs.\ $67.87\%$), while executing more local epochs per round ($\bar{e}=12.15$ vs.\ 10). No RoLoRA $E=15$/$E=20$ baseline was run at $C=50$. Cohort scaling suppresses round-level drift variance to $\bar{\nu} = 1.115$ (Panel e).
 \begin{figure}[p]
     \centering
     \makebox[\textwidth][c]{%
@@ -112,7 +112,7 @@ When scaling the federation to $C=50$ clients (Figure~\ref{fig:telemetry_mnli_c5
             \centering
             \includegraphics[width=\textwidth,height=4.9cm,keepaspectratio]{figures/telemetry/01_MNLI_C20_R50_LR0.1_6_variance_vs_epoch.png}
             \vspace{2pt}
-            \par{\footnotesize \textbf{(f)} Intra-Round Variance Drift}
+            \par{\footnotesize \textbf{(f)} Variance vs.\ Cumulative Local Epochs}
         \end{minipage}
 
         \vspace{0.6em}
@@ -164,7 +164,7 @@ When scaling the federation to $C=50$ clients (Figure~\ref{fig:telemetry_mnli_c5
             \centering
             \includegraphics[width=\textwidth,height=4.9cm,keepaspectratio]{figures/telemetry/03_MNLI_C50_R30_LR0.1_6_variance_vs_epoch.png}
             \vspace{2pt}
-            \par{\footnotesize \textbf{(f)} Intra-Round Variance Drift}
+            \par{\footnotesize \textbf{(f)} Variance vs.\ Cumulative Local Epochs}
         \end{minipage}
 
         \vspace{0.6em}
@@ -175,9 +175,9 @@ When scaling the federation to $C=50$ clients (Figure~\ref{fig:telemetry_mnli_c5
 \end{figure}
 
 \paragraph{QNLI:}
-Figures~\ref{fig:telemetry_qnli_c20_iid} and \ref{fig:telemetry_qnli_c50_iid} depict optimization dynamics on binary question-answering inference under homogeneous consensus across the six telemetry panels. On $C=20$ (Figure~\ref{fig:telemetry_qnli_c20_iid}), FDA-RoLoRA ($k=1.0$) reaches a suite-leading peak validation accuracy of $\mathbf{83.14\%}$ (Panel a), outperforming RoLoRA $E=10$ ($81.83\%$) while dominating the accuracy-cost tradeoff (Panel b). Dynamic local epochs (Panel c) stabilize at $\bar{e} = 9.85$ per round under $k=1.0$ (and $\bar{e} = 6.91$ under $k=0.5$), hovering near the midpoint setpoint. Threshold telemetry (Panel d) shows stable monotonic adaptation, preserving separate operational scales for $\theta_A$ and $\theta_B$. Drift variance at round synchronization (Panel e) is kept minimal ($\bar{\nu} \approx 1.11$), and intra-round variance curves (Panel f) confirm smooth, gradual dispersion across local epochs within each round.
+Figures~\ref{fig:telemetry_qnli_c20_iid} and \ref{fig:telemetry_qnli_c50_iid} depict optimization dynamics on binary question-answering inference under homogeneous consensus across the six telemetry panels. On $C=20$ (Figure~\ref{fig:telemetry_qnli_c20_iid}), FDA-RoLoRA ($k=1.0$) reaches a peak validation accuracy of $83.14\%$ (Panel a), compared with $81.83\%$ for RoLoRA $E=10$. However, it uses more communication ($77.3\,\text{MB}$ vs.\ $46.9\,\text{MB}$), and its final accuracy ($67.63 \pm 22.28\%$) is lower and less stable than its peak, because one seed ended at $51.9\%$. Dynamic local epochs (Panel c) stabilize at $\bar{e} = 9.85$ per round under $k=1.0$ (and $\bar{e} = 6.91$ under $k=0.5$), below the $k=1.0$ setpoint of 20. Threshold telemetry (Panel d) shows stable monotonic adaptation, preserving separate operational scales for $\theta_A$ and $\theta_B$. Drift variance at round synchronization (Panel e) is kept minimal ($\bar{\nu} \approx 1.11$).
 
-On scaled cohorts of $C=50$ clients (Figure~\ref{fig:telemetry_qnli_c50_iid}), FDA-RoLoRA ($k=1.0$) reaches competitive peak accuracy ($82.77\%$) and triggers early stopping at round 21 ($246.1\,\text{MB}$) versus 24.5 rounds ($287.1\,\text{MB}$) for static RoLoRA $E=10$ (Panel a \& b). Inter-client drift variance (Panel e) averages only $\bar{\nu} = 0.707$, while intra-round drift trajectories (Panel f) remain tightly flattened, proving that larger client cohorts reinforce gradient consensus and prevent intra-round divergence.
+On scaled cohorts of $C=50$ clients (Figure~\ref{fig:telemetry_qnli_c50_iid}), FDA-RoLoRA ($k=1.0$) reaches competitive peak accuracy ($82.77\%$) and triggers early stopping at round 21 ($246.1\,\text{MB}$) versus 24.5 rounds ($287.1\,\text{MB}$) for static RoLoRA $E=10$ (Panel a \& b). Inter-client drift variance (Panel e) averages only $\bar{\nu} = 0.707$.
 \begin{figure}[p]
     \centering
     \makebox[\textwidth][c]{%
@@ -220,7 +220,7 @@ On scaled cohorts of $C=50$ clients (Figure~\ref{fig:telemetry_qnli_c50_iid}), F
             \centering
             \includegraphics[width=\textwidth,height=4.9cm,keepaspectratio]{figures/telemetry/05_QNLI_C20_R50_LR0.1_6_variance_vs_epoch.png}
             \vspace{2pt}
-            \par{\footnotesize \textbf{(f)} Intra-Round Variance Drift}
+            \par{\footnotesize \textbf{(f)} Variance vs.\ Cumulative Local Epochs}
         \end{minipage}
 
         \vspace{0.6em}
@@ -272,7 +272,7 @@ On scaled cohorts of $C=50$ clients (Figure~\ref{fig:telemetry_qnli_c50_iid}), F
             \centering
             \includegraphics[width=\textwidth,height=4.9cm,keepaspectratio]{figures/telemetry/07_QNLI_C50_R30_LR0.1_6_variance_vs_epoch.png}
             \vspace{2pt}
-            \par{\footnotesize \textbf{(f)} Intra-Round Variance Drift}
+            \par{\footnotesize \textbf{(f)} Variance vs.\ Cumulative Local Epochs}
         \end{minipage}
 
         \vspace{0.6em}
@@ -283,9 +283,9 @@ On scaled cohorts of $C=50$ clients (Figure~\ref{fig:telemetry_qnli_c50_iid}), F
 \end{figure}
 
 \paragraph{QQP:}
-Semantic paraphrase detection demonstrates the primary communication compression benefits of dynamic averaging. Figures~\ref{fig:telemetry_qqp_c20_iid} and \ref{fig:telemetry_qqp_c50_iid} illustrate QQP telemetry across all six metrics. On $C=20$ (Figure~\ref{fig:telemetry_qqp_c20_iid}), FDA-RoLoRA ($k=1.0$) attains $\mathbf{78.57\%}$ peak validation accuracy (Panel a), outperforming RoLoRA $E=10$ ($75.47\%$) by $\mathbf{+3.10\%}$ while shifting the cost Pareto curve leftward (Panel b). Realized local epochs (Panel c) average $\bar{e} = 10.69$ under $k=1.0$ (and $\bar{e} = 6.50$ under $k=0.5$). Factor threshold tracks (Panel d) adapt smoothly without volatility, while subspace coordinate variance (Panel e) is strictly bounded ($\bar{\nu} = 1.577$). Intra-round drift curves (Panel f) demonstrate stable, convex variance growth that intercepts the threshold cleanly without overshoot.
+Semantic paraphrase detection demonstrates the primary communication compression benefits of dynamic averaging. Figures~\ref{fig:telemetry_qqp_c20_iid} and \ref{fig:telemetry_qqp_c50_iid} illustrate QQP telemetry across all six metrics. On $C=20$ (Figure~\ref{fig:telemetry_qqp_c20_iid}), FDA-RoLoRA ($k=1.0$) attains $\mathbf{78.57\%}$ peak validation accuracy (Panel a), outperforming RoLoRA $E=10$ ($75.47\%$) by $\mathbf{+3.10\%}$ while shifting the cost Pareto curve leftward (Panel b). Realized local epochs (Panel c) average $\bar{e} = 10.69$ under $k=1.0$ (and $\bar{e} = 6.50$ under $k=0.5$). Factor threshold tracks (Panel d) adapt smoothly without volatility, while subspace coordinate variance (Panel e) is strictly bounded ($\bar{\nu} = 1.577$).
 
-On $C=50$ (Figure~\ref{fig:telemetry_qqp_c50_iid}), static RoLoRA baselines require the full budget of $30.0$ rounds ($351.6\,\text{MB}$) without reaching early stopping. In contrast, FDA-RoLoRA ($k=1.0$) dynamically monitors coordinate stability, achieving target validation accuracy and triggering early stopping in only $\mathbf{14.0}$ rounds ($164.1\,\text{MB}$, Panels a \& b). This yields a dramatic \textbf{$53.3\%$ reduction in cumulative network communication}. Guided by suppressed drift variance ($\bar{\nu} = 0.220$, Panel e) and flat intra-round variance trajectories (Panel f), the controller safely executes $\bar{e} = 9.14$ epochs per round before synchronization.
+On $C=50$ (Figure~\ref{fig:telemetry_qqp_c50_iid}), static RoLoRA baselines require the full budget of $30.0$ rounds ($351.6\,\text{MB}$) without reaching early stopping. In contrast, FDA-RoLoRA ($k=1.0$) triggers early stopping after $14.0$ rounds ($164.1\,\text{MB}$) at a lower accuracy plateau (final $72.65\%$, peak $73.63\%$) than RoLoRA $E=10$ (final $75.43\%$, peak $78.79\%$). At the same round (round 14), RoLoRA $E=10$ had already reached $75.27\%$ and $75.90\%$ in the two seeds, and it matched FDA-RoLoRA's final accuracy by round 6--7. The earlier stop therefore reflects an earlier plateau, not a communication saving at equal accuracy. Guided by suppressed drift variance ($\bar{\nu} = 0.220$, Panel e), the controller safely executes $\bar{e} = 9.14$ epochs per round before synchronization.
 \begin{figure}[p]
     \centering
     \makebox[\textwidth][c]{%
@@ -328,7 +328,7 @@ On $C=50$ (Figure~\ref{fig:telemetry_qqp_c50_iid}), static RoLoRA baselines requ
             \centering
             \includegraphics[width=\textwidth,height=4.9cm,keepaspectratio]{figures/telemetry/09_QQP_C20_R50_LR0.1_6_variance_vs_epoch.png}
             \vspace{2pt}
-            \par{\footnotesize \textbf{(f)} Intra-Round Variance Drift}
+            \par{\footnotesize \textbf{(f)} Variance vs.\ Cumulative Local Epochs}
         \end{minipage}
 
         \vspace{0.6em}
@@ -380,7 +380,7 @@ On $C=50$ (Figure~\ref{fig:telemetry_qqp_c50_iid}), static RoLoRA baselines requ
             \centering
             \includegraphics[width=\textwidth,height=4.9cm,keepaspectratio]{figures/telemetry/10_QQP_C50_R30_LR0.1_6_variance_vs_epoch.png}
             \vspace{2pt}
-            \par{\footnotesize \textbf{(f)} Intra-Round Variance Drift}
+            \par{\footnotesize \textbf{(f)} Variance vs.\ Cumulative Local Epochs}
         \end{minipage}
 
         \vspace{0.6em}
@@ -391,9 +391,9 @@ On $C=50$ (Figure~\ref{fig:telemetry_qqp_c50_iid}), static RoLoRA baselines requ
 \end{figure}
 
 \paragraph{SST-2:}
-Figures~\ref{fig:telemetry_sst2_c20_iid} and \ref{fig:telemetry_sst2_c50_iid} report telemetry on single-sentence sentiment classification under homogeneous consensus. On $C=20$ (Figure~\ref{fig:telemetry_sst2_c20_iid}), both FDA-RoLoRA and fixed RoLoRA rapidly cross $92\%$ validation accuracy (Panel a). FDA-RoLoRA ($k=1.0$) matches fixed RoLoRA $E=20$ accuracy ($\mathbf{92.14\%}$ peak) while maintaining lower communication overhead (Panel b). Realized local epochs (Panel c) settle at $\bar{e} = 11.11$ per round, while dual thresholds (Panel d) stabilize at tight equilibria. Round-level drift variance (Panel e) is bounded at $\bar{\nu} = 0.654$, and intra-round variance drift (Panel f) exhibits near-linear progression across epochs $1\dots e^*$, confirming harmonious gradient trajectories.
+Figures~\ref{fig:telemetry_sst2_c20_iid} and \ref{fig:telemetry_sst2_c50_iid} report telemetry on single-sentence sentiment classification under homogeneous consensus. On $C=20$ (Figure~\ref{fig:telemetry_sst2_c20_iid}), both FDA-RoLoRA and fixed RoLoRA rapidly cross $92\%$ validation accuracy (Panel a). FDA-RoLoRA ($k=1.0$) reaches a peak of $92.14\%$, close to RoLoRA $E=20$ ($92.55\%$), but uses more communication ($57.7\,\text{MB}$ vs.\ $30.0\,\text{MB}$). Realized local epochs (Panel c) settle at $\bar{e} = 11.11$ per round, while dual thresholds (Panel d) stabilize at tight equilibria. Round-level drift variance (Panel e) is bounded at $\bar{\nu} = 0.654$.
 
-On $C=50$ (Figure~\ref{fig:telemetry_sst2_c50_iid}), FDA-RoLoRA ($k=1.0$) achieves $89.68\%$ validation accuracy in $20.0$ rounds ($140.6\,\text{MB}$) versus $22.0$ rounds ($154.7\,\text{MB}$) for static RoLoRA $E=10$ (Panels a \& b). Cohort aggregation suppresses coordinate drift variance to an extraordinarily low $\bar{\nu} = 0.063$ (Panel e). Intra-round variance trajectories (Panel f) remain almost completely flat across local epochs, demonstrating that large cohorts on binary sentiment data experience virtually zero intra-round gradient dispersion.
+On $C=50$ (Figure~\ref{fig:telemetry_sst2_c50_iid}), FDA-RoLoRA ($k=1.0$) achieves $89.68\%$ validation accuracy in $20.0$ rounds ($140.6\,\text{MB}$) versus $22.0$ rounds ($154.7\,\text{MB}$) for static RoLoRA $E=10$ (Panels a \& b), at lower accuracy than RoLoRA $E=10$ ($90.54\%$ peak) and $E=20$ ($92.01\%$ peak). Cohort aggregation suppresses coordinate drift variance to a low $\bar{\nu} = 0.063$ (Panel e).
 \begin{figure}[p]
     \centering
     \makebox[\textwidth][c]{%
@@ -436,7 +436,7 @@ On $C=50$ (Figure~\ref{fig:telemetry_sst2_c50_iid}), FDA-RoLoRA ($k=1.0$) achiev
             \centering
             \includegraphics[width=\textwidth,height=4.9cm,keepaspectratio]{figures/telemetry/11_SST2_C20_R50_LR0.1_6_variance_vs_epoch.png}
             \vspace{2pt}
-            \par{\footnotesize \textbf{(f)} Intra-Round Variance Drift}
+            \par{\footnotesize \textbf{(f)} Variance vs.\ Cumulative Local Epochs}
         \end{minipage}
 
         \vspace{0.6em}
@@ -488,7 +488,7 @@ On $C=50$ (Figure~\ref{fig:telemetry_sst2_c50_iid}), FDA-RoLoRA ($k=1.0$) achiev
             \centering
             \includegraphics[width=\textwidth,height=4.9cm,keepaspectratio]{figures/telemetry/12_SST2_C50_R30_LR0.1_6_variance_vs_epoch.png}
             \vspace{2pt}
-            \par{\footnotesize \textbf{(f)} Intra-Round Variance Drift}
+            \par{\footnotesize \textbf{(f)} Variance vs.\ Cumulative Local Epochs}
         \end{minipage}
 
         \vspace{0.6em}
@@ -513,9 +513,9 @@ Table~\ref{tab:non_iid_detailed_benchmarks} compiles the complete empirical eval
 \input{tables/table_5_4_detailed_noniid.tex}
 
 \paragraph{MNLI: Asymmetric Factor Allocation \& Post-Peak Collapse.}
-On 3-class sentence-pair inference under acute Dirichlet label skew ($\alpha=0.5, C=20, R_{\max}=50$), Figure~\ref{fig:telemetry_mnli_non_iid} illustrates optimization dynamics across all six telemetry panels. Under static schedules ($E=20$), forcing clients through unconstrained local training drives updates into conflicting subspaces: validation accuracy (Panel a) peaks early at $73.31\%$ and then suffers catastrophic post-peak collapse down to $68.09\%$. In contrast, FDA-RoLoRA ($k=1.0$) dynamically monitors coordinate variance, achieving a superior peak accuracy of $\mathbf{74.47\%}$ and terminating cleanly in $38.0$ rounds ($178.1\,\text{MB}$ vs. $234.4\,\text{MB}$, a $24.0\%$ communication saving, Panels a \& b). 
+On 3-class sentence-pair inference under acute Dirichlet label skew ($\alpha=0.5, C=20, R_{\max}=50$), Figure~\ref{fig:telemetry_mnli_non_iid} illustrates optimization dynamics across all six telemetry panels. Under static schedules ($E=20$), forcing clients through unconstrained local training drives updates into conflicting subspaces: validation accuracy (Panel a) peaks early at $73.31\%$ and then suffers catastrophic post-peak collapse down to $68.09\%$. In contrast, FDA-RoLoRA ($k=1.0$) dynamically monitors coordinate variance, achieving a superior peak accuracy of $\mathbf{74.47\%}$ and stopping after 41 and 35 rounds (seeds 42 and 43) at final accuracies of $73.17\%$ and $74.25\%$. At those same rounds, RoLoRA $E=10$ had reached only $70.23\%$ and $71.86\%$, and it needed 47 and 50 rounds to match FDA-RoLoRA's final accuracy. FDA-RoLoRA therefore reaches the same accuracy in roughly 15--30\% fewer rounds ($178.1\,\text{MB}$ vs.\ $234.4\,\text{MB}$ on average), while executing about $1.75\times$ more local epochs per round ($\bar{e}=17.49$ vs.\ 10). 
 
-Crucially, local epoch telemetry (Panel c) and decoupled threshold trajectories (Panel d) reveal the mechanistic basis of this stability: factor matrix $B$ safely accommodates deeper local training ($\bar{e}_B = 17.76$) under an expanded threshold $\theta_B$, whereas down-projection factor $A$ encounters sharper gradient drift, prompting threshold $\theta_A$ to enforce earlier synchronization ($\bar{e}_A = 17.19$). Subspace coordinate variance (Panel e) surges by over $2\times$ compared to IID regimes ($\bar{\nu} \approx 6.5\text{--}8.0$), reflecting severe inter-client gradient conflict. In the intra-round diagnostic (Panel f), parameter variance $\text{Var}_{\text{subspace}}(e)$ accelerates steeply with each passing local epoch. While static RoLoRA blindly continues training through this high-divergence zone, FDA-RoLoRA's intra-round variance intercepts the dynamic threshold $\theta_{\text{current}}$ early, triggering an automated safety brake that terminates the inner loop before client drift destroys model consensus.
+Crucially, local epoch telemetry (Panel c) and decoupled threshold trajectories (Panel d) reveal the mechanistic basis of this stability: factor matrix $B$ safely accommodates deeper local training ($\bar{e}_B = 17.76$) under an expanded threshold $\theta_B$, whereas down-projection factor $A$ encounters sharper gradient drift, prompting threshold $\theta_A$ to enforce earlier synchronization ($\bar{e}_A = 17.19$). Subspace coordinate variance (Panel e) surges by over $2\times$ compared to IID regimes ($\bar{\nu} \approx 6.5\text{--}8.0$), reflecting severe inter-client gradient conflict.
 \begin{figure}[p]
     \centering
     \makebox[\textwidth][c]{%
@@ -558,7 +558,7 @@ Crucially, local epoch telemetry (Panel c) and decoupled threshold trajectories 
             \centering
             \includegraphics[width=\textwidth,height=4.9cm,keepaspectratio]{figures/telemetry/17_MNLI_C20_R50_LR0.1_A0.5_6_variance_vs_epoch.png}
             \vspace{2pt}
-            \par{\footnotesize \textbf{(f)} Intra-Round Variance Drift}
+            \par{\footnotesize \textbf{(f)} Variance vs.\ Cumulative Local Epochs}
         \end{minipage}
 
         \vspace{0.6em}
@@ -569,9 +569,9 @@ Crucially, local epoch telemetry (Panel c) and decoupled threshold trajectories 
 \end{figure}
 
 \paragraph{QNLI: Scalability \& Suite-Leading Peak Accuracy.}
-Binary question-answering under skew demonstrates the scalability of closed-loop synchronization across the six telemetry dimensions (Figure~\ref{fig:telemetry_qnli_non_iid}). On $C=20$ ($R_{\max}=50$), FDA-RoLoRA ($k=1.0$) attains the highest peak validation accuracy across the entire non-IID benchmark suite ($\mathbf{84.22\%}$, Panel a), dominating the communication-cost curve (Panel b) over static baselines. With an expanded ceiling $e_{\max}=40$, the controller successfully expands local computation to $\bar{e} = 29.83$ epochs (Panel c) while tracking smooth, decoupled factor thresholds $\theta_A$ and $\theta_B$ (Panel d). Drift variance at synchronization (Panel e) stabilizes at $\bar{\nu} \approx 1.79$. In Panel (f), intra-round variance curves grow moderately up to epoch 15 before accelerating; the dynamic threshold successfully halts inner-loop execution, preventing over-fitting to biased local questions.
+Binary question-answering under skew demonstrates the scalability of closed-loop synchronization across the six telemetry dimensions (Figure~\ref{fig:telemetry_qnli_non_iid}). On $C=20$ ($R_{\max}=50$), FDA-RoLoRA ($k=1.0$) attains the highest peak validation accuracy across the entire non-IID benchmark suite ($\mathbf{84.22\%}$, Panel a), dominating the communication-cost curve (Panel b) over static baselines. With an expanded ceiling $e_{\max}=40$, the controller successfully expands local computation to $\bar{e} = 29.83$ epochs (Panel c) while tracking smooth, decoupled factor thresholds $\theta_A$ and $\theta_B$ (Panel d). Drift variance at synchronization (Panel e) stabilizes at $\bar{\nu} \approx 1.79$.
 
-When scaling to $C=50$ clients under acute skew ($R_{\max}=30$), aggressive setpoint scaling ($k=1.0$) over-allocated local epochs in early rounds, precipitating client drift and tripping early stopping at round 13.0 ($152.3\,\text{MB}$, $49.51\%$ accuracy). In contrast, conservative midpoint scaling ($k=0.5$) applied robust safety braking, bounding client coordinate variance and attaining superior peak accuracy ($\mathbf{75.69\%}$) with exceptional inter-seed stability ($\pm 1.17\%$, compared to $\pm 7.18\%$ for RoLoRA $E=10$). This demonstrates a $6.1\times$ reduction in performance volatility under high client participation.
+When scaling to $C=50$ clients under acute skew ($R_{\max}=30$), aggressive setpoint scaling ($k=1.0$) over-allocated local epochs in early rounds, precipitating client drift and tripping early stopping at round 13.0 ($152.3\,\text{MB}$, $49.51\%$ accuracy). With midpoint scaling ($k=0.5$), FDA-RoLoRA reaches a peak of $75.69 \pm 1.66\%$ (RoLoRA $E=10$: $74.61 \pm 10.15\%$), but both FDA-RoLoRA variants end near chance level (final $49.51\%$ for $k=1.0$ and $50.13\%$ for $k=0.5$), so no communication saving is claimed for this configuration. The $k=1.0$ runs used a round budget of $R_{\max}=22$.
 \begin{figure}[p]
     \centering
     \makebox[\textwidth][c]{%
@@ -614,7 +614,7 @@ When scaling to $C=50$ clients under acute skew ($R_{\max}=30$), aggressive setp
             \centering
             \includegraphics[width=\textwidth,height=4.9cm,keepaspectratio]{figures/telemetry/18_QNLI_C20_R50_LR0.1_A0.5_6_variance_vs_epoch.png}
             \vspace{2pt}
-            \par{\footnotesize \textbf{(f)} Intra-Round Variance Drift}
+            \par{\footnotesize \textbf{(f)} Variance vs.\ Cumulative Local Epochs}
         \end{minipage}
 
         \vspace{0.6em}
@@ -635,9 +635,9 @@ Figure~\ref{fig:non_iid_epoch_dynamics} visualizes round-by-round realized local
 \end{figure}
 
 \paragraph{SST-2 \& QQP: Cross-Task Drift and Anti-Collapse Protection.}
-Figure~\ref{fig:non_iid_benchmark_telemetry} provides a focused diagnostic synthesis on MNLI and QNLI of federated fine-tuning under acute Dirichlet label skew ($\alpha=0.5$). The most pronounced empirical difference occurs on SST-2 with 50 clients. Under static $E=10$, local over-fitting to skewed binary sentiment shards drives parameter trajectories into conflicting subspaces. Under static $E=10$, RoLoRA remained trapped at the majority-class baseline ($\sim 50\%$) for the majority of rounds before an isolated surge to $59.00 \pm 7.86\%$ peak accuracy ($53.33 \pm 4.71\%$ final). In contrast, FDA-RoLoRA ($k=1.0$) dynamically navigated the loss landscape to escape the plateau, attaining $\mathbf{85.95 \pm 3.96\%}$ peak accuracy ($\mathbf{81.36 \pm 4.09\%}$ final), representing a \textbf{+26.95\% absolute improvement in peak accuracy}. On QQP ($C=50$), FDA-RoLoRA triggers early stopping in $15.5$ rounds ($181.6\,\text{MB}$) versus RoLoRA's $22.5$ rounds ($263.7\,\text{MB}$), saving over $31.1\%$ of total network bandwidth.
+Figure~\ref{fig:non_iid_benchmark_telemetry} provides a focused diagnostic synthesis on MNLI and QNLI of federated fine-tuning under acute Dirichlet label skew ($\alpha=0.5$). The most pronounced empirical difference occurs on SST-2 with 50 clients. Under static $E=10$, RoLoRA did not leave the initial majority-class plateau within the 20-round budget in either seed (final $51.15\%$ and $55.50\%$), remaining trapped at the majority-class baseline ($\sim 50\%$) for the majority of rounds before an isolated surge to $59.00 \pm 11.11\%$ peak accuracy ($53.33 \pm 3.08\%$ final). In contrast, FDA-RoLoRA ($k=1.0$) dynamically navigated the loss landscape to escape the plateau, attaining $\mathbf{85.95 \pm 5.60\%}$ peak accuracy (final $88.42\%$ and $74.31\%$ in the two seeds), with a higher mean local-epoch count ($\bar{e}=14.57$ vs.\ 10), representing a \textbf{+26.95\% absolute improvement in peak accuracy}. On QQP ($C=50$), FDA-RoLoRA stops earlier (15.5 vs.\ 22.5 rounds), but one seed ended at chance level ($49.46\%$), and its mean final accuracy ($57.45\%$) is below RoLoRA $E=10$ ($69.28\%$). The earlier stop is therefore not a saving at equal accuracy.
 
-Across all four benchmarks, the client coordinate drift variance curves in Figure~\ref{fig:non_iid_benchmark_telemetry} reveal that parameter drift variance expands by approximately $4.0\times$ compared to homogeneous environments. By dynamically modulating local epoch budgets in coordinate space, FDA-RoLoRA reliably bounds variance surges below destabilizing thresholds, preventing minority-class erasure and securing robust consensus.
+
 
 \begin{figure}[htbp]
     \centering

@@ -23,10 +23,10 @@ The key insight enabling this integration is that FDA's variance monitoring can 
 \section{Foundational Precursor Protocols: RoLoRA and FDA}
 \label{sec:foundational_protocols}
 
-To rigorously contextualize the design of FDA-RoLoRA, we examine the operational execution loops of its two constituent foundational frameworks: Federated Dynamic Averaging (FDA) \cite{theologitis2025fda} and Robust Low-Rank Adaptation (RoLoRA) \cite{chen2025robust}. While both methods address fundamental inefficiencies in decentralized learning, they tackle orthogonal dimensions of the federated optimization bottleneck:
+To rigorously contextualize the design of FDA-RoLoRA, we examine the operational execution loops of its two constituent foundational frameworks: Federated Dynamic Averaging (FDA) \cite{theologitis2025communication} and Robust Low-Rank Adaptation (RoLoRA) \cite{chen2025robust}. While both methods address fundamental inefficiencies in decentralized learning, they tackle orthogonal dimensions of the federated optimization bottleneck:
 
 \begin{itemize}
-    \item \textbf{FDA (Temporal Optimization, Full-Rank Model Space)}: Evaluates the dispersion of local client updates in parameter space. By deploying geometric safe zones via the AMS sketch, FDA replaces static round schedules with variance-triggered synchronization, dynamically terminating local training at $e^* \le E$ when client drift exceeds a scalar threshold $\theta$. However, the standard protocol assumes simultaneous parameter updates over the full model weight space, leaving low-rank factorized architectures unaddressed.
+    \item \textbf{FDA (Temporal Optimization, Full-Rank Model Space)} \cite{theologitis2025communication}: Evaluates the dispersion of local client updates in parameter space. By deploying geometric safe zones via the AMS sketch, FDA replaces static round schedules with variance-triggered synchronization, dynamically terminating local training at $e^* \le E$ when client drift exceeds a scalar threshold $\theta$. However, the standard protocol assumes simultaneous parameter updates over the full model weight space, leaving low-rank factorized architectures unaddressed.
     \item \textbf{RoLoRA (Spatial Optimization, Fixed Local Schedule)}: Eliminates bilinear aggregation inconsistency by alternating coordinate optimization between low-rank factor matrices ($A$ and $B$) across global communication rounds. When factor $B$ is trained, down-projection $A$ is frozen, preserving update linearity ($\frac{1}{N}\sum_{i=1}^{N} (B_i A) = \left(\frac{1}{N}\sum_{i=1}^{N} B_i\right) A$). However, RoLoRA enforces a rigid, fixed local epoch schedule ($E$) across all clients and rounds, leaving temporal synchronization unoptimized.
 \end{itemize}
 
@@ -90,7 +90,7 @@ Initialize $W = W_{pretrained} + \frac{\alpha}{r} B_0 A_0$\;
 Contrasting these two protocols reveals the central architectural gap: RoLoRA provides the necessary update linearity to eliminate spatial distortion, but lacks adaptive temporal control; FDA provides dynamic temporal adaptivity, but cannot handle coordinate-isolated, asymmetric low-rank subspaces with a single scalar threshold. This limitation directly motivates our proposed \textbf{FDA-RoLoRA}, which synthesizes alternating coordinate isolation with decoupled subspace variance tracking via an internal dual-track threshold mechanism.
 
 \clearpage
-\section{Notation and Hyperparameters}
+\section{Notation and Hyperparameters}\label{sec:notation_hyperparams}
 Consider a global communication round indexed by $r$, during which an active matrix $\mathcal{M}^{(r)} \in \{A, B\}$ is designated for client-side optimization. Within round $r$, local client optimization progresses through discrete local epoch iterations $e \in \mathbb{N}$, culminating in a final realized local epoch count $e^* \in \mathbb{N}$ at the instant synchronization is triggered. At any given evaluation epoch $e$, each client $i$ computes its raw subspace parametric drift $\Delta_i^{(e)}$ relative to the starting global parameters. Rather than projecting these parameter updates back to the expanded model weight space, the framework evaluates the direct subspace variance $\text{Var}_{subspace}(\Delta^{(e)})$ exclusively on the low-rank coordinate tensors of the active matrix.
 
 The operational boundaries and adaptive behavior of FDA-RoLoRA are governed by a set of global hyperparameters. Local client training is bounded between an operational minimum epoch floor $e_{min} \in \mathbb{N}$ and a maximum epoch ceiling $e_{max} \in \mathbb{N}$. In practice, $e_{min}$ serves as an operational lower bound (for instance, setting $e_{min} = 1$) to ensure clients execute an initial computation pass before variance evaluations begin, though the framework does not presuppose that a particular value is universally fixed or optimal. To accommodate the distinct drift dynamics of alternating low-rank factor matrices, FDA-RoLoRA internally implements a dual-track threshold mechanism: synchronization timing is controlled by two persistent, decoupled variance thresholds $\theta_A, \theta_B \in \mathbb{R}^+$, from which the active threshold $\theta_{current}^{(r)}$ is dynamically mapped to match $\mathcal{M}^{(r)}$. Threshold adaptation across rounds is governed by variance-scaled setpoint feedback. A comprehensive summary of mathematical symbols, tensor shapes, and hyperparameters is provided in Table~\ref{tab:methodology_notation}.
@@ -119,8 +119,8 @@ $e_{min}, e_{max}$ & $\mathbb{N}^+$ ($e_{min} \le e_{max}$) & Operational minimu
 $e^*$ & $[e_{min}, e_{max}]$ & Realized local epoch count at synchronization trigger \\
 $\Delta_i^{(e)}$ & Matching $\mathcal{M}^{(r)}$ & Subspace parametric drift of client $i$ at epoch $e$ \\
 $\text{Var}_{subspace}$ & $\mathbb{R}_{\ge 0}$ & Subspace drift variance across cohort $S_r$ (Eq.~\ref{eq:subspace_var}) \\
-$\theta_A, \theta_B$ & $\mathbb{R}^+$ & Persistent, decoupled variance thresholds for tracks $A$ and $B$ \\
-$\theta_{current}^{(r)}$ & $\mathbb{R}^+$ & Active threshold loaded for round $r$ ($\theta_A$ or $\theta_B$) \\
+$\theta_A, \theta_B$ & $\mathbb{R}_{\ge 0}$ & Persistent, decoupled variance thresholds for tracks $A$ and $B$ (initialized to $\theta_A = \theta_B = 0$) \\
+$\theta_{current}^{(r)}$ & $\mathbb{R}_{\ge 0}$ & Active threshold loaded for round $r$ ($\theta_A$ or $\theta_B$) \\
 $k$ & $(0, 1]$ & Proportional controller setpoint ratio (e.g., $k=0.5$ for $e_{max}/2$, $k=1.0$ for $e_{max}$) \\
 $\nabla_{pseudo}^{(r)}$ & Matching $\mathcal{M}^{(r)}$ & Aggregated server-side pseudo-gradient (Eq.~\ref{eq:pseudo_grad}) \\
 $\eta_c, \eta_s$ & $\mathbb{R}^+$ & Local client learning rate and global server learning rate \\
@@ -134,9 +134,9 @@ $\eta_c, \eta_s$ & $\mathbb{R}^+$ & Local client learning rate and global server
 \begin{algorithm}[H]
 \caption{FDA-RoLoRA}
 \label{alg:fda_rolora}
-\KwIn{Clients $K$, cohort size $|S_r|$, server learning rate $\eta_s$, local learning rate $\eta_c$, min/max epochs $e_{min}, e_{max}$, setpoint ratio $k$, initial thresholds $\theta_A, \theta_B$}
+\KwIn{Clients $K$, cohort size $|S_r|$, server learning rate $\eta_s$, local learning rate $\eta_c$, min/max epochs $e_{min}, e_{max}$, setpoint ratio $k$, initial thresholds $\theta_A = \theta_B = 0$}
 Initialize global parameters $W = W_{pretrained} + \frac{\alpha}{r} B_0 A_0$\;
-Initialize persistent thresholds $\theta_A, \theta_B$ and decoupled server optimizer states (for matrices $A$ and $B$)\;
+Initialize persistent thresholds $\theta_A = \theta_B = 0$ and decoupled server optimizer states (for matrices $A$ and $B$)\;
 \For{round $r = 0, 1, 2, \dots$}{
     Determine active matrix $\mathcal{M}^{(r)} \in \{B, A\}$ (alternate $B$-first each round)\;
     Load active threshold $\theta_{current}^{(r)} \leftarrow \theta_{\mathcal{M}^{(r)}}$ and active server optimizer\;
@@ -173,7 +173,7 @@ At the start of round $r$, the server determines the active target matrix $\math
     \end{cases}
     \label{eq:active_threshold}
 \end{equation}
-The active weight matrix is initialized across all sampled clients $i \in S_r$ using the global model parameters broadcast by the server:
+Both thresholds are initialized to zero, so the first $B$ round and the first $A$ round each synchronize after a single local epoch ($e^* = 1$); from then on each threshold is set by Eq.~\ref{eq:generalized_update}. The active weight matrix is initialized across all sampled clients $i \in S_r$ using the global model parameters broadcast by the server:
 \begin{equation}
     W_{i,0}^{(r)} = W_{act}^{(r)}
     \label{eq:client_init}
@@ -208,7 +208,7 @@ At each epoch boundary $e \ge e_{min}$, the server evaluates the collective coho
 \end{equation}
 If the drift variance remains within the threshold and $e < e_{max}$, clients continue local optimization without model aggregation. The final realized local epoch count at synchronization is recorded as $e^* \in [e_{min}, e_{max}]$.
 
-As established in Section~\ref{sec:impl_architecture}, the operational floor $e_{min}$ prevents premature synchronization before initial gradient steps accumulate, while preserving dynamic variance evaluation across $[e_{min}, e_{max}]$.
+As defined in Section~\ref{sec:notation_hyperparams}, the operational floor $e_{min}$ prevents premature synchronization before initial gradient steps accumulate, while preserving dynamic variance evaluation across $[e_{min}, e_{max}]$.
 
 \section{Global Aggregation and Independent Threshold Evolution}
 Upon receiving the client updates, the server aggregates the subspace drifts to compute the pseudo-gradient:

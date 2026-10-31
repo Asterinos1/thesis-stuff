@@ -16,7 +16,7 @@ While conceptually simple, rigid synchronization cadences suffer from fundamenta
 
 To improve federated optimization, adaptive server-side optimizers were introduced under the Federated Optimization (FedOpt) framework \cite{reddi2021adaptive}. By interpreting aggregated client updates as pseudo-gradients and applying momentum-based tracking (such as FedAdam and FedYogi), FedOpt stabilizes the global optimization trajectory against client drift. 
 
-Subsequently, to resolve the rigid cadence of static rounds, Federated Dynamic Averaging (FDA-Opt) \cite{theologitis2025fda, frangias2023federated} introduced variance-driven dynamic synchronization. Rather than synchronizing after fixed epochs, FDA-Opt continuously monitors the pairwise drift and variance across participating clients. Synchronization is triggered dynamically only when parameter variance breaches an adaptive drift threshold ($\theta$). By synchronizing strictly when mathematically necessary, FDA-Opt proved that dynamic temporal throttling can dramatically reduce total communication rounds without sacrificing final accuracy.
+Subsequently, to resolve the rigid cadence of static rounds, Federated Dynamic Averaging (FDA) \cite{theologitis2025communication} and its fine-tuning extension FDA-Opt \cite{theologitis2025fda} introduced variance-driven dynamic synchronization. Rather than synchronizing after fixed epochs, FDA-Opt continuously monitors the pairwise drift and variance across participating clients. Synchronization is triggered dynamically only when parameter variance breaches an adaptive drift threshold ($\theta$). By synchronizing strictly when mathematically necessary, FDA-Opt proved that dynamic temporal throttling can dramatically reduce total communication rounds without sacrificing final accuracy.
 
 Crucially, however, FedAvg, FedOpt, and FDA-Opt all share a common architectural assumption: \emph{the transmission and synchronization of full-rank model parameter vectors}.
 
@@ -28,7 +28,7 @@ Yet, this shift in model scale fundamentally breaks the physical viability of fu
 \begin{itemize}
     \item Synchronizing a modern 7-billion parameter language model (such as LLaMA-2-7B \cite{touvron2023llama}) in 16-bit half-precision requires transmitting approximately \textbf{14 Gigabytes} of parameter data per client per round.
     \item In a cross-silo federated setting with 50 participating institutions over a modest horizon of 100 communication rounds, total network transfer exceeds \textbf{70 Terabytes}, an operational volume that is wholly intractable over standard wide-area network (WAN) connections.
-    \item Even for moderately sized encoders such as RoBERTa-Large \cite{liu2019roberta} (355M parameters), a single full-parameter round requires $\sim$1.4 GB per client, swamping edge up-links.
+    \item Even for moderately sized encoders such as RoBERTa-Large \cite{liu2019roberta} (355M parameters), a single full-parameter round requires $\sim$0.7 GB per client in 16-bit precision ($\sim$1.4 GB in FP32), swamping edge up-links.
 \end{itemize}
 
 To overcome this spatial bottleneck, Parameter-Efficient Fine-Tuning (PEFT) has emerged as an indispensable methodology. Among PEFT strategies, Low-Rank Adaptation (LoRA) \cite{hu2022lora} has become the de facto standard. LoRA keeps the large pre-trained weight matrix $W_0 \in \mathbb{R}^{d_{\text{out}} \times d_{\text{in}}}$ frozen, and factorizes task-specific parameter updates into two low-rank matrices:

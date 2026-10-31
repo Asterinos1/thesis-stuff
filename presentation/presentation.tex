@@ -321,9 +321,9 @@
 \begin{frame}{Methodology : Independent Halting \& Local Training Bounds}
     \begin{columns}
         \begin{column}{0.50\textwidth}
-            \begin{block}{Local Epoch Bounds ($e_{\min}=1$)}
+            \begin{block}{Local Epoch Bounds ($[e_{\min}, e_{\max}]$)}
                 \footnotesize
-                Client training bounded in $[e_{\min}, e_{\max}]$ with $e_{\min}=1$ standardized everywhere to guarantee baseline progress:
+                Client training bounded in $[e_{\min}, e_{\max}]$ with operational floor $e_{\min}$ to guarantee baseline progress:
                 $$\text{Halt if } \text{Var}_{\text{subspace}}(\Delta^{(e)}) > \theta_{\text{current}}^{(r)} \;\lor\; e \ge e_{\max}$$
                 Evaluated at epoch boundaries $e \ge e_{\min}$.
             \end{block}

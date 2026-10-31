@@ -26,15 +26,16 @@
 \newlabel{chap:intro}{{1}{1}{Introduction}{chapter.1}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {1.1}Federated Learning and Optimization}{1}{section.1.1}\protected@file@percent }
 \newlabel{sec:intro-fl-opt}{{1.1}{1}{Federated Learning and Optimization}{section.1.1}{}}
-\citation{theologitis2025fda,frangias2023federated}
+\citation{theologitis2025communication}
+\citation{theologitis2025fda}
 \citation{brown2020language,bommasani2021opportunities}
 \citation{touvron2023llama}
 \citation{liu2019roberta}
 \citation{hu2022lora}
-\citation{yang2025federated,zhang2023towards}
 \@writefile{toc}{\contentsline {section}{\numberline {1.2}Foundation Models and Parameter-Efficient Fine-Tuning}{2}{section.1.2}\protected@file@percent }
 \newlabel{sec:intro-foundation-peft}{{1.2}{2}{Foundation Models and Parameter-Efficient Fine-Tuning}{section.1.2}{}}
 \newlabel{eq:intro_lora_decomposition}{{1.1}{2}{Foundation Models and Parameter-Efficient Fine-Tuning}{equation.1.1}{}}
+\citation{yang2025federated,zhang2023towards}
 \citation{yang2025federated}
 \citation{yang2025federated}
 \citation{sun2024improving}
@@ -79,7 +80,7 @@
 \newlabel{eq:self_attention}{{2.5}{9}{Foundation Models and the Transformer Architecture}{equation.2.5}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {2.3}Distributed Machine Learning}{9}{section.2.3}\protected@file@percent }
 \newlabel{sec:distributed_ml}{{2.3}{9}{Distributed Machine Learning}{section.2.3}{}}
-\citation{kairouz2021advances}
+\citation{mcmahan2017communication,kairouz2021advances}
 \citation{theologitis2025fda}
 \citation{theologitis2025fda}
 \@writefile{toc}{\contentsline {section}{\numberline {2.4}Federated Learning and Communication Bottlenecks}{10}{section.2.4}\protected@file@percent }
@@ -139,13 +140,12 @@
 \citation{chen2025robust}
 \citation{chen2025robust}
 \citation{chen2025robust}
-\citation{chen2025robust}
-\citation{hu2022lora}
 \@writefile{toc}{\contentsline {section}{\numberline {2.6}Federated Low-Rank Adaptation}{16}{section.2.6}\protected@file@percent }
 \newlabel{sec:fedlora}{{2.6}{16}{Federated Low-Rank Adaptation}{section.2.6}{}}
 \newlabel{eq:lora_inconsistency}{{2.14}{16}{Federated Low-Rank Adaptation}{equation.2.14}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {2.7}Robust Low-Rank Adaptation}{16}{section.2.7}\protected@file@percent }
 \newlabel{sec:rolora}{{2.7}{16}{Robust Low-Rank Adaptation}{section.2.7}{}}
+\citation{theologitis2025communication}
 \citation{theologitis2025fda}
 \citation{sharfman2006geometric}
 \@writefile{lof}{\contentsline {figure}{\numberline {2.3}{\ignorespaces Robust Low-Rank Adaptation (RoLoRA) alternating optimization scheme.}}{17}{figure.2.3}\protected@file@percent }
@@ -156,10 +156,12 @@
 \newlabel{eq:rolora_A_proof}{{2.18}{17}{Robust Low-Rank Adaptation}{equation.2.18}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {2.8}Federated Dynamic Averaging}{17}{section.2.8}\protected@file@percent }
 \newlabel{sec:fda}{{2.8}{17}{Federated Dynamic Averaging}{section.2.8}{}}
+\citation{theologitis2025communication}
 \citation{alon1996space}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.8.1}Geometric Monitoring Foundations}{18}{subsection.2.8.1}\protected@file@percent }
 \newlabel{eq:fda_pseudo}{{2.19}{18}{Geometric Monitoring Foundations}{equation.2.19}{}}
 \newlabel{eq:fda_variance}{{2.20}{18}{Geometric Monitoring Foundations}{equation.2.20}{}}
+\citation{theologitis2025fda}
 \newlabel{eq:fda_threshold}{{2.21}{19}{Geometric Monitoring Foundations}{equation.2.21}{}}
 \citation{theologitis2025fda}
 \citation{hu2022lora}
@@ -174,8 +176,9 @@
 \@writefile{toc}{\contentsline {section}{\numberline {3.1}Combining Dynamic Averaging with Federated LoRA}{21}{section.3.1}\protected@file@percent }
 \newlabel{sec:fda_lora_taxonomy}{{3.1}{21}{Combining Dynamic Averaging with Federated LoRA}{section.3.1}{}}
 \citation{chen2025robust}
-\citation{theologitis2025fda}
+\citation{theologitis2025communication}
 \citation{chen2025robust}
+\citation{theologitis2025communication}
 \@writefile{toc}{\contentsline {section}{\numberline {3.2}Foundational Precursor Protocols: RoLoRA and FDA}{22}{section.3.2}\protected@file@percent }
 \newlabel{sec:foundational_protocols}{{3.2}{22}{Foundational Precursor Protocols: RoLoRA and FDA}{section.3.2}{}}
 \@writefile{loa}{\contentsline {algocf}{\numberline {1}{\ignorespaces FDA}}{23}{algocf.1}\protected@file@percent }
@@ -183,6 +186,7 @@
 \@writefile{loa}{\contentsline {algocf}{\numberline {2}{\ignorespaces RoLoRA}}{23}{algocf.2}\protected@file@percent }
 \newlabel{alg:std_rolora}{{2}{23}{Foundational Precursor Protocols: RoLoRA and FDA}{algocf.2}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3.3}Notation and Hyperparameters}{24}{section.3.3}\protected@file@percent }
+\newlabel{sec:notation_hyperparams}{{3.3}{24}{Notation and Hyperparameters}{section.3.3}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {3.1}{\ignorespaces Summary of mathematical notation and system hyperparameters.}}{24}{table.3.1}\protected@file@percent }
 \newlabel{tab:methodology_notation}{{3.1}{24}{Summary of mathematical notation and system hyperparameters}{table.3.1}{}}
 \@writefile{loa}{\contentsline {algocf}{\numberline {3}{\ignorespaces FDA-RoLoRA}}{25}{algocf.3}\protected@file@percent }
@@ -305,6 +309,7 @@
 \@writefile{lof}{\contentsline {figure}{\numberline {5.12}{\ignorespaces Convergence and client drift variance trajectories on MNLI and QNLI under severe Dirichlet statistical heterogeneity ($\alpha = 0.5$). Top panels present validation accuracy trajectories; bottom panels present client coordinate drift variance ($\sigma _t^2$).}}{58}{figure.5.12}\protected@file@percent }
 \newlabel{fig:non_iid_benchmark_telemetry}{{5.12}{58}{Convergence and client drift variance trajectories on MNLI and QNLI under severe Dirichlet statistical heterogeneity ($\alpha = 0.5$). Top panels present validation accuracy trajectories; bottom panels present client coordinate drift variance ($\sigma _t^2$)}{figure.5.12}{}}
 \citation{chen2025robust}
+\citation{theologitis2025fda}
 \@writefile{toc}{\contentsline {chapter}{\numberline {6}Conclusion and Future Work}{59}{chapter.6}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
@@ -328,27 +333,27 @@
 \bibcite{brown2020language}{5}
 \bibcite{chen2025robust}{6}
 \bibcite{dettmers2023qlora}{7}
-\bibcite{frangias2023federated}{8}
-\bibcite{houlsby2019parameter}{9}
-\bibcite{hsu2019measuring}{10}
-\bibcite{hu2022lora}{11}
+\bibcite{houlsby2019parameter}{8}
+\bibcite{hsu2019measuring}{9}
+\bibcite{hu2022lora}{10}
+\bibcite{kairouz2021advances}{11}
 \@writefile{toc}{\contentsline {chapter}{Bibliography}{63}{section*.8}\protected@file@percent }
-\bibcite{kairouz2021advances}{12}
-\bibcite{karimireddy2020scaffold}{13}
-\bibcite{kingma2015adam}{14}
-\bibcite{kuang2023federatedscope}{15}
-\bibcite{li2020federated}{16}
-\bibcite{li2020convergence}{17}
-\bibcite{li2021prefix}{18}
-\bibcite{liu2019roberta}{19}
-\bibcite{loshchilov2019decoupled}{20}
-\bibcite{mcmahan2017communication}{21}
-\bibcite{ouyang2022training}{22}
-\bibcite{reddi2021adaptive}{23}
-\bibcite{robbins1951stochastic}{24}
-\bibcite{sharfman2006geometric}{25}
-\bibcite{subasi2023landscape}{26}
-\bibcite{sun2024improving}{27}
+\bibcite{karimireddy2020scaffold}{12}
+\bibcite{kingma2015adam}{13}
+\bibcite{kuang2023federatedscope}{14}
+\bibcite{li2020federated}{15}
+\bibcite{li2020convergence}{16}
+\bibcite{li2021prefix}{17}
+\bibcite{liu2019roberta}{18}
+\bibcite{loshchilov2019decoupled}{19}
+\bibcite{mcmahan2017communication}{20}
+\bibcite{ouyang2022training}{21}
+\bibcite{reddi2021adaptive}{22}
+\bibcite{robbins1951stochastic}{23}
+\bibcite{sharfman2006geometric}{24}
+\bibcite{subasi2023landscape}{25}
+\bibcite{sun2024improving}{26}
+\bibcite{theologitis2025communication}{27}
 \bibcite{theologitis2025fda}{28}
 \bibcite{touvron2023llama}{29}
 \bibcite{vaswani2017attention}{30}

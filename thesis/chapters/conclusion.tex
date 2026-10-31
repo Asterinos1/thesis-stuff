@@ -13,7 +13,7 @@ The formulation, implementation, and empirical evaluation of FDA-RoLoRA provide 
     
     \item \textbf{Direct Subspace Drift Monitoring}: Tracking drift variance on low-rank coordinates avoids the heavy memory and network overhead of full-model gradient estimation. Using separate thresholds ($\theta_A, \theta_B$) for each factor allows the controller to adjust local epochs dynamically according to measured client divergence on the active matrix, preventing minority-class forgetting under skew.
     
-    \item \textbf{Empirical Foundation Model Benchmarks}: Evaluations using \texttt{roberta-base} across GLUE tasks show that dynamic synchronization can achieve substantial communication round savings while preserving or improving validation accuracy under non-IID client skew.
+    \item \textbf{Empirical Foundation Model Benchmarks}: Evaluations using \texttt{roberta-base} across GLUE tasks show that, under non-IID client skew, dynamic synchronization reached RoLoRA's accuracy in fewer rounds on MNLI ($C=20$) and escaped the initial plateau on SST-2 ($C=50$), whereas under IID partitioning no consistent communication advantage was observed.
 \end{enumerate}
 
 \section{Limitations}
@@ -22,7 +22,7 @@ The formulation, implementation, and empirical evaluation of FDA-RoLoRA provide 
 The findings of this work should be considered in light of several practical and experimental limitations:
 
 \begin{enumerate}
-    \item \textbf{Absence of Original RoLoRA Codebase}: The original implementation from the RoLoRA study \cite{chen2025robust} is not publicly available. Consequently, our work relied on an independent reimplementation from the paper's mathematical description, presenting significant engineering challenges in reconstructing and integrating its alternating dynamics into the FederatedScope-LLM framework.
+    \item \textbf{Absence of Original RoLoRA Codebase}: The original implementation from the RoLoRA study \cite{chen2025robust} is not publicly available. Consequently, we reimplemented RoLoRA's alternating optimization from the paper's description inside the FDA-Opt codebase \cite{theologitis2025fda} (Section~\ref{sec:impl_architecture}), rather than using FederatedScope-LLM, on which the original implementation was based.
     
     \item \textbf{Omission of Critical Hyperparameters}: The RoLoRA paper did not report key experimental hyperparameters, most notably the task-specific optimal client learning rates. Substantial exploratory tuning was therefore required to identify stable, competitive learning rate schedules for the baseline before comparative benchmarks could be conducted.
     
