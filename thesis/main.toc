@@ -70,8 +70,13 @@
 \contentsline {paragraph}{QNLI: Scalability \bbl@greek@ampersand Suite-Leading Peak Accuracy.}{54}{figure.5.9}%
 \contentsline {paragraph}{Dynamic Round Synchronization and Realized Epoch Dynamics.}{54}{figure.5.10}%
 \contentsline {paragraph}{SST-2 \bbl@greek@ampersand QQP: Cross-Task Drift and Anti-Collapse Protection.}{54}{figure.5.11}%
-\contentsline {chapter}{\numberline {6}Conclusion and Future Work}{59}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Synthesis of Results and Methodological Takeaways}{59}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Limitations}{59}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Future Work}{60}{section.6.3}%
-\contentsline {chapter}{Bibliography}{63}{section*.8}%
+\contentsline {section}{\numberline {5.4}Summary of Findings}{57}{section.5.4}%
+\contentsline {paragraph}{IID partitioning ($\alpha = 1000$).}{57}{section.5.4}%
+\contentsline {paragraph}{Non-IID partitioning ($\alpha = 0.5$).}{57}{section.5.4}%
+\contentsline {paragraph}{Stability.}{57}{section.5.4}%
+\contentsline {paragraph}{Overall.}{59}{section.5.4}%
+\contentsline {chapter}{\numberline {6}Conclusion and Future Work}{61}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Synthesis of Results and Methodological Takeaways}{61}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Limitations}{61}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Future Work}{62}{section.6.3}%
+\contentsline {chapter}{Bibliography}{65}{section*.8}%

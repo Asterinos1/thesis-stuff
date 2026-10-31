@@ -646,4 +646,24 @@ Figure~\ref{fig:non_iid_benchmark_telemetry} provides a focused diagnostic synth
     \label{fig:non_iid_benchmark_telemetry}
 \end{figure}
 
+% ==============================================================================
+% SECTION 5.4: SUMMARY OF FINDINGS
+% ==============================================================================
+\section{Summary of Findings}
+\label{sec:eval-summary}
+
+Across both benchmark suites, the behaviour of FDA-RoLoRA depends primarily on the data partitioning regime.
+
+\paragraph{IID partitioning ($\alpha = 1000$).}
+Under homogeneous data the threshold controller does not reach its epoch setpoint: the realized mean local epochs are $\bar{e} \approx 5.8$--$7.8$ for $k = 0.5$ (target 10) and $\bar{e} \approx 9.1$--$13.4$ for $k = 1.0$ (target 20). FDA-RoLoRA shows no consistent communication advantage over fixed-epoch RoLoRA in this regime. Where it reaches a higher peak accuracy, as on MNLI ($C = 50$), it also executes more local epochs per round than the baseline. In other configurations (MNLI, QNLI and SST-2 with $C = 20$) it consumes more communication than the best static schedule. On QQP ($C = 50$), its earlier stop reflects a lower accuracy plateau rather than a saving at equal accuracy.
+
+\paragraph{Non-IID partitioning ($\alpha = 0.5$).}
+Under Dirichlet label skew the controller tracks its setpoint closely ($\bar{e} \approx 8.7$--$10.9$ for $k = 0.5$ and $\bar{e} \approx 13.0$--$17.5$ for $k = 1.0$), and FDA-RoLoRA yields its clearest benefits. On MNLI ($C = 20$) it reaches the final accuracy of RoLoRA ($E = 10$) in roughly 15--30\% fewer communication rounds. On SST-2 ($C = 50$) it escapes the initial majority-class plateau (final accuracies of 88.42\% and 74.31\%), whereas RoLoRA ($E = 10$) remains near the plateau within the 20-round budget (51.15\% and 55.50\%). In both cases FDA-RoLoRA also executes more local epochs per round than the baseline.
+
+\paragraph{Stability.}
+Several FDA-RoLoRA runs reached a competitive peak accuracy but ended near chance level, most notably on QNLI and QQP with $C = 50$ under label skew. In these configurations the earlier termination does not constitute a communication saving.
+
+\paragraph{Overall.}
+FDA-RoLoRA is not advantageous under IID partitioning, where its controller undershoots the intended local-training horizon. It is more effective under statistical heterogeneity, where it adapts the local horizon as intended and, in specific configurations, reduces the number of communication rounds needed to reach the accuracy of fixed-epoch RoLoRA. These conclusions are based on two random seeds per configuration and should be read with that variance in mind.
+
 \clearpage
