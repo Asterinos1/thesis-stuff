@@ -67,14 +67,8 @@ Distributed training strategies generally fall into two categories: data paralle
 
 In a standard data-parallel setup using synchronous SGD, all worker nodes independently compute gradients on their local data batches. Once all workers finish computing their local gradients, they synchronize by aggregating them, typically using an all-reduce operation. The globally averaged gradient is then used to update the model parameters across all nodes simultaneously. While mathematically equivalent to centralized mini-batch SGD with a larger batch size, synchronous SGD suffers from the straggler effect: the entire system must wait for the slowest worker to complete its computation before proceeding to the next step.
 
-To mitigate the straggler problem, asynchronous SGD was introduced, often implemented via a parameter server architecture (illustrated in Figure \ref{fig:parameter_server}). In this paradigm, workers independently fetch the latest model parameters from a central server, compute gradients on their local data, and push the gradients back to the server without waiting for other workers. The server updates the model immediately upon receiving a gradient. However, this lack of synchronization introduces the staleness problem: a worker might compute gradients based on an older version of the model, and by the time it pushes its update, the server's model has already been updated by other workers. These stale gradients can introduce noise, destabilize training, and degrade final model performance.
+To mitigate the straggler problem, asynchronous SGD was introduced, often implemented via a parameter server architecture. In this paradigm, workers independently fetch the latest model parameters from a central server, compute gradients on their local data, and push the gradients back to the server without waiting for other workers. The server updates the model immediately upon receiving a gradient. However, this lack of synchronization introduces the staleness problem: a worker might compute gradients based on an older version of the model, and by the time it pushes its update, the server's model has already been updated by other workers. These stale gradients can introduce noise, destabilize training, and degrade final model performance.
 
-\begin{figure}[htbp]
-    \centering
-    \input{figures/parameter_server.tex}
-    \caption{Parameter Server Architecture for Asynchronous Distributed Learning. Workers independently pull the latest parameters and push computed gradients.}
-    \label{fig:parameter_server}
-\end{figure}
 
 The evolution of these distributed optimization techniques laid the groundwork for scaling machine learning. However, traditional distributed systems assume reliable communication networks, homogeneous compute nodes, and centrally accessible data. The emergence of privacy concerns and the proliferation of edge devices necessitated a paradigm shift, giving rise to Federated Learning as a privacy-preserving variant of distributed learning that addresses the unique challenges of decentralized data.
 
@@ -183,7 +177,7 @@ Throughout fine-tuning, the pre-trained backbone weights $W_0$ remain completely
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.4\textwidth]{figures/lora_figure.png}
-    \caption{Low-Rank Adaptation (LoRA) schematic: decomposition of weight updates into low-rank matrices $A$ and $B$ alongside frozen pretrained weights $W$.}
+    \caption{Low-Rank Adaptation (LoRA) schematic: decomposition of weight updates into low-rank matrices $A$ and $B$ alongside frozen pretrained weights $W$. Figure reproduced from Hu et al. \cite{hu2022lora}.}
     \label{fig:lora_schematic}
 \end{figure} 
 

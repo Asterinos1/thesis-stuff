@@ -245,6 +245,8 @@ To accommodate both homogeneous consensus and heterogeneous dispersion, we gener
 \end{equation}
 Under this generalized formulation, setting $k = 0.5$ exactly recovers the canonical FDA-Opt midpoint rule ($0.5 e_{max} = e_{max}/2$). In contrast, an aggressive setpoint such as $k = 1.0$ targets the upper epoch ceiling ($e^* \approx e_{max}$), allowing federated clients to maximize local computation when drift variance remains subdued. Intermediate setpoints (such as $k = 0.75$, targeting $\frac{3}{4}e_{max}$) provide balanced trade-offs. 
 
+From an experimental design perspective, parameterizing the controller with a target setpoint allows FDA-RoLoRA to maintain direct computational comparability with fixed-epoch baselines. Specifically, when benchmarking against a static RoLoRA baseline executing a constant budget of $E$ epochs (e.g., $E=20$), the dynamic controller is configured with an expanded ceiling of $e_{max} = 2E$ (e.g., $e_{max} = 40$) alongside midpoint scaling $k = 0.5$. Because the nominal setpoint evaluates to $k \cdot e_{max} = 0.5 \times 40 = 20$, the closed-loop controller is designed to naturally hover around the exact same average computational horizon as the baseline. Crucially, this midpoint formulation establishes symmetric bidirectional flexibility: it provides the controller with headroom to safely throttle local training down ($e^* < 20$) when coordinate variance surges under severe non-IID skew, while granting ample operational space to expand local computation deeper into the round ($e^* > 20$, up to $e_{max}=40$) when inter-client variance remains subdued, thereby minimizing communication rounds without inducing divergence.
+
 In our methodological formulation, Eq.~\ref{eq:std_update} represents the foundational midpoint rule inherited from previous work, while Eq.~\ref{eq:generalized_update} provides the parametric control law. In Chapter~\ref{chap:evaluation}, we empirically evaluate the behavioral impact of transitioning from canonical midpoint scaling ($k=0.5$) to full-horizon scaling ($k=1.0$) across both IID and Non-IID benchmark suites.
 
 \section{Server Optimization and Aggregation Dynamics}
@@ -263,14 +265,23 @@ Setting $\eta_s = 1.0$ collapses the server update directly to coordinate-wise F
 
 The finalized architecture of FDA-RoLoRA is the outcome of systematically exploring and discarding several preliminary formulations during pilot development. Documenting these rejected architectural paths provides critical insight into the structural challenges of combining dynamic federated averaging with low-rank factorizations:
 
-\subsection{Dense Product Reconstruction and SVD Factorization}
-An intuitive initial approach to federated low-rank adaptation involves allowing clients to optimize both low-rank factor matrices ($A_i$ and $B_i$) simultaneously, transmitting their parameter updates to the server to compute the accumulated dense parameter drift $\Delta W_i = B_i A_i$. Under this protocol (\textit{FDA-LoRA-SVD}), the server aggregates the dense client updates in full model weight space, applies a global optimizer step, and subsequently performs truncated Singular Value Decomposition (SVD):
+\subsection{Naive Simultaneous Factor Adaptation (FDA + FedLoRA)}
+Our initial exploratory implementation coupled FDA directly with standard FedLoRA, training low-rank matrices $A$ and $B$ simultaneously on clients under a single shared variance threshold $\theta$. While this setup demonstrated fast early convergence, it systematically reached premature accuracy plateaus and failed to attain desired validation accuracies. 
+
+This performance degradation stems directly from the bilinear aggregation error inherent to federated low-rank factorizations:
+\begin{equation*}
+    \frac{1}{|S_r|} \sum_{i \in S_r} \left( B_i^{(r)} A_i^{(r)} \right) \neq \left( \frac{1}{|S_r|} \sum_{i \in S_r} B_i^{(r)} \right) \left( \frac{1}{|S_r|} \sum_{i \in S_r} A_i^{(r)} \right)
+\end{equation*}
+Averaging factors independently in product space distorts the reconstructed weight trajectory. Furthermore, conflating both factors under a single variance threshold failed to capture their asymmetric optimization velocities, compounding the aggregation distortion.
+
+\subsection{Dense Product Reconstruction and Truncated SVD (FDA-LoRA-SVD)}
+To resolve the bilinear aggregation error while preserving simultaneous factor training, we evaluated an intermediate protocol designated \textit{FDA-LoRA-SVD}. In this design, clients compute accumulated dense parameter updates $\Delta W_i = B_i A_i$ locally. The server averages these updates in full parameter space---eliminating the bilinear distortion---and applies truncated Singular Value Decomposition (SVD):
 \begin{equation*}
     W^{(r+1)} \approx U_r \Sigma_r V_r^T
 \end{equation*}
 re-factoring the principal components back into rank-$r$ matrices $B \leftarrow U_r \Sigma_r^{1/2}$ and $A \leftarrow \Sigma_r^{1/2} V_r^T$.
 
-While mathematically unconstrained, pilot profiling revealed that this approach is computationally prohibitive. Evaluating exact matrix drift requires reconstructing full dense matrices ($d_{\text{out}} \times d_{\text{in}}$) in memory across all clients at each epoch boundary, inflating GPU VRAM footprint and eliminating the memory benefits of PEFT. Furthermore, transmitting and aggregating full dense matrices across clients scales with $\mathcal{O}(d^2)$ communication and memory, completely eliminating the bandwidth advantages of PEFT. Factoring the aggregated dense updates back into rank-$r$ factors via truncated SVD requires an additional $\mathcal{O}(d^2 r)$ computational cost per layer at every round. These bottlenecks confirm that preserving factorized representation natively throughout training and communication is essential, directly motivating alternating coordinate optimization.
+Empirically, FDA-LoRA-SVD successfully mitigated the accuracy ceiling, achieving strong validation performance in fewer communication rounds than naive FedLoRA. However, its computational runtime was prohibitive. Evaluating matrix drift required clients to materialize dense matrices ($d_{\text{out}} \times d_{\text{in}}$) at every epoch boundary, while transmitting and aggregating dense updates scaled communication with $\mathcal{O}(d^2)$. Moreover, performing per-layer truncated SVD at every round introduced severe latency ($\mathcal{O}(d^2 r)$ per layer). Consequently, despite reducing communication rounds, its wall-clock execution time rendered it impractical for federated settings. This trade-off demonstrated that low-rank factorizations must be preserved natively throughout training and communication, directly motivating alternating coordinate optimization.
 
 \subsection{Single Shared Threshold vs. Decoupled Dual-Track}
 In early implementations of alternating coordinate optimization, local synchronization was governed by a single, shared scalar variance threshold $\theta$. However, empirical pilot testing demonstrated that sharing a single threshold across alternating coordinate cycles induced acute optimization instability. 
