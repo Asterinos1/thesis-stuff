@@ -111,59 +111,61 @@
 
 ### [Page 5 / Slide 5] Background Knowledge : Low-Rank Adaptation (LoRA) & Factor Asymmetry
 - **Slide Title:** Background Knowledge : Low-Rank Adaptation (LoRA) & Factor Asymmetry
-- **Visual Display:** Left column: Pre-trained weights $W_0$ frozen, factorized updates $\Delta W = A B$ with rank $r \ll \min(d,k)$, $>99\%$ parameter reduction, Factor Asymmetry details ($A$ down-projection Gaussian init vs $B$ up-projection zero init). Right column: Architectural diagram of LoRA decomposition.
+- **Visual Display:** Left column: Pre-trained weights $W_0 \in \mathbb{R}^{d_{\text{out}} \times d_{\text{in}}}$ frozen, factorized updates $\Delta W = \frac{\alpha_{\text{lora}}}{r} B A$ with rank $r \ll \min(d_{\text{in}}, d_{\text{out}})$, $>99\%$ parameter reduction, Factor Asymmetry details ($A \in \mathbb{R}^{r \times d_{\text{in}}}$ down-projection Gaussian init vs $B \in \mathbb{R}^{d_{\text{out}} \times r}$ up-projection zero init). Right column: Architectural diagram of LoRA decomposition.
 - **Target Time:** 1:30 min | **Cumulative Time:** 05:00
 
 #### 🎙️ Spoken Script:
-> "To overcome the spatial bottleneck, Low-Rank Adaptation, or LoRA, freezes the pre-trained foundation weights $W_0 \in \mathbb{R}^{d \times k}$ and parameterizes the task-specific weight update $\Delta W$ as the product of two low-rank matrices: $A \in \mathbb{R}^{d \times r}$ and $B \in \mathbb{R}^{r \times k}$, where the rank $r$ is much smaller than the hidden dimensions.
+> "To overcome the spatial bottleneck, Low-Rank Adaptation, or LoRA, freezes the pre-trained foundation weights $W_0 \in \mathbb{R}^{d_{\text{out}} \times d_{\text{in}}}$ and parameterizes the task-specific weight update $\Delta W$ as the scaled product of two low-rank matrices: $\frac{\alpha_{\text{lora}}}{r} B A$, where down-projection $A \in \mathbb{R}^{r \times d_{\text{in}}}$ and up-projection $B \in \mathbb{R}^{d_{\text{out}} \times r}$, with rank $r$ much smaller than the input and output dimensions.
 > 
-> During the forward pass, representations are modified as $h = W_0 x + A B x$. Because only $A$ and $B$ are updated, trainable parameters are slashed by over 99%, making edge storage and communication feasible.
+> During the forward pass, representations are modified as $h = W_0 x + \frac{\alpha_{\text{lora}}}{r} B A x$. Because only $A$ and $B$ are updated, trainable parameters are slashed by over 99%—in our benchmark setup, just 590K parameters out of 125M—making edge storage and transmission feasible.
 > 
-> However, an often-overlooked property that is vital to this thesis is **Factor Asymmetry**:
-> Matrix $A$ serves as the down-projection layer, compressing representations into the bottleneck dimension $r$, and is initialized via a random Gaussian distribution.
-> In contrast, Matrix $B$ serves as the up-projection layer, expanding bottleneck states back to dimension $k$, and is initialized strictly to zero to ensure $\Delta W = 0$ at the start of training.
+> However, a foundational structural property that is vital to this thesis is **Factor Asymmetry**:
+> Matrix $A$ compresses representations into bottleneck dimension $r$, and is initialized via a random Gaussian distribution.
+> In contrast, Matrix $B$ expands bottleneck states back to dimension $d_{\text{out}}$, and is initialized strictly to zero to ensure $\Delta W = 0$ at the start of training.
 > 
-> Because of this structural difference, matrices $A$ and $B$ experience fundamentally different gradient flows, optimization landscapes, and variance velocities throughout training."
+> As we will demonstrate, this structural initialization induces a severe initial numerical scale disparity ($\theta_B \gg \theta_A$), making decoupled tracking essential to maintain balanced training."
 
 #### 🎯 Delivery & Pointer Guidance:
 - Point to the diagram showing $W_0$ frozen and the parallel bypass $x \to A \to B$.
 - Explicitly emphasize the contrast: Gaussian init for $A$ versus zero init for $B$. This sets up why decoupled tracking is necessary later.
-
 ---
 
 ### [Page 6 / Slide 6] Background Knowledge : The LoRA Aggregation Inconsistency Problem
 - **Slide Title:** Background Knowledge : The LoRA Aggregation Inconsistency Problem
-- **Visual Display:** Alert block with mathematical formula $\frac{1}{N}\sum_{i=1}^{N}(A_i B_i) \neq (\frac{1}{N}\sum_{i=1}^{N} A_i)(\frac{1}{N}\sum_{i=1}^{N} B_i)$. Bilinear distortion explanation, cross-client geometric interference, and prior work limitations (full expansion, FFA-LoRA, FLoRA).
+- **Visual Display:** Alert block with mathematical formula $\frac{1}{N}\sum_{i=1}^{N}(B_i A_i) \neq (\frac{1}{N}\sum_{i=1}^{N} B_i)(\frac{1}{N}\sum_{i=1}^{N} A_i)$. FedLoRA Survey taxonomy (Yang et al., IJCAI 2025: stability, heterogeneity, efficiency), bilinear distortion explanation, cross-client geometric interference, and surveyed prior work compromises (full expansion, FFA-LoRA, FLoRA).
 - **Target Time:** 2:00 min | **Cumulative Time:** 07:00
 
 #### 🎙️ Spoken Script:
 > "Now we arrive at the central mathematical challenge of federated parameter-efficient fine-tuning: **The LoRA Aggregation Inconsistency Problem**.
 > 
-> When multiple clients train their local LoRA factors $(A_i, B_i)$ simultaneously, standard federated learning requires the server to aggregate them by averaging $A$ and $B$ independently.
+> In their comprehensive IJCAI 2025 survey on Federated LoRA, Yang et al. categorize the primary challenges of federated PEFT into three fundamental pillars: **distributed learning stability**, **data heterogeneity**, and **communication efficiency**.
 > 
-> But as shown in the highlighted equation, matrix multiplication is bilinear and non-commutative:
-> The average of the products does not equal the product of the averages!
+> The core bottleneck stems directly from how low-rank factors are aggregated across decentralized clients:
+> When multiple clients train their local LoRA factors $(B_i, A_i)$ simultaneously, standard federated learning aggregates them by averaging factor matrices $B$ and $A$ independently.
 > 
-> Expanding this product reveals severe cross-client interaction terms. Under homogeneous data, these cross-terms might average out; but under Non-IID statistical heterogeneity, this bilinear distortion induces severe geometric interference between clients. The composite global update diverges violently, frequently leading to training instability or catastrophic collapse.
+> But as highlighted in red, matrix multiplication is bilinear and non-commutative:
+> The average of the products does not equal the product of the averages:
+> $\frac{1}{N}\sum_{i=1}^{N}(B_i A_i) \neq \left(\frac{1}{N}\sum_{i=1}^{N} B_i\right)\left(\frac{1}{N}\sum_{i=1}^{N} A_i\right)$.
 > 
-> Prior literature attempted three main workarounds, all with severe compromises:
-> First, *full-matrix expansion*, computing $\Delta W_i = A_i B_i$ on clients and averaging full matrices. This destroys all spatial communication savings.
-> Second, *FFA-LoRA*, which permanently freezes down-projection matrix $A$ across the entire federation. This preserves linearity, but severely degrades representational capacity.
+> Expanding this product reveals severe cross-client interaction terms. Under homogeneous data, these cross-terms might partially cancel; but under Non-IID statistical heterogeneity, this bilinear distortion induces severe geometric interference between client trajectories. The composite global update diverges, destroying distributed learning stability.
+> 
+> Prior literature attempted three main workarounds, all incurring severe compromises:
+> First, *full-matrix expansion*, computing $\Delta W_i = B_i A_i$ on clients and averaging full matrices. This transmits full parameter matrices and destroys spatial communication savings.
+> Second, *FFA-LoRA*, which permanently freezes down-projection matrix $A$ across the entire federation. This preserves linearity, but sacrifices adapter expressivity.
 > Third, *FLoRA*, which transmits full models and recalculates SVD on the server after every round, imposing prohibitive server-side compute overhead."
 
 #### 🎯 Delivery & Pointer Guidance:
-- Point firmly at the central equation. Emphasize: *"This is not an approximation error; it is a fundamental algebraic non-commutativity."*
+- Point firmly at the central non-commutativity equation. Emphasize: *"This is not an approximation error; it is a fundamental mathematical non-commutativity that corrupts FedAvg."*
 - Briefly contrast the three prior compromises to demonstrate your mastery of the literature.
 
 #### ❓ Anticipated Committee Questions & Model Answers:
-- **Prof. Samoladas:** *"Can you elaborate on the cross-terms when expanding $\frac{1}{N}\sum A_i B_i$?"*
-  - **Answer:** *"Yes. If we write $A_i = \bar{A} + \delta A_i$ and $B_i = \bar{B} + \delta B_i$, then $\frac{1}{N}\sum A_i B_i = \bar{A}\bar{B} + \frac{1}{N}\sum (\delta A_i \delta B_i)$. The term $\frac{1}{N}\sum (\delta A_i \delta B_i)$ is the sample cross-covariance of the updates across clients. Unless client drifts are orthogonal or zero, this covariance term does not vanish. In Non-IID settings, it acts as persistent structured noise distorting the global step."*
-
+- **Prof. Samoladas:** *"Can you elaborate on the cross-terms when expanding $\frac{1}{N}\sum B_i A_i$?"*
+  - **Answer:** *"Yes. If we write $B_i = \bar{B} + \delta B_i$ and $A_i = \bar{A} + \delta A_i$, then $\frac{1}{N}\sum B_i A_i = \bar{B}\bar{A} + \frac{1}{N}\sum (\delta B_i \delta A_i)$. The term $\frac{1}{N}\sum (\delta B_i \delta A_i)$ is the sample cross-covariance of the updates across clients. Unless client drifts are orthogonal or zero, this covariance term does not vanish. In Non-IID settings, it acts as persistent structured noise distorting the global step."*
 ---
 
 ### [Page 7 / Slide 7] Background Knowledge : Robust Low-Rank Adaptation (RoLoRA)
 - **Slide Title:** Background Knowledge : Robust Low-Rank Adaptation (RoLoRA)
-- **Visual Display:** Alternating coordinate optimization formula. Odd rounds: freeze $A^t$, update $B$. Even rounds: freeze $B^{t+1}$, update $A$. Graphic from Chen et al. (NeurIPS 2025). Static schedule limitation.
+- **Visual Display:** Alternating coordinate optimization formula. Even rounds: freeze $A$, update $B$. Odd rounds: freeze $B$, update $A$. Graphic from Chen et al. (NeurIPS 2025). Static schedule limitation highlighted. Note on standard column-vector convention.
 - **Target Time:** 1:30 min | **Cumulative Time:** 08:30
 
 #### 🎙️ Spoken Script:
@@ -172,19 +174,19 @@
 > RoLoRA eliminates bilinear aggregation error by reformulating federated LoRA as an **alternating coordinate optimization** problem across communication rounds.
 > 
 > Specifically:
-> On odd rounds, designated as the B-Track, the server globally freezes matrix $A^t$ across all clients and trains only matrix $B$. Because $A^t$ is identical across all clients, it factors out linearly from the summation:
-> $\frac{1}{N}\sum (A^t B_i) = A^t (\frac{1}{N}\sum B_i) = A^t \bar{B}$. Aggregation is mathematically exact and distortion-free!
+> On even rounds (starting at round 0), designated as the B-Track, the server globally freezes matrix $A$ across all clients and trains only matrix $B$. Because $A$ is identical across all clients, it factors out linearly from the summation:
+> $\frac{1}{N}\sum_{i=1}^N (B_i A) = \left(\frac{1}{N}\sum_{i=1}^N B_i\right) A = \bar{B} A$. Aggregation is mathematically exact and distortion-free!
 > 
-> On even rounds, designated as the A-Track, the server freezes the newly updated matrix $B^{t+1}$ and trains only matrix $A$. By linearity, the update is again mathematically exact.
+> On odd rounds, designated as the A-Track, the server freezes the newly updated matrix $B$ and trains only matrix $A$:
+> $\frac{1}{N}\sum_{i=1}^N (B A_i) = B \left(\frac{1}{N}\sum_{i=1}^N A_i\right) = B \bar{A}$.
 > 
-> Furthermore, in every round, clients only transmit the active matrix factor, cutting round communication volume in half!
+> By linearity, the update is again mathematically exact. Furthermore, in every round, clients only transmit the active matrix factor, cutting round communication volume in half!
 > 
-> **However, RoLoRA has a critical limitation**: it operates on a rigid, static local epoch schedule, forcing all clients to train for exactly $E$ epochs every single round, completely oblivious to local convergence dynamics or data drift."
+> **However, RoLoRA has a critical limitation**: it operates on a rigid, static local epoch schedule ($E=10$), forcing all clients to train for the exact same number of epochs every single round, completely oblivious to local convergence dynamics or data drift."
 
 #### 🎯 Delivery & Pointer Guidance:
-- Trace the factoring out of $A^t$ and $B^{t+1}$ with the pointer.
+- Trace the alternating rounds in the diagram: even rounds train $B$, odd rounds train $A$.
 - Emphasize that RoLoRA solves the *spatial* bottleneck and the *aggregation consistency* problem, but leaves the *temporal* schedule static.
-
 ---
 
 ### [Page 8 / Slide 8] Background Knowledge : FDA-Opt & Geometric Monitoring
@@ -290,57 +292,59 @@
 ---
 
 ### [Page 13 / Slide 13] Methodology : Independent Halting & Local Training Bounds
-- **Slide Title:** Methodology : Independent Halting \& Local Training Bounds
-- **Visual Display:** Left: Local epoch bounds $[e_{\min}, e_{\max}]$ with operational floor $e_{\min}$; halting condition $\text{Var}_{\text{subspace}} > \theta_{\text{current}} \lor e \ge e_{\max}$. Right: Threshold controller target scaling $\theta_{\text{target}} = (\frac{k \cdot e_{\max}}{e^*})\text{Var}_{\text{subspace}}$ with default $k=0.5$ ($e_{\max}/2$) vs aggressive $k=1.0$ ($e_{\max}$). Alert block contrasting Non-IID near-flawless performance against IID midpoint lag.
-- **Target Time:** 1:30 min | **Cumulative Time:** 16:15
+- **Slide Title:** Methodology : Independent Halting & Local Training Bounds
+- **Visual Display:** Left: Local Epoch Bounds $[e_{\min}, e_{\max}]$ with operational floor $e_{\min}=1$; Subspace Variance Metric $V_r$ calculated strictly on active coordinate. Right: Telemetry curve showing independent client halting epochs across rounds. Bottom alert block: Controller Dynamic: Super-Linear vs. Near-Linear Variance Discovery.
+- **Target Time:** 2:00 min | **Cumulative Time:** 16:30
 
 #### 🎙️ Spoken Script:
-> "Next, we define the local training bounds and threshold controller mechanics.
+> "Now let us examine how client training is bounded and governed during local steps on Slide 13.
 > 
-> Client training is bounded within $[e_{\min}, e_{\max}]$ local epochs. Here, $e_{\min}$ serves as an operational lower bound to ensure clients execute an initial computation pass before variance evaluations begin, while $e_{\max}$ establishes the upper computation ceiling per round.
+> In standard FDA, clients evaluate drift variance at epoch boundaries and halt independently when variance exceeds the current threshold.
 > 
-> Local coordinate variance is evaluated at each epoch boundary $e \ge e_{\min}$. Training halts immediately when coordinate variance exceeds the active threshold $\theta_{\text{current}}$, or when reaching the hard ceiling $e_{\max}$.
+> In FDA-RoLoRA, local epochs are bounded within $[e_{\min}, e_{\max}]$.
+> A crucial architectural principle is establishing a **Universal Operational Floor** at $e_{\min} = 1$:
+> Under severe non-IID label skew, initial gradient drift is high. Without an operational floor, clients could halt immediately at $e=0$, triggering dead communication rounds. Forcing $e_{\min}=1$ guarantees non-zero forward optimization progress.
 > 
-> The server then updates the threshold via target scaling:
-> $\theta_{\text{target}}^{(r)} = \left(\frac{k \cdot e_{\max}}{e^*}\right) \text{Var}_{\text{subspace}}(\Delta^{(e^*)})$.
+> The variance metric $V_r$ is computed exclusively over the active coordinate matrix ($A$ or $B$):
+> $$V_r = \frac{1}{|S_r|} \sum_{i \in S_r} \|\Delta_i^{(e)} - \bar{\Delta}^{(e)}\|_F^2$$
+> This evaluates over only 590,000 active parameters instead of 125 million, saving substantial compute and memory.
 > 
-> Here, $k=0.5$ represents **FDA-Opt's default controller**, targeting the midpoint $e_{\max}/2$. For example, if $e_{\max}=40$, the controller aims to steer average local training toward 20 epochs.
-> 
-> As highlighted on the bottom alert box, our empirical investigation revealed a critical distinction:
-> - In **Non-IID environments**, this default controller worked almost *perfectly*, sensitively catching client drift and preventing collapse.
-> - However, in **IID environments**, the default $k=0.5$ struggled to reach the intended midpoint of $e_{\max}$. Trying an aggressive target of $k=1.0$ did manage to push realized epochs close to 20, but as we will see in the results, it overall did not perform well against static baselines."
+> In the bottom alert block, note our core theoretical discovery regarding controller dynamics:
+> In **IID consensus ($\alpha=1000$)**, variance grows *super-linearly* ($p \approx 1.8\text{--}2.2$) in low-rank space. Because the controller assumes linear extrapolation, the variance surge breaches the threshold early, causing systematic setpoint undershoot ($\mathcal{S} \approx 0.64\text{--}0.79$).
+> In **Non-IID skew ($\alpha=0.5$)**, gradient dispersion across skewed classes linearizes drift ($p \approx 0.9\text{--}1.1$), enabling near-optimal setpoint tracking ($\mathcal{S} \approx 0.91\text{--}1.11$)."
 
 #### 🎯 Delivery & Pointer Guidance:
-- Point out the $(k \cdot e_{\max}) / e^*$ formula: explain that $k=0.5$ is FDA-Opt's default midpoint rule.
-- Highlight the contrast between the Non-IID success and the IID midpoint lag.
-
+- Point to $e_{\min}=1$ and explain: *"Without this floor, edge devices can stall before taking a single step."*
+- Highlight the contrast in the bottom block: super-linear variance in IID versus linearized drift under Non-IID skew.
 ---
 
 ### [Page 14 / Slide 14] Methodology : Threshold Evolution Mechanics & Controller Design
-- **Slide Title:** Methodology : Threshold Evolution Mechanics \& Controller Design
-- **Visual Display:** Top: Primary Operational Controller: Standard Midpoint Scaling (parameter-free, zero inertia). Bottom: Exploratory Temporal Smoothing Variants prototyped (SMA, EMA, Pure EMA). Prototyping finding: smoothing added threshold inertia without tangible accuracy benefits.
-- **Target Time:** 1:30 min | **Cumulative Time:** 17:45
+- **Slide Title:** Methodology : Threshold Evolution Mechanics & Controller Design
+- **Visual Display:** Top: Primary Operational Controller (Standard Midpoint Scaling, parameter-free, adaptive, Cold Start Protocol). Bottom: Exploratory Temporal Smoothing Variants prototyped (SMA, EMA with weighting $\rho$) and key empirical finding (inertia/lag under distribution shifts without benefit).
+- **Target Time:** 1:30 min | **Cumulative Time:** 18:00
 
 #### 🎙️ Spoken Script:
-> "We explored several controller designs for threshold evolution.
+> "Slide 14 details how the server updates variance thresholds across communication rounds.
 > 
-> Our primary operational controller is **Standard Midpoint Scaling**: direct assignment of $\theta_{\text{next}} = \theta_{\text{target}}$ without historical memory.
-> This controller is completely parameter-free—requiring no smoothing hyperparameters—and reacts instantaneously to abrupt shifts in client gradient drift.
+> Our primary operational controller is **Standard Midpoint Scaling**:
+> $\theta_{\mathcal{M}^{(r)}}^{(\text{next})} = \theta_{\text{target}}^{(r)} = \frac{k \cdot e_{\max}}{e^*} \text{Var}^{(r)}$
+> This controller is completely parameter-free and responds instantaneously to shifts in client gradient drift.
 > 
-> We also mathematically formulated and prototyped temporal smoothing variants:
-> A Simple Moving Average (SMA) averaging target thresholds over a sliding window of past rounds, and Exponential Moving Average (EMA) controllers weighting past history by parameter $\rho$.
+> To initialize the system, we implement a **Cold Start Protocol**:
+> At round $r=0$, the server initializes $\theta_A = \theta_B = 0$ and forces $e_{\min}=1$, training matrix $B$ on pristine initial embeddings. This allows the server to measure baseline coordinate variance $V^{(0)}_B$ and seed subsequent threshold scaling.
 > 
-> However, our empirical prototyping revealed that temporal smoothing introduced *threshold inertia*. When client distributions abruptly shifted or when alternating between tracks, smoothed thresholds lagged behind the true optimization state, occasionally allowing runaway drift before the threshold could tighten.
+> As part of our investigation, we also prototyped exploratory temporal smoothing variants:
+> - **Simple Moving Average (SMA)**, averaging targets over past active rounds.
+> - **Exponential Moving Average (EMA)**, applying historical weighting: $\rho \theta_{\text{current}} + (1-\rho) \theta_{\text{target}}$.
 > 
-> Standard midpoint scaling proved consistently more robust across benchmarks, so we adopted it as our primary production mechanism, while documenting SMA and EMA as exploratory variants."
+> However, empirical evaluation revealed a critical insight:
+> Temporal smoothing introduces **threshold inertia**: when client drift surges rapidly due to statistical skew, an EMA controller lags behind, failing to lower the threshold quickly enough to prevent representation collapse.
+> 
+> Standard midpoint scaling consistently matched or outperformed smoothed variants without requiring any hyperparameter tuning."
 
 #### 🎯 Delivery & Pointer Guidance:
-- Point out that discovering that simpler parameter-free midpoint scaling outperformed smoothed variants is a valuable scientific result showing that low-rank adaptation needs agile controllers.
-
-#### ❓ Anticipated Committee Questions & Model Answers:
-- **Prof. Garofalakis:** *"Did you observe threshold collapse where $\theta$ drops to near zero and never recovers?"*
-  - **Answer:** *"Because we enforce $e_{\min} = 1$, clients always complete at least one local epoch, and the minimum non-zero variance of that epoch acts as a natural lower bound. Furthermore, if $e^*=1$, the scaling ratio $(0.5 \cdot e_{\max})/1 = 10$, which immediately amplifies the threshold by an order of magnitude for the next round, driving it out of any potential stagnation."*
-
+- Point to the formula for $\theta_{\text{target}}$ and the Cold Start Protocol.
+- Emphasize the takeaway: *"Memory smoothing creates lag; instantaneous midpoint scaling provides immediate protective response."*
 ---
 
 ### [Page 15 / Slide 15] Methodology : Coordinate-Wise FedAvg & Protocol Flow
@@ -406,40 +410,48 @@
 ---
 
 ### [Page 18 / Slide 18] Implementation : Foundation Model Setup & Data Partitioning
-- **Slide Title:** Implementation : Foundation Model Setup \& Data Partitioning
-- **Visual Display:** Left: Foundation Model Backbone (\texttt{roberta-base}, 125M params, 12 layers, 768 hidden; LoRA $r=4, \alpha=8$ on $W_q, W_v$; 0.47% trainable params; >99% spatial reduction). Right: Resource constraints & simulation setup (Dirichlet $\alpha \in \{0.5, 1000\}$, 25k sample cap, batch sizes 16/32, simulation early stopping, GLUE tasks).
-- **Target Time:** 1:30 min | **Cumulative Time:** 22:45
+- **Slide Title:** Implementation : Foundation Model Setup & Data Partitioning
+- **Visual Display:** Left: Foundation Model Backbone details (\texttt{roberta-base}, 125M params, 12 layers, 768 hidden, LoRA on $W_q, W_v$, $r=4, \alpha_{\text{lora}}=8$, 0.47% trainable params). Right: Resource Constraints & Simulation Setup (Dirichlet $\alpha \in \{0.5, 1000.0\}$, 25k sample cap, batch sizes $B=32$ / $B=64$ for SST-2, accuracy-gated early stopping, GLUE tasks).
+- **Target Time:** 1:45 min | **Cumulative Time:** 22:15
 
 #### 🎙️ Spoken Script:
-> "Slide 18 details our foundation model and benchmark configurations.
+> "Now let us turn to Section 3: Implementation. Slide 18 details our foundation model and experimental setup.
 > 
-> For our model backbone, we utilized **RoBERTa-base**, containing 125 million parameters across 12 transformer encoder layers. This backbone was specifically chosen because rigorous multi-seed sweeps across 86 experimental configurations required over 1,000 GPU-hours; RoBERTa-base allowed us to complete this massive matrix within our allocated hardware budget.
+> We selected **RoBERTa-Base** (125 million parameters) as our foundation model backbone. While modern LLMs reach billions of parameters, RoBERTa-Base represents an ideal, rigorous testbed that permitted running **173 complete federated training runs** across multiple random seeds under our dedicated hardware budget.
 > 
-> Low-rank adapters with rank $r=4$ and scaling factor $\alpha=8$ were injected into the Query ($W_q$) and Value ($W_v$) attention projections across all layers. This represents just 0.47% trainable parameters, slashing parameter transfers by over 99%—reducing the uplink payload to just **240 Kilobytes per client per round**.
+> Low-rank adapters with rank $r=4$ and scaling factor $\alpha_{\text{lora}}=8$ are injected into the Query and Value attention projections across the top transformer layers. This confines trainable parameters to just **590,000 weights**—a 0.47% parameter share.
 > 
-> On the right, client datasets were partitioned under Dirichlet distributions across cohorts of $C=20$ and $C=50$ clients. Due to cluster throughput limits, training sets were capped at 25,000 samples. We implemented accuracy-gated early stopping with a 5-round sliding window to terminate runs once convergence plateaued, preventing redundant compute."
+> For data partitioning, we implement Dirichlet distribution sampling $p_k \sim \text{Dir}(\alpha)$:
+> - $\alpha = 1000.0$ models near-perfect IID homogeneous consensus.
+> - $\alpha = 0.5$ models severe non-IID statistical heterogeneity with extreme label skew.
+> 
+> To make extensive sweeps computationally viable, datasets are capped at 25,000 samples, batch sizes follow Chen et al. ($B=32$ for MNLI, QNLI, QQP; $B=64$ for SST-2), and accuracy-gated early stopping is employed to avoid redundant GPU hours."
 
 #### 🎯 Delivery & Pointer Guidance:
-- Point out the 240 KB payload number. Contrast this with the hundreds of megabytes required by full model transfers.
-
+- Point to the 0.47% parameter share: *"We are fine-tuning less than half a percent of the model."*
+- Highlight the Dirichlet $\alpha$ lever: 1000.0 for IID versus 0.5 for acute skew.
 ---
 
 ### [Page 19 / Slide 19] Implementation : Training Pipeline & Dedicated Testbed Deployment
-- **Slide Title:** Implementation : Training Pipeline \& Dedicated Testbed Deployment
-- **Visual Display:** Left: Training pipeline mechanics (alternation, exact variance, client SGD $\eta_c=0.1$, server SGD $\eta_s=1.0$, multi-process orchestration). Right: Polytechnix Server Testbed (SoftNet Lab GPU server, $2\times$ NVIDIA Ampere A10 24GB, $2\times$ Intel Xeon Silver 4310, 256GB RAM, uniform comparability).
-- **Target Time:** 1:15 min | **Cumulative Time:** 24:00
+- **Slide Title:** Implementation : Training Pipeline & Dedicated Testbed Deployment
+- **Visual Display:** Left: Training pipeline mechanics (Track $B$ even rounds, Track $A$ odd rounds, exact subspace variance evaluation, client SGD $\eta_c=0.1$, batch sizes $B=32/64$, bi-directional payload $240\,\text{KB}$ / $144\,\text{KB}$, AMS sketch mode $2.5\%$--$5.8\%$ overhead). Right: SoftNet Lab Polytechnix GPU server specifications (2x NVIDIA A10 24GB, 2x Xeon Silver 4310 24c/48t, 256GB DDR4 RAM, Slurm orchestration).
+- **Target Time:** 1:45 min | **Cumulative Time:** 24:00
 
 #### 🎙️ Spoken Script:
-> "To guarantee empirical integrity, all experiments were orchestrated and executed exclusively on a single dedicated enterprise platform: the **Polytechnix GPU Server** at the TUC SoftNet Laboratory.
+> "Slide 19 details the execution pipeline and testbed environment that powered our empirical benchmarks.
 > 
-> The hardware comprises dual NVIDIA Ampere A10 GPUs with 24 Gigabytes of VRAM each, dual Intel Xeon Silver 4310 CPUs providing 48 execution threads, and 256 Gigabytes of high-speed DDR4 memory.
+> The training pipeline strictly enforces coordinate alternation: Track $B$ updates on even communication rounds, and Track $A$ updates on odd rounds.
+> In each round, clients only transmit the active coordinate factor. Accounting for bi-directional payload (downlink global update + uplink client delta), this requires just **240 KB per client per round** for 5-layer tasks (120 KB down + 120 KB up), and **144 KB** for 3-layer SST-2. In physical deployments, optional AMS sketch streaming adds only 2.5% to 5.8% overhead.
 > 
-> Because every single one of our 173 completed benchmark runs was executed on this identical physical hardware using deterministic PyTorch seeding, our runtime and throughput comparisons are completely free of cross-platform hardware confounding."
+> All 173 experiments were orchestrated and executed exclusively on a dedicated high-performance server in the SoftNet Lab:
+> - **GPUs**: Dual NVIDIA Ampere A10 GPUs with 24 GB of high-bandwidth VRAM each.
+> - **CPUs**: Dual Intel Xeon Silver 4310 processors providing 48 hardware threads.
+> - **Memory**: 256 GB of DDR4 system RAM.
+> 
+> By running all benchmarks on this dedicated, uniform hardware infrastructure, we eliminated confounding hardware variables and ensured perfect reproducibility across all 173 runs."
 
 #### 🎯 Delivery & Pointer Guidance:
-- Acknowledge SoftNet Lab and the Polytechnix cluster.
-- **Checkpoint Check:** You should be at the 24:00 mark. You now have a solid 14-16 minutes for the Results and Conclusion.
-
+- Emphasize the dedicated hardware testbed: *"Every single run was executed on identical physical hardware under strictly controlled multi-process simulation."*
 ---
 
 ### [Page 20 / Slide 20] Section 4 Transition Divider
@@ -453,212 +465,193 @@
 ---
 
 ### [Page 21 / Slide 21] Evaluation : Experimental Setup & Benchmark Protocol
-- **Slide Title:** Evaluation : Experimental Setup \& Benchmark Protocol
-- **Visual Display:** Summary matrix of the 173 completed runs across 86 configurations. GLUE tasks (MNLI, QNLI, QQP, SST-2), cohorts $C \in \{20, 50\}$, regimes $\alpha \in \{0.5, 1000\}$, baselines RoLoRA $E \in \{5, 10, 15, 20\}$, FDA-RoLoRA with $e_{\min}=1$ everywhere, $E_{\max} \in \{20, 40\}$, and controller scaling $k \in \{0.5, 1.0\}$.
-- **Target Time:** 1:15 min | **Cumulative Time:** 25:30
+- **Slide Title:** Evaluation : Experimental Setup & Benchmark Protocol
+- **Visual Display:** Left: Model & LoRA parameterization (RoBERTa-Base, $r=4, \alpha=8$, bi-directional payload $240\,\text{KB}$ / $144\,\text{KB}$, batch sizes $B=32/64$, SGD optimizer). Right: Benchmark Matrix & Regimes (GLUE suite, $C \in \{20, 50\}$, $\alpha \in \{0.5, 1000.0\}$, RoLoRA baselines $E \in \{5,10,15,20\}$, FDA $E_{\max} \in \{20,40\}, k \in \{0.5, 1.0\}$, 173 completed runs). Bottom alert: Controller dynamic (super-linear vs near-linear variance growth).
+- **Target Time:** 2:00 min | **Cumulative Time:** 26:00
 
 #### 🎙️ Spoken Script:
-> "To thoroughly evaluate FDA-RoLoRA, we established a rigorous benchmark protocol across four distinct GLUE tasks: SST-2, QNLI, QQP, and MNLI.
+> "We now enter Section 4: Evaluations & Results. Slide 21 summarizes our comprehensive experimental protocol.
 > 
-> Across each task, we systematically evaluated:
-> - Client cohort sizes of $C=20$ and $C=50$ under full participation.
-> - Data regimes from homogeneous IID ($\alpha=1000$) to extreme Dirichlet label skew ($\alpha=0.5$).
-> - Fixed RoLoRA baselines across local epoch schedules $E \in \{5, 10, 15, 20\}$.
-> - FDA-RoLoRA with **$e_{\min}=1$ standardized across all runs**, testing upper ceilings $E_{\max}=20$ and $E_{\max}=40$.
-> - We benchmarked both the **FDA-Opt default controller ($k=0.5$)** targeting $E_{\max}/2$ and the **aggressive boundary controller ($k=1.0$)** targeting $E_{\max}$.
+> Across all benchmarks:
+> - Clients fine-tune RoBERTa-Base with rank $r=4$ on attention projections.
+> - In each round, only the active factor is communicated: bi-directional payload is **240 KB per client per round** for 5-layer tasks (120 KB down + 120 KB up), and **144 KB** for SST-2 (3 layers).
+> - Client batch sizes are $B=32$ for MNLI, QNLI, and QQP, and $B=64$ for SST-2.
+> - Optimization uses mini-batch SGD with client learning rate $\eta_c = 0.1$ and server step size $\eta_s = 1.0$, exactly replicating linear FedAvg.
 > 
-> In total, this represents **173 completed experimental runs** across 86 configurations, providing a massive, rigorous empirical foundation."
+> The evaluation spans four GLUE benchmark tasks: MNLI, QNLI, QQP, and SST-2 across cohort sizes $C=20$ and $C=50$.
+> We compare against static RoLoRA schedules across $E \in \{5, 10, 15, 20\}$.
+> For FDA-RoLoRA, we systematically test horizons $E_{\max} \in \{20, 40\}$ and setpoint ratios $k \in \{0.5, 1.0\}$, with $e_{\min}=1$ standardized everywhere.
+> 
+> In total, this represents **173 completed federated training runs** across 86 distinct configurations, providing rigorous empirical grounding.
+> 
+> In the bottom block, note our core finding on horizon dynamics:
+> In IID consensus, low-rank variance grows super-linearly, tripping the threshold prematurely and causing systematic setpoint undershoot ($\mathcal{S} \approx 0.64\text{--}0.79$).
+> In Non-IID skew, linear drift enables near-optimal tracking ($\mathcal{S} \approx 0.91\text{--}1.11$), though aggressive $k=1.0$ on large cohorts ($C=50$) causes drift-induced collapse on QNLI."
 
 #### 🎯 Delivery & Pointer Guidance:
-- Emphasize the breadth of the study: 173 runs ensures that the findings are not anecdotal artifacts.
-
+- Point out the breadth: 173 runs, 4 tasks, 2 regimes, 2 cohort sizes.
+- Draw attention to the bottom alert block regarding super-linear versus linear variance growth.
 ---
 
 ### [Page 22 / Slide 22] Evaluation : Executive Performance Scorecard
 - **Slide Title:** Evaluation : Executive Performance Scorecard
-- **Visual Display:** Full cross-task scorecard table explicitly reporting $E_{\max}$ and $k$ for each top FDA configuration (with $e_{\min}=1$ everywhere) vs top fixed RoLoRA baselines. Green callout box summarizing key breakthroughs (+26.95% SST-2 recovery, +4.00% MNLI, up to 56.6% bandwidth cut).
-- **Target Time:** 2:30 min | **Cumulative Time:** 28:00
+- **Visual Display:** Comprehensive comparative table across MNLI, QNLI, QQP, and SST-2 showing: Task & Cohort, Regime (IID vs Non-IID), Top FDA-RoLoRA ($e_{\min}=1$) config and Peak Accuracy, Top RoLoRA Baseline config and Peak Accuracy, Delta Accuracy. Bottom callout box: Key Empirical Breakthroughs (Plateau Escape on SST-2 +26.95%, Convergence Speedup on MNLI, IID Regime Discipline).
+- **Target Time:** 2:30 min | **Cumulative Time:** 28:30
 
 #### 🎙️ Spoken Script:
-> "Slide 22 presents the executive scorecard across our benchmark suite. Notice that in the third column, we explicitly display the exact $E_{\max}$ and controller scaling $k$ for each top FDA configuration, with $e_{\min}=1$ universally enforced.
+> "Slide 22 presents the **Executive Performance Scorecard**—the central empirical synthesis of this thesis across all evaluated tasks, partitions, and cohort sizes.
 > 
-> For our primary benchmark suite, all top FDA runs used $E_{\max}=20$.
+> Let us focus on the key empirical findings:
 > 
-> Looking at the table, three major empirical patterns emerge:
+> First and most significant: look at the bottom row for **SST-2 under Non-IID skew ($\alpha=0.5, C=50$)**:
+> Static RoLoRA ($E=10$) gets trapped in the majority-class representation plateau at **59.00%**.
+> In contrast, FDA-RoLoRA dynamically expands local compute ($\bar{e}=14.57$), escaping the plateau to reach **85.95% peak accuracy—an absolute recovery of +26.95%!**
 > 
-> First, **The Anti-Collapse Breakthrough on SST-2 Non-IID ($C=50$)**:
-> In the bottom row, under acute Dirichlet skew ($\alpha=0.5$), static RoLoRA crashes catastrophically to 59.00% accuracy because forced local epochs drive clients into irreconcilable minima.
-> In contrast, FDA-RoLoRA ($E_{\max}=20, k=1.0$) detects surging coordinate variance and throttles local epochs, securing **85.95% accuracy—a massive +26.95% recovery from collapse!**
+> Second, examine **MNLI under Non-IID ($C=20$)**:
+> FDA-RoLoRA reaches RoLoRA's target accuracy in **15 to 30% fewer rounds** ($178.1\,\text{MB}$ vs $234.4\,\text{MB}$), while avoiding the severe post-peak degradation that afflicted deep static schedules ($E=20$ collapsed from $73.3\%$ to $68.1\%$).
 > 
-> Second, **Consensus Acceleration on MNLI ($C=50$, IID)**:
-> On multi-class MNLI with 50 clients, static RoLoRA plateaus at 65.85%. FDA-RoLoRA ($E_{\max}=20, k=1.0$) senses aligned gradients and breaks through to **69.85%—a clean +4.00% accuracy outperformance**.
+> Third, on IID consensus:
+> Notice that across uniform IID partitions, FDA-RoLoRA and static RoLoRA achieve comparable peak accuracies (e.g. 76.86% vs 76.60% on MNLI, 89.68% vs 92.01% on SST-2). Because low-rank variance surges super-linearly under consensus, FDA provides **no consistent communication advantage** over fixed RoLoRA in IID.
 > 
-> Third, **Controller Behavior Across Regimes**:
-> Notice where $k=0.5$ versus $k=1.0$ appear:
-> Under Non-IID skew (e.g. MNLI $C=50$ and QNLI $C=50$), FDA-Opt's default midpoint controller $k=0.5$ excelled by keeping client epochs tightly controlled ($\bar{e} \approx 10$), matching or outperforming static baselines while cutting network bandwidth by up to 56.6%."
+> Across the entire benchmark, FDA-RoLoRA proves to be fundamentally a **heterogeneity adaptation mechanism**: it acts as a **Plateau Escape and Safety Brake** under acute skew, while fixed schedules remain optimal in homogeneous settings."
 
 #### 🎯 Delivery & Pointer Guidance:
-- Point laser pointer directly at the **+26.95%** SST-2 row. This is your single most dramatic empirical result!
-- Then point to the MNLI row showing the **+4.00%** gain.
-- Emphasize that static RoLoRA requires guessing the right $E$, whereas FDA finds the optimal schedule autonomously.
-
+- Pause and let the committee absorb the table.
+- Circle the SST-2 row: emphasize the +26.95% plateau escape.
+- Emphasize academic rigor: acknowledge openly that dynamic thresholding offers no communication advantage in uniform IID.
 ---
 
 ### [Page 23 / Slide 23] Evaluation : Homogeneous Consensus (IID, $\alpha=1000.0$)
 - **Slide Title:** Evaluation : Homogeneous Consensus (IID, $\alpha=1000.0$)
-- **Visual Display:** Left: Optimization dynamics & controller behavior (consensus alignment $\bar{\nu} \le 1.0$; default $k=0.5$ midpoint lag; aggressive $k=1.0$ trade-offs) and empirical highlights (QQP 53.3% bandwidth cut, MNLI +4.00%). Right: Six-panel telemetry figure for QQP ($C=50$, IID).
+- **Visual Display:** Left: Optimization Dynamics & Controller Behavior under IID (super-linear variance surge, setpoint undershoot); audited empirical observations (QQP early plateau, MNLI +4%, fixed RoLoRA recommendation). Right: Six-panel telemetry figure for QQP ($C=50$, IID).
 - **Target Time:** 2:00 min | **Cumulative Time:** 30:00
 
 #### 🎙️ Spoken Script:
-> "To understand the inner workings of the controller, let us examine the telemetry under homogeneous consensus, shown here for QQP with 50 clients.
+> "Let us examine the telemetry dynamics in detail, beginning with the homogeneous IID regime ($\alpha=1000.0$) on Slide 23.
 > 
-> When client data is IID, local updates point along near-consensus trajectories toward the global optimum. Looking at panel (e), the average coordinate variance $\bar{\nu}$ remains tiny—well below 1.0 throughout training.
+> In an IID setting, client data distributions are statistically identical. Local updates align along a shared consensus trajectory.
 > 
-> Here we uncovered an essential insight regarding controller dynamics:
-> In IID scenarios, FDA-Opt's default controller ($k=0.5$), which targets $E_{\max}/2$, was **not reaching the expected midpoint of $E_{\max}$**. For instance, when we set $E_{\max}=40$ and $k=0.5$ expecting realized mean epochs around 20, the realized epochs lagged significantly below 20 because variance still grew enough to trigger halts earlier.
+> Here, our investigation uncovered a fundamental mechanistic phenomenon in low-rank federated optimization:
+> In full-parameter federated learning, gradient variance often scales linearly with local steps. But in low-rank coordinate space, client variance accumulates **super-linearly** ($V_r(e) \propto e^p$, with power $p \approx 1.8\text{--}2.2$).
 > 
-> To test if we could force clients deeper into local compute, we tried $k=1.0$ (aiming for the full $E_{\max}$ ceiling). With $k=1.0$, it did succeed in pushing realized epochs higher—reaching close to $\bar{e} \approx 20$. However, overall, pushing such deep epochs under IID did *not* do well: it caused validation oscillations and failed to beat tuned static baselines like RoLoRA $E=20$.
+> Because the FDA-Opt controller assumes a linear extrapolation ($k \cdot e_{\max} / e^*$), this super-linear variance surge breaches the threshold prematurely. As a result, the controller suffers from **systematic setpoint undershoot** ($\mathcal{S} = \bar{e}/e^* \approx 0.64\text{--}0.79$). For example, targeting $e^*=20$ yields only $\bar{e} \approx 13.5$ epochs.
 > 
-> Nevertheless, in configurations like QQP shown here, FDA-RoLoRA early stopped in just **14.0 rounds (164 MB)** versus 30 rounds (352 MB) for the baseline, securing a **53.3% reduction in network bandwidth**."
+> Look at the telemetry for QQP with 50 clients:
+> The FDA run terminated early at round 14 at a lower plateau of $72.65\%$, while RoLoRA continued to $75.43\%$. In fact, RoLoRA had already matched $72.65\%$ by round 6 to 7. This confirms that earlier termination was an accuracy plateau, not a bandwidth saving at equal performance.
+> 
+> Therefore, our thesis establishes a clear, rigorous conclusion: in homogeneous IID environments, fixed-epoch RoLoRA ($E=10$) remains the superior operational choice."
 
 #### 🎯 Delivery & Pointer Guidance:
-- Direct committee attention to the IID controller nuance: explain the midpoint lag with $k=0.5$ and the limitation of pushing $k=1.0$.
-
+- Direct committee attention to the super-linear variance growth mechanism: explain that low-rank coordinate dynamics violate linear assumptions under IID.
+- Emphasize academic honesty regarding QQP: clarify that stopping at round 14 was an early plateau, not a saving at parity.
 ---
 
 ### [Page 24 / Slide 24] Evaluation : Statistical Heterogeneity (Non-IID, $\alpha=0.5$)
 - **Slide Title:** Evaluation : Statistical Heterogeneity (Non-IID, $\alpha=0.5$)
-- **Visual Display:** Left: The Safety Brake mechanism and near-flawless controller performance under Non-IID; empirical highlights (SST-2 anti-collapse, QNLI suite-leading 84.22%, 56.6% bandwidth cut). Right: Six-panel telemetry figure for QNLI under Dirichlet skew ($\alpha=0.5, C=20$).
+- **Visual Display:** Left: The Safety Brake mechanism and near-linear drift tracking under Non-IID; empirical highlights (SST-2 plateau escape +26.95%, MNLI 15-30% speedup, QNLI controller sensitivity). Right: Six-panel telemetry figure for QNLI under Dirichlet skew ($\alpha=0.5, C=20$).
 - **Target Time:** 2:00 min | **Cumulative Time:** 32:00
 
 #### 🎙️ Spoken Script:
 > "Now let us examine the opposite regime: acute statistical heterogeneity under Dirichlet label skew ($\alpha=0.5$), shown here on QNLI with 20 clients.
 > 
-> In sharp contrast to IID, **in Non-IID the threshold controller worked almost perfectly!**
+> In sharp contrast to IID, **under Non-IID skew the threshold controller achieves near-optimal tracking fidelity!**
 > 
-> Under label skew, client update trajectories diverge sharply, and coordinate variance surges by more than four-fold, as seen in panel (e).
+> Why does this happen? Under label skew, client gradient dispersion across heterogeneous classes linearizes drift accumulation ($p \approx 0.9\text{--}1.1$). Because drift accumulation matches the controller's linear extrapolation model, the controller tracks its nominal setpoint with high precision ($\mathcal{S} \approx 0.91\text{--}1.11$, $\bar{e} \approx 13.0\text{--}17.5$).
 > 
-> In static RoLoRA with $E=10$, clients are blindly forced to take deep gradient steps on biased data, driving models toward irreconcilable local minima.
+> This linearized tracking unlocks FDA-RoLoRA's primary empirical achievements:
 > 
-> But in FDA-RoLoRA, the threshold controller sensitively catches the variance spike and fires an immediate synchronization halt. In panel (c), you can see how realized epochs are dynamically throttled down to protect the global model.
+> First, on **SST-2 with 50 clients**: static RoLoRA gets trapped in the majority-class plateau ($59.00\%$). FDA expands local compute when safe ($\bar{e}=14.57$), escaping the plateau to reach **85.95% peak accuracy (+26.95% gain)**.
 > 
-> This near-flawless drift containment delivers our most dramatic results: recovering **+26.95% accuracy on SST-2**, attaining a suite-leading **84.22% on QNLI**, and saving **56.6% in total communication bandwidth** on QNLI with 50 clients."
+> Second, on **MNLI with 20 clients**: FDA matches RoLoRA's target accuracy in **15 to 30% fewer rounds** ($178.1\,\text{MB}$ vs $234.4\,\text{MB}$), avoiding post-peak degradation ($E=20$ collapsed from $73.3\% \to 68.1\%$).
+> 
+> Third, on **QNLI with 50 clients**, our audit reveals important controller sensitivity: conservative tuning ($k=0.5$) maintains stability at 84.7%, but aggressive tuning ($k=1.0$) causes catastrophic divergence and collapses to chance level ($49.5\%$), debunking prior overstated bandwidth savings claims."
 
 #### 🎯 Delivery & Pointer Guidance:
 - Contrast this slide directly with Slide 23:
-  - On Slide 23, variance was low, but pushing deep epochs had trade-offs.
-  - On Slide 24, surging variance was throttled near-flawlessly, preventing collapse.
-
+  - On Slide 23, low-rank variance grew super-linearly ($p \approx 2$), causing setpoint undershoot.
+  - On Slide 24, gradient dispersion linearized drift ($p \approx 1$), enabling near-optimal setpoint tracking.
 ---
 
 ### [Page 25 / Slide 25] Evaluation : Factor Asymmetry & Decoupled Tracking
-- **Slide Title:** Evaluation : Factor Asymmetry \& Decoupled Tracking
-- **Visual Display:** Left: Factor Asymmetry theory reminder (Down-projection $A$ Gaussian init vs Up-projection $B$ zero init). Right: Empirical table reporting realized epoch counts $\bar{e}_A$ vs $\bar{e}_B$ with explicit $E_{\max}=20$ and $e_{\min}=1$ settings across Non-IID tasks. Key finding box: $\bar{e}_B > \bar{e}_A$ universally.
+- **Slide Title:** Evaluation : Factor Asymmetry & Decoupled Tracking
+- **Visual Display:** Left: Scale Disparity theory (Down-projection $A$ Gaussian init vs Up-projection $B$ zero init induces $\theta_B \gg \theta_A$). Right: Audited Table 5.6 reporting Setpoint Tracking Ratio $\mathcal{S} = \bar{e}/e^*$ and Factor Progression $\bar{e}_A / \bar{e}_B$. Key finding box: $\bar{e}_A \approx \bar{e}_B$ confirms factor symmetry ($\Delta < 0.5$ epochs).
 - **Target Time:** 1:45 min | **Cumulative Time:** 33:45
 
 #### 🎙️ Spoken Script:
-> "Slide 25 provides direct empirical validation for one of our core architectural contributions: **Decoupled Subspace Tracking**.
+> "Slide 25 provides an empirical audit of **Setpoint Tracking and Factor Dynamics**, resolving a common misconception about low-rank training.
 > 
-> Earlier, we hypothesized from theory that low-rank factors $A$ and $B$ possess distinct optimization geometries due to initialization and dimensionality asymmetry.
+> Earlier hypotheses speculated that Matrix $B$ might train deeper than Matrix $A$. However, our rigorous audit across all 173 runs refutes this myth:
+> As shown in Table 5.6 from Chapter 5 of the thesis, **local epoch progression across factors is remarkably symmetrical** ($\bar{e}_A \approx \bar{e}_B$, with differences $\Delta < 0.5$ epochs across all tasks).
+> For example, on MNLI Non-IID with $k=0.5$: $\bar{e}_A = 10.63 \pm 0.45$ versus $\bar{e}_B = 10.82 \pm 0.41$. Under $k=1.0$: $\bar{e}_A = 16.77$ versus $\bar{e}_B = 16.93$.
 > 
-> In this table, we report the actual realized local epoch allocations decomposed by active track: $\bar{e}_A$ for the down-projection rounds, and $\bar{e}_B$ for the up-projection rounds across five distinct non-IID benchmark suites (all evaluated under $E_{\max}=20, e_{\min}=1$).
+> If local epoch allocations are symmetric, **why is it essential to decouple factor thresholds $(\theta_A, \theta_B)$?**
+> The answer lies in **numerical scale disparity**:
+> Matrix $A$ is initialized with random Gaussian weights, whereas Matrix $B$ is initialized strictly to zero. This structural difference creates a massive initial magnitude gap: $\theta_B \gg \theta_A$.
 > 
-> Notice the striking, universal pattern:
-> In every single task without exception, **the up-projection factor $B$ absorbs deeper local epoch allocations than factor $A$ ($\bar{e}_B > \bar{e}_A$)**.
-> For instance, on MNLI with 50 clients, factor $A$ averages 9.47 epochs before variance halts, while factor $B$ safely trains for 10.80 epochs.
-> 
-> Because factor $B$ begins at zero, its early optimization trajectory is more constrained, allowing deeper local training before divergence; whereas factor $A$, initialized with random Gaussian weights, exhibits greater variance volatility.
-> 
-> Had we coupled these tracks with a single shared threshold, the volatile variance of factor $A$ would have prematurely throttled factor $B$, degrading convergence. Decoupling $\theta_A$ and $\theta_B$ was essential."
+> Had we coupled these tracks with a single shared threshold, that shared threshold would have either choked Matrix $A$ into premature halts or allowed Matrix $B$ to diverge unconstrained.
+> Decoupling $\theta_A$ and $\theta_B$ normalizes each factor's geometric bounds independently, which is precisely what enables symmetrical epoch progression without manual intervention."
 
 #### 🎯 Delivery & Pointer Guidance:
-- Point directly at the bold numbers in the $\bar{e}_B$ column: 17.76 vs 17.19, 10.80 vs 9.47, 11.13 vs 9.83.
-- Note how this confirms your theoretical hypothesis with hard empirical data.
-
+- Point directly at the $\bar{e}_A / \bar{e}_B$ column in Table 5.6: 10.63 vs 10.82, 16.77 vs 16.93. Emphasize factor symmetry.
+- Highlight the setpoint tracking ratio $\mathcal{S}$: near 1.0 under Non-IID, undershooting to 0.68-0.71 under IID.
 ---
 
 ### [Page 26 / Slide 26] Evaluation : Communication Efficiency: Milestone Gates
 - **Slide Title:** Evaluation : Communication Efficiency: Milestone Gates
-- **Visual Display:** Theologitis-style milestone analysis table: rounds and megabytes required to reach target accuracy gates (e.g. 80%, 85%, 88% on SST-2; 65%, 72%, 74% on MNLI; 80%, 83%, 84% on QNLI) comparing RoLoRA ($E=10$) against FDA-RoLoRA ($E_{\max}=20, k=1.0$). Bottom callouts: $2.87\times$ speedup on SST-2, higher ceiling on QNLI.
+- **Visual Display:** Audited Table 5.5 from the thesis: Megabytes transmitted to reach *a priori* accuracy gates comparing RoLoRA ($E=10$) against FDA-RoLoRA ($E_{\max}=20, k=1.0$). Gates: MNLI Non-IID ($65\%, 70\%, 72\%$), QNLI Non-IID ($80\%, 84\%$), SST-2 Non-IID ($80\%, 85\%$). Bottom boxes: MNLI speedup and SST-2 plateau escape.
 - **Target Time:** 2:00 min | **Cumulative Time:** 35:45
 
 #### 🎙️ Spoken Script:
-> "Following the evaluation methodology established in Theologitis et al. (2025), slide 26 analyzes communication efficiency through **Milestone Accuracy Gates**.
+> "Following the evaluation methodology established in Theologitis et al. (2025), slide 26 presents the audited **Milestone Accuracy Gates** from Table 5.5 of the thesis.
 > 
-> Peak accuracy alone does not tell the full story; edge networks care deeply about the network payload required to reach acceptable operational thresholds.
+> In federated edge networks, practitioners care about the communication volume required to reach acceptable operational accuracy.
 > 
-> Looking at the top row for SST-2 under Non-IID skew:
-> - To reach the 80% accuracy gate, static RoLoRA requires 23 rounds and 107.8 Megabytes of uplink transfer.
-> - FDA-RoLoRA ($E_{\max}=20, k=1.0$) crosses 80% in just **8 rounds and 37.5 Megabytes—a $2.87\times$ convergence speedup and a 65.2% bandwidth reduction!**
-> - To complete training, FDA-RoLoRA requires only 65.6 Megabytes in total, versus 117.2 Megabytes for RoLoRA.
+> Let us examine the three benchmark stories:
 > 
-> On MNLI, FDA-RoLoRA reaches the 72% milestone in 25 rounds versus 43 rounds for the baseline, saving nearly 85 Megabytes.
+> 1. **MNLI Non-IID ($C=20$) — Convergence Speedup**:
+> To reach the initial 65% gate, FDA requires 56.3 MB versus 75.0 MB (a 24.9% saving).
+> At the 70% milestone, FDA reaches it in 93.8 MB versus 131.3 MB (a 28.6% saving).
+> To reach 72%, FDA saves 11 communication rounds ($178.1\,\text{MB}$ vs $234.4\,\text{MB}$, a 24.0% reduction). Crucially, FDA achieves peak accuracy before static schedules can over-accumulate client drift.
 > 
-> Most impressively, on QNLI in the third row:
-> FDA-RoLoRA achieves the 84% accuracy milestone in 25 rounds (117 Megabytes), whereas static RoLoRA **fails to ever reach 84%**, plateauing below the gate.
+> 2. **QNLI Non-IID ($C=50$) — Milestone Parity & Stability**:
+> Both methods cross the 80% gate at 112.5 MB, and the 84% gate at 187.5 MB under conservative tuning ($k=0.5$). Aggressive $k=1.0$ collapsed to chance level ($49.5\%$), debunking prior post-hoc claims of bandwidth cuts on QNLI.
 > 
-> Thus, FDA-RoLoRA delivers both faster convergence speed and higher generalization ceilings."
+> 3. **SST-2 Non-IID ($C=50$) — Plateau Escape**:
+> Static RoLoRA remains permanently trapped at majority class ($59.00\%$) and never reaches the 80% or 85% gates. FDA-RoLoRA unlocks both gates at 48.2 MB and 72.3 MB respectively.
+> 
+> Thus, dynamic synchronization delivers concrete communication savings where models are prone to drift, and unlocks generalization milestones that static schedules fail to achieve."
 
 #### 🎯 Delivery & Pointer Guidance:
-- Point out the 8 rounds vs 23 rounds on SST-2.
-- Point out the "Unattained" dash for RoLoRA at 84% on QNLI.
-
+- Point to the 24-28% savings on MNLI across intermediate milestones.
+- Point to the infinity symbols for RoLoRA on SST-2 Non-IID, highlighting the plateau escape.
 ---
 
-### [Page 27 / Slide 27] Evaluation : Cross-Regime Synthesis: The Dual Frontier
-- **Slide Title:** Evaluation : Cross-Regime Synthesis: The Dual Frontier
-- **Visual Display:** TikZ diagram illustrating the Dual Frontier curve: x-axis data heterogeneity (IID to Non-IID skew), y-axis realized local epochs $\bar{e}$. Green region: Compute Accelerator (IID, low variance, deep epochs). Orange region: Safety Brake (Non-IID skew, surging variance, early halt).
-- **Target Time:** 2:00 min | **Cumulative Time:** 37:45
-
-#### 🎙️ Spoken Script:
-> "Slide 27 synthesizes our empirical and theoretical insights into a unifying conceptual model: **The Dual Frontier of Federated Dynamic Averaging**.
-> 
-> This diagram plots realized local epochs on the y-axis against data heterogeneity on the x-axis, bounded by our operational guardrails $e_{\min}=1$ and $e_{\max}=20$.
-> 
-> The horizontal dotted blue line represents static RoLoRA, locked at fixed $E=10$ regardless of network conditions.
-> 
-> In contrast, the red curve depicts the **FDA-RoLoRA Adaptive Horizon**, which autonomously navigates two distinct operational regimes:
-> 
-> On the left, in the green **Consensus Accelerator** regime:
-> When data is homogeneous (low drift variance), the curve rides high toward $e_{\max}$. Clients maximize local computation, amortizing communication costs and slashing round latency by up to 53%.
-> 
-> On the right, as heterogeneity shifts toward acute Non-IID skew in the orange **Safety Brake** regime:
-> Surging coordinate variance causes the curve to descend toward $e_{\min}=1$, enforcing frequent synchronization. This contains client drift, preserves decision boundaries, and prevents the catastrophic accuracy collapses that cripple static baselines.
-> 
-> This dual frontier demonstrates that FDA-RoLoRA acts as an autonomous, self-regulating governor for federated optimization."
-
-#### 🎯 Delivery & Pointer Guidance:
-- Trace the curve from top-left (green accelerator) to bottom-right (orange brake).
-- **Checkpoint Check:** You are at 37:45. You are perfectly on track to finish your final slides comfortably by minute 41-42.
-
----
-
-### [Page 28 / Slide 28] Evaluation : Practical Deployment Guidelines
+### [Page 27 / Slide 27] Evaluation : Practical Deployment Guidelines
 - **Slide Title:** Evaluation : Practical Deployment Guidelines
-- **Visual Display:** Four core architectural principles: (1) Universal Base Progress ($e_{\min}=1$), (2) Controller Dynamics in IID vs Non-IID ($k=0.5$ vs $k=1.0$), (3) Decouple Factor Thresholds, (4) Calibrate Early Stopping Under Skew.
+- **Visual Display:** Four core architectural principles: (1) Enforce a Universal Local Epoch Floor ($e_{\min} \ge 1$), (2) Adopt Regime-Aware Deployment, (3) Decouple Factor Thresholds for Scale Disparity, (4) Conservative Horizon Tuning on Scaled Cohorts.
 - **Target Time:** 1:30 min | **Cumulative Time:** 39:15
 
 #### 🎙️ Spoken Script:
-> "Based on our 173 benchmark runs, we distill four actionable design principles for deploying dynamic federated PEFT in production:
+> "Based on our 173 empirical benchmark runs, we distill four actionable principles for deploying dynamic federated PEFT in production:
 > 
-> 1. **Universal Base Progress ($e_{\min} = 1$)**: Enforce $e_{\min} = 1$ everywhere across the federation. While exploratory sweeps evaluated $e_{\min}=3$, it produced negligible difference; setting $e_{\min}=1$ guarantees valid stochastic progress while keeping the framework simple and uniform.
+> 1. **Enforce a Universal Local Epoch Floor ($e_{\min} \ge 1$)**:
+> Always set $e_{\min} \ge 1$ across all participating clients. Under severe initial drift, unconstrained dynamic halting can trigger $e=0$, causing dead communication rounds and stalling training entirely.
 > 
-> 2. **Controller Dynamics in IID vs. Non-IID**:
-> In Non-IID edge networks, FDA-Opt's default controller ($k=0.5$, targeting $E_{\max}/2$) is nearly flawless at detecting drift and preventing catastrophic collapse.
-> In homogeneous IID setups, the default controller lags behind the midpoint of $E_{\max}$; setting $k=1.0$ pushes epochs higher (e.g. toward 20 under $E_{\max}=40$), but pushing such deep epochs does not generalize well and underperforms compared to static schedules.
+> 2. **Adopt Regime-Aware Deployment**:
+> Deploy FDA-RoLoRA in heterogeneous edge networks ($\alpha \le 0.5$), where linearized drift allows accurate tracking, yielding 15 to 30% communication savings and preventing representation collapse.
+> In uniform IID consensus ($\alpha \ge 1.0$), deploy fixed-epoch RoLoRA ($E=10$), because super-linear low-rank variance growth eliminates any dynamic communication advantage.
 > 
-> 3. **Strictly Decouple Factor Thresholds**:
-> Never share variance thresholds across low-rank projection layers. Freezing inactive thresholds during alternate rounds is mathematically necessary to respect factor asymmetry.
+> 3. **Decouple Factor Thresholds for Numerical Scale Disparity**:
+> Always maintain independent $(\theta_A, \theta_B)$ states to handle the initialization magnitude gap ($\theta_B \gg \theta_A$). Freezing the inactive threshold preserves balanced, symmetrical training across tracks ($\Delta < 0.5$ epochs).
 > 
-> 4. **Calibrate Early Stopping for Coordinate Alternation**:
-> Because alternating between $A$ and $B$ induces slight round-to-round validation oscillations, configure wider evaluation smoothing windows ($W \ge 5$) and an initial round floor ($R_{\min} \ge 0.6 \times R_{\max}$) to avoid premature termination."
+> 4. **Conservative Horizon Tuning on Scaled Cohorts**:
+> When scaling to larger cohorts ($C=50$) under severe skew, configure conservative setpoint ratios ($k=0.5$) and wider validation smoothing windows ($W \ge 5$) to prevent drift-induced collapse."
 
 #### 🎯 Delivery & Pointer Guidance:
-- Present these guidelines as practical engineering takeaways that demonstrate your real-world systems thinking.
-
+- Present these guidelines as practical, principled engineering takeaways grounded in your empirical findings.
 ---
 
-### [Page 29 / Slide 29] Section 5 Transition Divider
+### [Page 28 / Slide 28] Section 5 Transition Divider
 - **Slide Title:** Section 5: Conclusion & Future Work
 - **Visual Display:** Table of Contents highlighting Section 5.
 - **Target Time:** 0:15 min | **Cumulative Time:** 39:30
@@ -668,59 +661,63 @@
 
 ---
 
-### [Page 30 / Slide 30] Conclusion : Synthesis of Scientific Contributions
+### [Page 29 / Slide 29] Conclusion : Synthesis of Scientific Contributions
 - **Slide Title:** Conclusion : Synthesis of Scientific Contributions
-- **Visual Display:** Five bulleted scientific contributions: (1) Bridging RoLoRA & FDA-Opt, (2) Mathematical consistency via alternating isolation, (3) Decoupled subspace geometric monitoring, (4) Dual Frontier operational model, (5) Full empirical foundation benchmark (173 runs on Polytechnix cluster).
+- **Visual Display:** Four core theoretical and empirical pillars aligned with Chapter 6: (1) Preservation of Aggregation Linearity, (2) Scale-Decoupled Geometric Monitoring, (3) Variance Growth Regime Dichotomy, (4) Intellectual Honesty & Principled Guidelines.
 - **Target Time:** 1:45 min | **Cumulative Time:** 41:15
 
 #### 🎙️ Spoken Script:
-> "To summarize, this thesis delivers five primary scientific contributions:
+> "To summarize, this thesis delivers four primary scientific contributions:
 > 
-> 1. **Bridging RoLoRA and FDA-Opt**: We formulated the first unified framework uniting alternating parameter-efficient fine-tuning with dynamic variance-driven averaging, simultaneously resolving the spatial and temporal communication bottlenecks.
+> 1. **Preservation of Aggregation Linearity**: We demonstrated that updating both LoRA matrices simultaneously incurs bilinear distortion ($\frac{1}{N}\sum B_i A_i \neq \bar{B}\bar{A}$). Alternating coordinate optimization isolates one factor per round, restoring strictly linear updates and enabling stable geometric drift measurement.
 > 
-> 2. **Mathematical Consistency via Alternating Isolation**: We demonstrated that alternating coordinate optimization resolves the LoRA bilinear aggregation inconsistency, providing the strictly linear mathematical updates required for distortion-free geometric variance monitoring.
+> 2. **Scale-Decoupled Geometric Monitoring**: We identified that Gaussian versus zero initialization creates a severe initial magnitude gap ($\theta_B \gg \theta_A$). Decoupling tracking thresholds normalizes each factor's geometric bounds independently, preserving remarkably symmetrical local epoch progression ($\bar{e}_A \approx \bar{e}_B$, $\Delta < 0.5$ epochs).
 > 
-> 3. **Decoupled Subspace Geometric Monitoring**: We established that tracking update dispersion directly within low-rank coordinate tensors eliminates full-parameter expansion overhead while respecting factor asymmetry.
+> 3. **Variance Growth Regime Dichotomy**: We discovered that in low-rank coordinate space under IID consensus, variance accumulates super-linearly ($p \approx 2$), causing premature threshold tripping and systematic setpoint undershoot ($\mathcal{S} \approx 0.7$). Conversely, under Non-IID skew, gradient dispersion linearizes drift ($p \approx 1$), allowing near-optimal setpoint tracking that escapes representation plateaus (+26.95% on SST-2) and speeds up convergence by 15 to 30% on MNLI.
 > 
-> 4. **Discovery of the Dual Frontier**: We proved both theoretically and empirically that dynamic averaging operates as an autonomous dual-mode system: accelerating consensus in IID regimes (up to 56.6% bandwidth reduction) and braking drift in Non-IID regimes (recovering +26.95% accuracy from collapse).
-> 
-> 5. **Open Benchmark Foundation**: We built an end-to-end open-source testbed on PyTorch and PEFT, completing 173 runs on dedicated GPU hardware to rigorously validate our framework."
+> 4. **Rigorous Empirical Foundation**: We completed 173 runs on dedicated GPU hardware, debunking overstated communication savings claims and establishing principled deployment guidelines."
 
 #### 🎯 Delivery & Pointer Guidance:
-- Speak with calm authority. Summarize clearly, emphasizing that your theoretical hypotheses were fully validated by rigorous empirical evidence.
-
+- Speak with calm authority. Summarize clearly, emphasizing that your theoretical insights are backed by audited empirical facts.
 ---
 
-### [Page 31 / Slide 31] Conclusion : Limitations & Future Research Horizons
-- **Slide Title:** Conclusion : Limitations \& Future Research Horizons
-- **Visual Display:** Left: Limitations (deterministic alternation, simulated multi-process, RoBERTa-125M backbone scope). Right: Future Horizons (PID-regulated threshold controllers, FFA-LoRA and AdaLoRA variants, 4-bit QLoRA edge quantization, physical IoT/mobile testbed).
+### [Page 30 / Slide 30] Conclusion : Limitations & Future Research Horizons
+- **Slide Title:** Conclusion : Limitations & Future Research Horizons
+- **Visual Display:** Left: Practical & Experimental Limitations (RoLoRA reimplementation, hyperparameter search, compute constraints, simulated FL). Right: Future Research Horizons (Larger Foundation Models, Broader PEFT Integration, Partial Participation, FederatedScope-LLM Integration).
 - **Target Time:** 1:15 min | **Cumulative Time:** 42:30
 
 #### 🎙️ Spoken Script:
-> "Finally, we acknowledge key limitations and identify exciting future research horizons:
+> "Finally, we place our findings in perspective by addressing practical limitations and charting concrete future research horizons, directly reflecting Chapter 6 of the thesis:
 > 
-> While our work focused on deterministic alternation between $A$ and $B$, future work should explore **asymmetric and adaptive switching cadences**, where the server dynamically decides which factor to update based on subspace gradient norms.
+> **Practical & Experimental Limitations**:
+> 1. *RoLoRA Reimplementation*: The original RoLoRA codebase was unavailable; we reimplemented the alternating optimization protocol from scratch within the FDA-Opt framework.
+> 2. *Hyperparameter Search*: Key experimental hyperparameters—notably optimal client learning rates—were omitted from the original paper, requiring extensive exploratory tuning.
+> 3. *Compute Constraints*: Constrained to $2\times$ NVIDIA A10 GPUs, restricting benchmarks to RoBERTa-Base (125M parameters) rather than multi-billion parameter autoregressive LLMs.
+> 4. *Simulated Federated Environment*: Executed in a multi-process simulated environment; physical wide-area latency, bandwidth jitter, and client dropouts were unmodeled.
 > 
-> While tested on 125M-parameter RoBERTa-base, scaling FDA-RoLoRA to 7B and 70B parameter models like Llama-3 represents a natural next frontier.
-> 
-> Methodologically, we envision integrating **PID feedback controllers** to dampen threshold oscillations, combining the dual track with 4-bit **QLoRA quantization** for memory-constrained edge hardware, and deploying across physical heterogeneous IoT devices."
+> **Future Research Horizons**:
+> 1. *Larger Foundation Models*: Scaling dynamic coordinate variance scaling to modern autoregressive LLMs (LLaMA, Mistral) on instruction-tuning workloads.
+> 2. *Broader PEFT Integration*: Synthesizing FDA with alternative PEFT architectures like SLoRA, FFA-LoRA, and dynamic rank allocation (AdaLoRA).
+> 3. *Partial Participation*: Evaluating dynamic synchronization under client subsampling and alternative matrix alternation orders.
+> 4. *Framework Integration*: Upstreaming native FDA-RoLoRA support into FederatedScope-LLM for standardized community benchmarking."
 
 #### 🎯 Delivery & Pointer Guidance:
-- Being transparent about limitations demonstrates scientific maturity and gives the committee constructive avenues for discussion.
-
+- Deliver limitations with intellectual confidence—acknowledging boundaries demonstrates scientific maturity and gives the committee constructive avenues for discussion.
 ---
 
-### [Page 32 / Slide 32] Key References
+### [Page 31 / Slide 31] Key References
 - **Slide Title:** Key References
-- **Visual Display:** Bibliographic entries for Chen et al. (NeurIPS 2025 RoLoRA), Theologitis et al. (2025 FDA-Opt), Hu et al. (ICLR 2022 LoRA), McMahan et al. (AISTATS 2017 FedAvg), and Sharfman et al. (ACM SIGMOD 2006 Geometric Monitoring).
+- **Visual Display:** Academic citations in standard IEEE/ACM format: Chen et al. (RoLoRA, NeurIPS 2025), Theologitis et al. (Dynamic Averaging, EDBT 2025 & FDA-Opt 2025), Yang et al. (FedLoRA Survey, IJCAI 2025), Hu et al. (LoRA, ICLR 2022).
 - **Target Time:** 0:30 min | **Cumulative Time:** 43:00
 
 #### 🎙️ Spoken Script:
-> "The primary references grounding this research are displayed here, highlighting the foundational works in federated learning, parameter-efficient adaptation, and distributed geometric monitoring."
+> "The primary foundational literature anchoring this defense is displayed here: Chen et al. for RoLoRA at NeurIPS 2025; Theologitis, Samoladas, and Deligiannakis for Dynamic Averaging at EDBT 2025 and FDA-Opt; Yang et al. for the IJCAI 2025 Federated LoRA Survey; and Hu et al. for foundational LoRA."
 
+#### 🎯 Delivery & Pointer Guidance:
+- Acknowledge your supervisor's and committee members' contributions gracefully (Theologitis, Samoladas, Deligiannakis).
 ---
 
-### [Page 33 / Slide 33] Closing Slide: Questions & Discussion
+### [Page 32 / Slide 32] Closing Slide: Questions & Discussion
 - **Slide Title:** Thank You! Questions & Discussion
 - **Visual Display:** Asterinos Karalis, clickable Technical University of Crete & School of Electrical and Computer Engineering links, Open-Source Repository URL: `https://github.com/Asterinos1/FDA-RoLoRA`.
 - **Target Time:** 0:30 min | **Cumulative Time:** 43:30
@@ -787,12 +784,12 @@
 
 ### Q6: "Why did the default FDA-Opt controller ($k=0.5$) struggle to reach the midpoint under IID, and why didn't $k=1.0$ solve it?"
 - **Defense Answer:**
-  > "In FDA-Opt, the default threshold controller sets target epochs to $E_{\max}/2$ (corresponding to $k=0.5$).
-  > - Under homogeneous IID data, client updates point along near-consensus trajectories toward the global optimum. However, because local SGD steps continually accumulate norm, variance still crosses the threshold before reaching the full midpoint (for example, with $E_{\max}=40$ and $k=0.5$, realized epochs averaged around 10 to 12 rather than the intended 20).
-  > - When we tried $k=1.0$ (targeting the full ceiling $E_{\max}$), the controller did succeed in pushing realized local training significantly deeper—approaching mean epochs around 15 to 20.
-  > - However, overall it did not perform well in terms of final validation accuracy: in low-rank fine-tuning under IID data, running 15 to 20 local epochs per client between synchronizations caused clients to slightly overfit to their local sample batches, inducing loss oscillations upon server aggregation and failing to beat tuned static baselines like RoLoRA $E=20$.
-  > - In contrast, in Non-IID environments, the default controller worked almost perfectly: drift variance surged rapidly whenever clients over-trained on skewed label shards, triggering early halts that protected global generalization."
-
+  > "This stems directly from our discovery regarding **super-linear variance growth**:
+  > - The FDA-Opt controller operates on the assumption that gradient variance scales linearly with local training steps.
+  > - However, in low-rank coordinate space under IID consensus, client variance accumulates *super-linearly* ($V_r(e) \propto e^p$, with $p \approx 1.8\text{--}2.2$).
+  > - Because the variance surge accelerates as epochs advance, it breaches the threshold earlier than the linear model expects, resulting in systematic setpoint undershoot ($\mathcal{S} = \bar{e}/e^* \approx 0.64\text{--}0.79$). With $E_{\max}=40$ and $k=0.5$, realized epochs averaged around 13 rather than 20.
+  > - When we increased $k=1.0$, the controller pushed realized epochs deeper toward 28, but this failed to improve validation accuracy: running excessive local epochs under consensus caused minor batch-level overfitting and aggregation loss oscillations, failing to beat tuned static baselines like RoLoRA $E=10$.
+  > - In contrast, under Non-IID skew, gradient dispersion across unbalanced classes linearizes drift accumulation ($p \approx 0.9\text{--}1.1$), allowing the controller to track its nominal setpoint with high fidelity ($\mathcal{S} \approx 0.91\text{--}1.11$)."
 ---
 
 ## 🏁 Final Presentation Day Checklist
@@ -801,7 +798,6 @@
   - *Slide 9 (Synthesis): ~11:30*
   - *Slide 15 (Protocol): ~19:30*
   - *Slide 19 (Testbed): ~24:00*
-  - *Slide 27 (Dual Frontier): ~37:45*
   - *Finish / Q&A: ~41:00 - 43:00*
 - [ ] **Laser Pointer / Remote:** Keep hand steady; circle key numbers (e.g. +26.95%, $\bar{e}_B > \bar{e}_A$) rather than waving the pointer constantly.
 - [ ] **Tone & Posture:** Address all three professors. When answering questions, pause 2 seconds, acknowledge the premise, and answer directly with mathematical and empirical clarity.
